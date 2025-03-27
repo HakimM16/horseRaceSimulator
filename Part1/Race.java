@@ -1,5 +1,4 @@
 import java.util.concurrent.TimeUnit;
-import java.lang.Math;
 
 /**
  * A three-horse race, each horse running in its own lane
@@ -92,6 +91,15 @@ public class Race
             try{ 
                 TimeUnit.MILLISECONDS.sleep(100);
             }catch(Exception e){}
+        }
+
+        // print the winner
+        if (raceWonBy(lane1Horse)) {
+            System.out.println("The winner is " + lane1Horse.getName() + "!");
+        } else if (raceWonBy(lane2Horse)) {
+            System.out.println("The winner is " + lane2Horse.getName() + "!");
+        } else if (raceWonBy(lane3Horse)) {
+            System.out.println("The winner is " + lane3Horse.getName() + "!");
         }
     }
     
