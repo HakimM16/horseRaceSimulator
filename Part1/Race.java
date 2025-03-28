@@ -98,6 +98,9 @@ public class Race
             if ( raceWonBy(lane1Horse) || raceWonBy(lane2Horse) || raceWonBy(lane3Horse) )
             {
                 finished = true;
+            } else if (lane1Horse.hasFallen() && lane2Horse.hasFallen() && lane3Horse.hasFallen()) {
+                System.out.println("All horses have fallen. No winner.");
+                finished = true;
             }
            
             //wait for 100 milliseconds
@@ -209,7 +212,7 @@ public class Race
         //else print the horse's symbol
         if(theHorse.hasFallen())
         {
-            System.out.print('\u2322');
+            System.out.print('X');
         }
         else
         {
