@@ -30,10 +30,10 @@ public class Race
     }
 
     public static void main(String[] args) {
-        Race race = new Race(1000); // 1000 meters
-        Horse horse1 = new Horse('A', "Thunder", 0.8);
-        Horse horse2 = new Horse('B', "Lightning", 0.9);
-        Horse horse3 = new Horse('C', "Wind", 0.5);
+        Race race = new Race(20);
+        Horse horse1 = new Horse('T', "Thunder", 0.8);
+        Horse horse2 = new Horse('L', "Lightning", 0.9);
+        Horse horse3 = new Horse('W', "Wind", 0.5);
 
         race.addHorse(horse1, 1);
         race.addHorse(horse2, 2);
@@ -137,6 +137,12 @@ public class Race
             {
                theHorse.moveForward();
             }
+
+            // If statement that increase confidence if horse wins
+            if (theHorse.getDistanceTravelled() == raceLength) {
+                double newConfidence = Math.round((theHorse.getConfidence() + 0.1) * 10.0) / 10.0; 
+                theHorse.setConfidence(newConfidence); 
+            }
             
             //the probability that the horse will fall is very small (max is 0.1)
             //but will also will depends exponentially on confidence 
@@ -144,8 +150,10 @@ public class Race
             if (Math.random() < (0.1*theHorse.getConfidence()*theHorse.getConfidence()))
             {
                 theHorse.fall();
+                double newConfidence = Math.round((theHorse.getConfidence() - 0.1) * 10.0) / 10.0; //decrease confidence if horse falls
+                theHorse.setConfidence(newConfidence); 
             }
-        }
+        } 
     }
         
     /** 
@@ -177,12 +185,18 @@ public class Race
         System.out.println();
         
         printLane(lane1Horse);
+        System.out.print(" ");
+        System.out.print(lane1Horse.getName() + " (Current confidence " + lane1Horse.getConfidence() + ")");
         System.out.println();
         
         printLane(lane2Horse);
+        System.out.print(" ");
+        System.out.print(lane2Horse.getName() + " (Current confidence " + lane2Horse.getConfidence() + ")");
         System.out.println();
         
         printLane(lane3Horse);
+        System.out.print(" ");
+        System.out.print(lane3Horse.getName() + " (Current confidence " + lane3Horse.getConfidence() + ")");
         System.out.println();
         
         multiplePrint('=',raceLength+3); //bottom edge of track
