@@ -28,6 +28,19 @@ public class Race
         lane2Horse = null;
         lane3Horse = null;
     }
+
+    public static void main(String[] args) {
+        Race race = new Race(1000); // 1000 meters
+        Horse horse1 = new Horse('A', "Thunder", 0.8);
+        Horse horse2 = new Horse('B', "Lightning", 0.9);
+        Horse horse3 = new Horse('C', "Wind", 0.5);
+
+        race.addHorse(horse1, 1);
+        race.addHorse(horse2, 2);
+        race.addHorse(horse3, 3);
+
+        race.startRace();
+    }
     
     /**
      * Adds a horse to the race in a given lane
