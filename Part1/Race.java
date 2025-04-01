@@ -99,6 +99,7 @@ public class Race
             {
                 finished = true;
             } else if (lane1Horse.hasFallen() && lane2Horse.hasFallen() && lane3Horse.hasFallen()) {
+                // Made an if-statement to check if all horses have fallen
                 System.out.println("All horses have fallen. No winner.");
                 finished = true;
             }
@@ -109,7 +110,7 @@ public class Race
             }catch(Exception e){}
         }
 
-        // print the winner
+        // prints the winner
         if (raceWonBy(lane1Horse)) {
             System.out.println("The winner is " + lane1Horse.getName() + "!");
         } else if (raceWonBy(lane2Horse)) {
@@ -184,6 +185,8 @@ public class Race
         multiplePrint('=',raceLength+3); //top edge of track
         System.out.println();
         
+        // print the lanes for each horse
+        // and the horse's name and confidence rating
         printLane(lane1Horse);
         System.out.print(" ");
         System.out.print(lane1Horse.getName() + " (Current confidence " + lane1Horse.getConfidence() + ")");
