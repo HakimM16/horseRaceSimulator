@@ -31,14 +31,18 @@ public class Race
 
     public static void main(String[] args) {
         Race race = new Race(20);
-        Horse horse1 = new Horse('T', "Thunder", 0.8);
-        Horse horse2 = new Horse('L', "Lightning", 0.9);
-        Horse horse3 = new Horse('W', "Wind", 0.5);
+        try {
+            Horse horse1 = new Horse('T', "Thunder", 1.2);
+            Horse horse2 = new Horse('L', "Lightning", 0.9);
+            Horse horse3 = new Horse('W', "Wind", 0.5);
 
-        race.addHorse(horse1, 1);
-        race.addHorse(horse2, 2);
-        race.addHorse(horse3, 3);
-
+            race.addHorse(horse1, 1);
+            race.addHorse(horse2, 2);
+            race.addHorse(horse3, 3);
+        } catch (rangeOfConfidenceException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        } 
         race.startRace();
     }
     

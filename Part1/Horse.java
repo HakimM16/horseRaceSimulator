@@ -19,8 +19,14 @@ public class Horse
     /**
      * Constructor for objects of class Horse
      */
-    public Horse(char horseSymbol, String horseName, double horseConfidence)
+    public Horse(char horseSymbol, String horseName, double horseConfidence) throws rangeOfConfidenceException
     {
+        // Check if the confidence is within the range of 0.0 to 1.0
+        if (horseConfidence < 0.0 || horseConfidence > 1.0) {
+            throw new rangeOfConfidenceException("Confidence must be between 0.0 and 1.0");
+        }
+        
+    // Initialise instance variables
        this.symbol = horseSymbol;
        this.name = horseName;
        this.confidence = horseConfidence;
