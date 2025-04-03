@@ -20,7 +20,7 @@ public class Race
      * 
      * @param distance the length of the racetrack (in metres/yards...)
      */
-    public Race(int distance)
+    public Race(int distance) throws NumberFormatException
     {
         // initialise instance variables
         raceLength = distance;

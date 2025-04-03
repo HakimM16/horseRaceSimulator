@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
-        Race race = new Race(20);
+        //Race race = new Race(20);
         /*
         Planning:
         - For the try-catch block, allow the user to create three horses with different confidence levels✅
@@ -13,6 +13,8 @@ public class Test {
 
         // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
         System.out.println("Welcome to the horse race stimulator!");
+        String l_str = inputString("Enter the length of the race: ");
+
         System.out.println("Please enter the horse names for three horses.");
 
         String horseName1 = inputString("Enter the name of horse 1: ");
@@ -24,6 +26,9 @@ public class Test {
         double confidence3 = Math.round(Math.random() * 10.0) / 10.0; // Random confidence level between 0.0 and 1.0
 
         try {
+            int length = Integer.parseInt(l_str); // Convert the string to an integer
+
+            Race race = new Race(length);
             Horse horse1 = new Horse('\u2658', horseName1, confidence1); // white horse
             Horse horse2 = new Horse('\u265A', horseName2, confidence2); // white king
             Horse horse3 = new Horse('\u2656', horseName3, confidence3); // white rook
@@ -41,6 +46,9 @@ public class Test {
         } catch (CheckArgumentException e) {
             System.out.println(e.getMessage());
             System.exit(1);
+        } catch (NumberFormatException e ) {
+            System.out.println("The length of the race must be a number.");
+            System.exit(1);
         }
 
     }
@@ -50,5 +58,15 @@ public class Test {
         Scanner scanner = new Scanner(System.in);
         System.out.println(message);
         return scanner.nextLine();
+    }
+
+    public static int inputInt(String message) 
+    {   
+        // user input is taken by inputString()
+        String string = inputString(message); 
+        int numberinput = Integer.parseInt(string); 
+        // string is converted into an integer
+
+        return numberinput; 
     }
 }
