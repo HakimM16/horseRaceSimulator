@@ -61,7 +61,7 @@ public class Race
      * then repeatedly moved forward until the 
      * race is finished
      */
-    public void startRace()
+    public void startRace(String predict)
     {
         //declare a local variable to tell us when the race is finished
         boolean finished = false;
@@ -97,14 +97,26 @@ public class Race
             }catch(Exception e){}
         }
 
-        // prints the winner
-        if (raceWonBy(lane1Horse)) {
+        // prints the winner and if the user was right
+        if (raceWonBy(lane1Horse) && lane1Horse.getName().equals(predict)) {
             System.out.println("The winner is " + lane1Horse.getName() + "!");
-        } else if (raceWonBy(lane2Horse)) {
+            System.out.println("Congratulations! You was right.");
+        } else if (raceWonBy(lane2Horse) && lane2Horse.getName().equals(predict)) {
             System.out.println("The winner is " + lane2Horse.getName() + "!");
-        } else if (raceWonBy(lane3Horse)) {
+            System.out.println("Congratulations! You was right.");
+        } else if (raceWonBy(lane3Horse) && lane3Horse.getName().equals(predict)) {
             System.out.println("The winner is " + lane3Horse.getName() + "!");
-        }
+            System.out.println("Congratulations! You was right.");
+        } 
+
+        // prints if the user lost the bet
+        if (raceWonBy(lane1Horse) && !lane1Horse.getName().equals(predict)) {
+            System.out.println("The winner is " + lane1Horse.getName() + " but you was wrong.");
+        } else if (raceWonBy(lane2Horse) && !lane2Horse.getName().equals(predict)) {
+            System.out.println("The winner is " + lane2Horse.getName() + " but you was wrong.");
+        } else if (raceWonBy(lane3Horse) && !lane3Horse.getName().equals(predict)) {
+            System.out.println("The winner is " + lane2Horse.getName() + " but you was wrong.");
+        } 
     }
     
     /**

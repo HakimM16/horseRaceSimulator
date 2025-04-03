@@ -30,7 +30,7 @@ public class Horse
         // Check if the horseName contains only letters
         for (char c : horseName.toCharArray()) {
             if (!Character.isLetter(c)) {
-                throw new CheckArgumentException("Horse name must contain only letters");
+                throw new CheckArgumentException("The horse name (" + horseName + ") must contain only letters");
             }
         }
 
