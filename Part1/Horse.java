@@ -19,12 +19,27 @@ public class Horse
     /**
      * Constructor for objects of class Horse
      */
-    public Horse(char horseSymbol, String horseName, double horseConfidence) throws rangeOfConfidenceException
+    public Horse(char horseSymbol, String horseName, double horseConfidence) throws rangeOfConfidenceException, CheckArgumentException
     {
+        
+        // Check if the horseName is a valid string
+        if (horseName == null || horseName.isEmpty()) {
+            throw new CheckArgumentException("Horse name cannot be null or empty");
+        }
+
+        // Check if the horseName contains only letters
+        for (char c : horseName.toCharArray()) {
+            if (!Character.isLetter(c)) {
+                throw new CheckArgumentException("Horse name must contain only letters");
+            }
+        }
+
         // Check if the confidence is within the range of 0.0 to 1.0
         if (horseConfidence < 0.0 || horseConfidence > 1.0) {
             throw new rangeOfConfidenceException("Confidence must be between 0.0 and 1.0");
         }
+
+
         
     // Initialise instance variables
        this.symbol = horseSymbol;
