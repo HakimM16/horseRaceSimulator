@@ -32,9 +32,9 @@ public class Race
     public static void main(String[] args) {
         Race race = new Race(20);
         try {
-            Horse horse1 = new Horse('T', "Thunder", 1.2);
-            Horse horse2 = new Horse('L', "Lightning", 0.9);
-            Horse horse3 = new Horse('W', "Wind", 0.5);
+            Horse horse1 = new Horse('\u2658', "Thunder", 0.6); // white horse
+            Horse horse2 = new Horse('\u265A', "Lightning", 0.9); // white king
+            Horse horse3 = new Horse('\u2656', "Wind", 0.5); // white rook
 
             race.addHorse(horse1, 1);
             race.addHorse(horse2, 2);
@@ -186,7 +186,7 @@ public class Race
     {
         System.out.print('\u000C');  //clear the terminal window
         
-        multiplePrint('=',raceLength+3); //top edge of track
+        multiplePrint('=',raceLength+4); //top edge of track
         System.out.println();
         
         // print the lanes for each horse
@@ -206,7 +206,7 @@ public class Race
         System.out.print(lane3Horse.getName() + " (Current confidence " + lane3Horse.getConfidence() + ")");
         System.out.println();
         
-        multiplePrint('=',raceLength+3); //bottom edge of track
+        multiplePrint('=',raceLength+4); //bottom edge of track
         System.out.println();    
     }
     
@@ -233,7 +233,7 @@ public class Race
         //else print the horse's symbol
         if(theHorse.hasFallen())
         {
-            System.out.print('X');
+            System.out.print('\u274C'); //dead horse symbol
         }
         else
         {
