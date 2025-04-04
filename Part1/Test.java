@@ -36,16 +36,16 @@ public class Test {
             race.addHorse(horse3, 3);
 
             race.startRace(predict);
-        } catch (rangeOfConfidenceException e) {
+        } catch (rangeOfConfidenceException e) { // Catching the exception for confidence level range
             System.out.println(e.getMessage());
             System.exit(1);
-        } catch (CheckArgumentException e) {
+        } catch (CheckArgumentException e) { // Catching the exception for invalid horse name
             System.out.println(e.getMessage());
             System.exit(1);
-        } catch (NumberFormatException e ) {
+        } catch (NumberFormatException e ) { // Catching the exception of invalid number format for length of race
             System.out.println("The length of the race must be a number.");
             System.exit(1);
-        } catch (Exception e) {
+        } catch (Exception e) { // Catching any other unexpected exceptions
             System.out.println("An unexpected error occurred: " + e.getMessage());
             System.exit(1);
         }
