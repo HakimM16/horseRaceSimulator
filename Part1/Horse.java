@@ -39,6 +39,11 @@ public class Horse
             throw new rangeOfConfidenceException("Confidence must be between 0.0 and 1.0");
         }
 
+        // check if the confidence is a double, not a string or char
+        if (horseConfidence != (double) horseConfidence) {
+            throw new rangeOfConfidenceException("Confidence must be a double");
+        }
+
 
         
     // Initialise instance variables
