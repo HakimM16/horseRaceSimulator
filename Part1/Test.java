@@ -29,7 +29,7 @@ public class Test {
             print("Horse 3: " + horseName3 + " with confidence level: " + confidence3);
             print("Horse 1 symbol: " + horse1.getSymbol() + " Horse 2 symbol: " + horse2.getSymbol() + " Horse 3 symbol: " + horse3.getSymbol());
 
-            String predict = inputString("Which horse do you want to win? (" + horseName1 + ", " + horseName2 + " or " + horseName3 + "): ");
+            String predict = prediction(horseName1, horseName2, horseName3); // Get the user's prediction
 
             race.addHorse(horse1, 1);
             race.addHorse(horse2, 2);
@@ -44,6 +44,9 @@ public class Test {
             System.exit(1);
         } catch (NumberFormatException e ) {
             System.out.println("The length of the race must be a number.");
+            System.exit(1);
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
             System.exit(1);
         }
 
@@ -68,5 +71,15 @@ public class Test {
 
     public static void print(String message) {
         System.out.println(message);
+    }
+
+    public static String prediction(String horsename1, String horsename2, String horsename3){ 
+        String p = inputString("Which horse do you want to win? (" + horsename1 + ", " + horsename2 + " or " + horsename3 + "): ");
+
+        while(!p.equals(horsename1) && !p.equals(horsename2) && !p.equals(horsename3)) {
+            System.out.println("Invalid input. Please enter a valid horse name.");
+            p = inputString("Which horse do you want to win? (" + horsename1 + ", " + horsename2 + " or " + horsename3 + "): ");
+        }
+        return p; // Return the valid horse name
     }
 }
