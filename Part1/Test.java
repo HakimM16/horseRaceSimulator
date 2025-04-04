@@ -12,9 +12,9 @@ public class Test {
         String horseName2 = inputString("Enter the name of horse 2: ");
         String horseName3 = inputString("Enter the name of horse 3: ");
 
-        double confidence1 = Math.round(Math.random() * 10.0) / 10.0; // Random confidence level between 0.0 and 1.0
-        double confidence2 = Math.round(Math.random() * 10.0) / 10.0;// Random confidence level between 0.0 and 1.0
-        double confidence3 = Math.round(Math.random() * 10.0) / 10.0; // Random confidence level between 0.0 and 1.0
+        double confidence1 = inputDouble("Enter the confidence level of horse 1 (0.0 - 1.0)"); // Random confidence level between 0.0 and 1.0
+        double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.0 - 1.0)");// Random confidence level between 0.0 and 1.0
+        double confidence3 = inputDouble("Enter the confidence level of horse 2 (0.0 - 1.0)"); // Random confidence level between 0.0 and 1.0
 
         try {
             int length = Integer.parseInt(l_str); // Convert the string to an integer
@@ -65,6 +65,16 @@ public class Test {
         String string = inputString(message); 
         int numberinput = Integer.parseInt(string); 
         // string is converted into an integer
+
+        return numberinput; 
+    }
+
+    public static double inputDouble(String message) 
+    {   
+        // user input is taken by inputString()
+        String string = inputString(message); 
+        double numberinput = Double.parseDouble(string); 
+        // string is converted into a double
 
         return numberinput; 
     }

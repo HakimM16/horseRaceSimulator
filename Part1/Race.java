@@ -110,7 +110,7 @@ public class Race
             System.out.println("Congratulations! You was right.");
         } 
 
-        // prints if the user lost the bet
+        // prints if the user was wrong about their prediction
         if (raceWonBy(lane1Horse) && !lane1Horse.getName().equals(predict)) {
             System.out.println("The winner is " + lane1Horse.getName() + " but you was wrong.");
         } else if (raceWonBy(lane2Horse) && !lane2Horse.getName().equals(predict)) {
@@ -292,8 +292,6 @@ public class Race
     - The string variable string is initialised to the value of inputInt() with the argument message
     - The int variable numberinput is initialised to the value of string converted into an integer type
     - then, the method returns number input
-
-
     */
 
     public static int inputInt(String message) 
@@ -304,6 +302,61 @@ public class Race
         // string is converted into an integer
 
         return numberinput; 
+    }
+
+    // print()
+    /*
+    how it works:
+    - it takes in input by the user and returns it
+    implementation:
+    - the method takes in the string argument message
+    - The input function scanner is created
+    - message is outputted in system.out.println
+    - The user makes an input using scanner.nextLine() and the value is returned
+    */
+    public static void print(String message) {
+        System.out.println(message);
+    }
+
+    // inputDouble()
+    /*
+    how it works:
+    - it takes in input by the user and returns it in a double type
+    implementation:
+    - the method takes in the string argument message
+    - The string variable string is initialised to the value of inputInt() with the argument message
+    - The double variable numberinput is initialised to the value of string converted into a double type
+    - then, the method returns number input
+    */
+    public static double inputDouble(String message) 
+    {   
+        // user input is taken by inputString()
+        String string = inputString(message); 
+        double numberinput = Double.parseDouble(string); 
+        // string is converted into a double
+
+        return numberinput; 
+    }
+
+    // prediction()
+    /*
+    how it works:
+    - it takes in input by the user and returns it
+    implementation:
+    - the method takes in the string argument message
+    - The input function scanner is created
+    - message is outputted in system.out.println
+    - It keeps on asking the user for input until a valid horse name is given
+    - The user makes an input using scanner.nextLine() and the value is returned
+    */
+    public static String prediction(String horsename1, String horsename2, String horsename3){ 
+        String p = inputString("Which horse do you want to win? (" + horsename1 + ", " + horsename2 + " or " + horsename3 + "): ");
+
+        while(!p.equals(horsename1) && !p.equals(horsename2) && !p.equals(horsename3)) {
+            System.out.println("Invalid input. Please enter a valid horse name.");
+            p = inputString("Which horse do you want to win? (" + horsename1 + ", " + horsename2 + " or " + horsename3 + "): ");
+        }
+        return p; // Return the valid horse name
     }
 
 }
