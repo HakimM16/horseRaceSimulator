@@ -27,7 +27,9 @@ public class Test {
             print("Horse 1: " + horseName1 + " with confidence level: " + confidence1);
             print("Horse 2: " + horseName2 + " with confidence level: " + confidence2);
             print("Horse 3: " + horseName3 + " with confidence level: " + confidence3);
-            print("Horse 1 symbol: " + horse1.getSymbol() + " Horse 2 symbol: " + horse2.getSymbol() + " Horse 3 symbol: " + horse3.getSymbol());
+            print("Horse 1 symbol: " + horse1.getSymbol());
+            print("Horse 2 symbol: " + horse2.getSymbol());
+            print("Horse 3 symbol: " + horse3.getSymbol());
 
             String predict = prediction(horseName1, horseName2, horseName3); // Get the user's prediction
 
