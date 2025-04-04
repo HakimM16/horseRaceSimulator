@@ -2,15 +2,6 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
-        //Race race = new Race(20);
-        /*
-        Planning:
-        - For the try-catch block, allow the user to create three horses with different confidence levels✅
-        - give the user to choose which horse to bet on ✅
-        - Once race is done, display whether the chosen horse has won or not ✅
-        - Add more exceptions for invalid input (e.g. number instead of string, char instead of string) ✅
-         */
-
         // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
         System.out.println("Welcome to the horse race stimulator!");
         String l_str = inputString("Enter the length of the race: ");

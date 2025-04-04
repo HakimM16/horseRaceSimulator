@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -258,4 +259,51 @@ public class Race
             i = i + 1;
         }
     }
+
+    // inputString()
+
+    /*
+    how it works:
+    - it takes in input by the user and returns it
+
+    implementation:
+    - the method takes in the string argument message
+    - The input function scanner is created
+    - message is outputted in system.out.println
+    - The user makes an input using scanner.nextLine() and the value is returned
+    */
+
+    public static String inputString(String message)
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(message);
+        // returns the user input
+        return scanner.nextLine();
+    }
+
+    // inputInt()
+
+    /*
+    how it works:
+    - it takes in input by the user and returns it in an integer type
+
+    implementation:
+    - the method takes in the string argument message
+    - The string variable string is initialised to the value of inputInt() with the argument message
+    - The int variable numberinput is initialised to the value of string converted into an integer type
+    - then, the method returns number input
+
+
+    */
+
+    public static int inputInt(String message) 
+    {   
+        // user input is taken by inputString()
+        String string = inputString(message); 
+        int numberinput = Integer.parseInt(string); 
+        // string is converted into an integer
+
+        return numberinput; 
+    }
+
 }
