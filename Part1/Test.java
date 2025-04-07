@@ -51,6 +51,9 @@ public class Test {
         } catch (NumberFormatException e ) { // Catching the exception of invalid number format for length of race
             System.out.println("The length of the race must be a number.");
             System.exit(1);
+        } catch (LengthOfRaceException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
         } catch (Exception e) { // Catching any other unexpected exceptions
             System.out.println("An unexpected error occurred: " + e.getMessage());
             System.exit(1);

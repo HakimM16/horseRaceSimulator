@@ -21,13 +21,18 @@ public class Race
      * 
      * @param distance the length of the racetrack (in metres/yards...)
      */
-    public Race(double distance) throws NumberFormatException
+    public Race(double distance) throws NumberFormatException, LengthOfRaceException
     {
         // initialise instance variables
         raceLength = distance;
         lane1Horse = null;
         lane2Horse = null;
         lane3Horse = null;
+
+        // checks if raceLength is under the max length
+        if (distance > 175) {
+            throw new LengthOfRaceException("The length of the race can't be more than 175");
+        }
     }
     
     /**
