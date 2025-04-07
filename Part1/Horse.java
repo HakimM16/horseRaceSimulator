@@ -19,12 +19,17 @@ public class Horse
     /**
      * Constructor for objects of class Horse
      */
-    public Horse(char horseSymbol, String horseName, double horseConfidence) throws rangeOfConfidenceException, CheckArgumentException
+    public Horse(char horseSymbol, String horseName, double horseConfidence) throws rangeOfConfidenceException, CheckArgumentException, LongNameException
     {
         
         // Check if the horseName is a valid string
         if (horseName == null || horseName.isEmpty()) {
             throw new CheckArgumentException("Horse name cannot be null or empty");
+        }
+
+        // Check if horseName is more than 15 characters
+        if (horseName.length() > 15) {
+            throw new LongNameException("Name cannot be more than 15 characters");
         }
 
         // check if the horseSymbol is null or empty or a number

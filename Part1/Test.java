@@ -7,6 +7,7 @@ public class Test {
             // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
             System.out.println("Welcome to the horse race stimulator!");
             String l_str = inputString("Enter the length of the race: ");
+            
 
             System.out.println("Please enter the horse names for three horses.");
 
@@ -59,6 +60,9 @@ public class Test {
             System.out.println(e.getMessage());
             System.exit(1);
         } catch (SameNameException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        } catch (LongNameException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
