@@ -16,13 +16,17 @@ public class Test {
         double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.0 - 1.0)");// Random confidence level between 0.0 and 1.0
         double confidence3 = inputDouble("Enter the confidence level of horse 2 (0.0 - 1.0)"); // Random confidence level between 0.0 and 1.0
 
+        char symbol1 = inputChar("Enter the symbol for horse 1 (first character of input is taken as the symbol): "); 
+        char symbol2 = inputChar("Enter the symbol for horse 2 (first character of input is taken as the symbol): ");
+        char symbol3 = inputChar("Enter the symbol for horse 3 (first character of input is taken as the symbol): ");
+
         try {
             int length = Integer.parseInt(l_str); // Convert the string to an integer
 
             Race race = new Race(length);
-            Horse horse1 = new Horse('\u2658', horseName1, confidence1); // white horse
-            Horse horse2 = new Horse('\u265A', horseName2, confidence2); // white king
-            Horse horse3 = new Horse('\u2656', horseName3, confidence3); // white rook
+            Horse horse1 = new Horse(symbol1, horseName1, confidence1); // white horse, symbol: \u2658
+            Horse horse2 = new Horse(symbol2, horseName2, confidence2); // white king, symbol: \u265A
+            Horse horse3 = new Horse(symbol3, horseName3, confidence3); // white rook, symbol: \u2656
 
             print("Horse 1: " + horseName1 + " with confidence level: " + confidence1);
             print("Horse 2: " + horseName2 + " with confidence level: " + confidence2);
@@ -59,6 +63,16 @@ public class Test {
         Scanner scanner = new Scanner(System.in);
         System.out.println(message);
         return scanner.nextLine();
+    }
+
+    public static char inputChar(String message) 
+    {   
+        // user input is taken by inputString()
+        String string = inputString(message); 
+        char charinput = string.charAt(0); 
+        // first character of the string is taken as a char
+
+        return charinput; 
     }
 
     public static int inputInt(String message) 

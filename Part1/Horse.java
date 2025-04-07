@@ -27,6 +27,13 @@ public class Horse
             throw new CheckArgumentException("Horse name cannot be null or empty");
         }
 
+        // check if the horseSymbol is null or empty or a number
+        if (horseSymbol == '\0' || horseSymbol == ' ') {
+            throw new CheckArgumentException("Horse symbol cannot be null or empty");
+        } else if (horseSymbol >= '0' && horseSymbol <= '9') {
+            throw new CheckArgumentException("Horse symbol cannot be a number");
+        }
+
         // Check if the horseName contains only letters
         for (char c : horseName.toCharArray()) {
             if (!Character.isLetter(c)) {
