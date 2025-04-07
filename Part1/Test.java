@@ -29,14 +29,14 @@ public class Test {
             Horse horse2 = new Horse(symbol2, horseName2, confidence2); // white king, symbol: \u265A
             Horse horse3 = new Horse(symbol3, horseName3, confidence3); // white rook, symbol: \u2656
 
+            String predict = prediction(horseName1, horseName2, horseName3); // Get the user's prediction
+
             print("Horse 1: " + horseName1 + " with confidence level: " + confidence1);
             print("Horse 2: " + horseName2 + " with confidence level: " + confidence2);
             print("Horse 3: " + horseName3 + " with confidence level: " + confidence3);
             print("Horse 1 symbol: " + horse1.getSymbol());
             print("Horse 2 symbol: " + horse2.getSymbol());
             print("Horse 3 symbol: " + horse3.getSymbol());
-
-            String predict = prediction(horseName1, horseName2, horseName3); // Get the user's prediction
 
             race.addHorse(horse1, 1);
             race.addHorse(horse2, 2);
@@ -58,7 +58,10 @@ public class Test {
         } catch (EmptyStringException e) { // Catching any other unexpected exceptions
             System.out.println(e.getMessage());
             System.exit(1);
-        } 
+        } catch (SameNameException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
 
     }
 
@@ -112,7 +115,11 @@ public class Test {
         System.out.println(message);
     }
 
-    public static String prediction(String horsename1, String horsename2, String horsename3) throws EmptyStringException{ 
+    public static String prediction(String horsename1, String horsename2, String horsename3) throws EmptyStringException, SameNameException { 
+        if (horsename1.equals(horsename3) || horsename1.equals(horsename2) || horsename2.equals(horsename3)) {
+            throw new SameNameException("You can't have at least 2 horses of the same name");
+        }
+
         String p = inputString("Which horse do you want to win? (" + horsename1 + ", " + horsename2 + " or " + horsename3 + "): ");
 
         while(!p.equals(horsename1) && !p.equals(horsename2) && !p.equals(horsename3)) {
