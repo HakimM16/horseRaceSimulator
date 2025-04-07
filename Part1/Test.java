@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) throws EmptyStringException {
-
         try {
             // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
             System.out.println("Welcome to the horse race stimulator!");
@@ -31,14 +30,14 @@ public class Test {
             Horse horse2 = new Horse(symbol2, horseName2, confidence2); // white king, symbol: \u265A
             Horse horse3 = new Horse(symbol3, horseName3, confidence3); // white rook, symbol: \u2656
 
-            String predict = prediction(horseName1, horseName2, horseName3); // Get the user's prediction
-
             print("Horse 1: " + horseName1 + " with confidence level: " + confidence1);
             print("Horse 2: " + horseName2 + " with confidence level: " + confidence2);
             print("Horse 3: " + horseName3 + " with confidence level: " + confidence3);
             print("Horse 1 symbol: " + horse1.getSymbol());
             print("Horse 2 symbol: " + horse2.getSymbol());
             print("Horse 3 symbol: " + horse3.getSymbol());
+
+            String predict = prediction(horseName1, horseName2, horseName3); // Get the user's prediction
 
             race.addHorse(horse1, 1);
             race.addHorse(horse2, 2);
