@@ -51,6 +51,11 @@ public class Horse
             throw new CheckArgumentException("Confidence must be a double");
         }
 
+        // check confidence is empty or null
+        if (Double.isNaN(horseConfidence)) {
+            throw new CheckArgumentException("Confidence cannot be null or empty");
+        }
+
 
         
     // Initialise instance variables

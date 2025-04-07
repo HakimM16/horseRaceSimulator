@@ -1,26 +1,27 @@
 import java.util.Scanner;
 
 public class Test {
-    public static void main(String[] args) {
-        // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
-        System.out.println("Welcome to the horse race stimulator!");
-        String l_str = inputString("Enter the length of the race: ");
-
-        System.out.println("Please enter the horse names for three horses.");
-
-        String horseName1 = inputString("Enter the name of horse 1: ");
-        String horseName2 = inputString("Enter the name of horse 2: ");
-        String horseName3 = inputString("Enter the name of horse 3: ");
-
-        double confidence1 = inputDouble("Enter the confidence level of horse 1 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
-        double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)");// Random confidence level between 0.0 and 1.0
-        double confidence3 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
-
-        char symbol1 = inputChar("Enter the symbol for horse 1 (first character of input is taken as the symbol): "); 
-        char symbol2 = inputChar("Enter the symbol for horse 2 (first character of input is taken as the symbol): ");
-        char symbol3 = inputChar("Enter the symbol for horse 3 (first character of input is taken as the symbol): ");
+    public static void main(String[] args) throws EmptyStringException {
 
         try {
+            // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
+            System.out.println("Welcome to the horse race stimulator!");
+            String l_str = inputString("Enter the length of the race: ");
+
+            System.out.println("Please enter the horse names for three horses.");
+
+            String horseName1 = inputString("Enter the name of horse 1: ");
+            String horseName2 = inputString("Enter the name of horse 2: ");
+            String horseName3 = inputString("Enter the name of horse 3: ");
+
+            double confidence1 = inputDouble("Enter the confidence level of horse 1 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
+            double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)");// Random confidence level between 0.0 and 1.0
+            double confidence3 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
+
+            char symbol1 = inputChar("Enter the symbol for horse 1 (first character of input is taken as the symbol): "); 
+            char symbol2 = inputChar("Enter the symbol for horse 2 (first character of input is taken as the symbol): ");
+            char symbol3 = inputChar("Enter the symbol for horse 3 (first character of input is taken as the symbol): ");
+
             double length = Double.parseDouble(l_str); // convert string to double
 
             Race race = new Race(length);
@@ -54,21 +55,30 @@ public class Test {
         } catch (LengthOfRaceException e) {
             System.out.println(e.getMessage());
             System.exit(1);
-        } catch (Exception e) { // Catching any other unexpected exceptions
-            System.out.println("An unexpected error occurred: " + e.getMessage());
+        } catch (EmptyStringException e) { // Catching any other unexpected exceptions
+            System.out.println(e.getMessage());
             System.exit(1);
-        }
+        } 
 
     }
 
-    public static String inputString(String message)
-    {
+    public static String inputString(String message) throws EmptyStringException 
+    { 
+        
+        // Scanner class is used to take input from the user
         Scanner scanner = new Scanner(System.in);
         System.out.println(message);
-        return scanner.nextLine();
+
+        String input = scanner.nextLine(); // user input is taken
+        // if the input is empty, an exception is thrown
+        if (input.isEmpty()) {
+            throw new EmptyStringException("Input cannot be empty.");
+        }
+        // if the input is not empty, it is returned
+        return input;
     }
 
-    public static char inputChar(String message) 
+    public static char inputChar(String message) throws EmptyStringException
     {   
         // user input is taken by inputString()
         String string = inputString(message); 
@@ -78,7 +88,7 @@ public class Test {
         return charinput; 
     }
 
-    public static int inputInt(String message) 
+    public static int inputInt(String message) throws EmptyStringException
     {   
         // user input is taken by inputString()
         String string = inputString(message); 
@@ -88,7 +98,7 @@ public class Test {
         return numberinput; 
     }
 
-    public static double inputDouble(String message) 
+    public static double inputDouble(String message) throws EmptyStringException
     {   
         // user input is taken by inputString()
         String string = inputString(message); 
@@ -102,7 +112,7 @@ public class Test {
         System.out.println(message);
     }
 
-    public static String prediction(String horsename1, String horsename2, String horsename3){ 
+    public static String prediction(String horsename1, String horsename2, String horsename3) throws EmptyStringException{ 
         String p = inputString("Which horse do you want to win? (" + horsename1 + ", " + horsename2 + " or " + horsename3 + "): ");
 
         while(!p.equals(horsename1) && !p.equals(horsename2) && !p.equals(horsename3)) {
