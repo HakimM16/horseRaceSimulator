@@ -18,6 +18,9 @@ public class Test {
             String horseName2 = inputString("Enter the name of horse 2: ");
             String horseName3 = inputString("Enter the name of horse 3: ");
 
+            // check for same horse name
+            checkHorseName(horseName1, horseName2, horseName3);
+
             // remove spaces from the horse names
             horseName1 = horseName1.replaceAll("\\s+", "");
             horseName2 = horseName2.replaceAll("\\s+", "");
@@ -26,10 +29,14 @@ public class Test {
             double confidence1 = inputDouble("Enter the confidence level of horse 1 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
             double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)");// Random confidence level between 0.0 and 1.0
             double confidence3 = inputDouble("Enter the confidence level of horse 3 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
+            
 
             char symbol1 = inputChar("Enter the symbol for horse 1 (first character of input is taken as the symbol): "); 
             char symbol2 = inputChar("Enter the symbol for horse 2 (first character of input is taken as the symbol): ");
             char symbol3 = inputChar("Enter the symbol for horse 3 (first character of input is taken as the symbol): ");
+            
+            // check for same symbol
+            checkSymbol(symbol1, symbol2, symbol3);
 
             Horse horse1 = new Horse(symbol1, horseName1, confidence1); // white horse, symbol: \u2658
             Horse horse2 = new Horse(symbol2, horseName2, confidence2); // white king, symbol: \u265A
@@ -124,11 +131,7 @@ public class Test {
         System.out.println(message);
     }
 
-    public static String prediction(String horsename1, String horsename2, String horsename3) throws EmptyStringException, SameNameException { 
-        if (horsename1.equals(horsename3) || horsename1.equals(horsename2) || horsename2.equals(horsename3)) {
-            throw new SameNameException("You can't have at least 2 horses of the same name");
-        }
-
+    public static String prediction(String horsename1, String horsename2, String horsename3) throws EmptyStringException { 
         String p = inputString("Which horse do you want to win? (" + horsename1 + ", " + horsename2 + " or " + horsename3 + "): ");
 
         while(!p.equals(horsename1) && !p.equals(horsename2) && !p.equals(horsename3)) {
@@ -136,5 +139,19 @@ public class Test {
             p = inputString("Which horse do you want to win? (" + horsename1 + ", " + horsename2 + " or " + horsename3 + "): ");
         }
         return p; // Return the valid horse name
+    }
+
+    // check for same symbol
+    public static void checkSymbol(char symbol1, char symbol2, char symbol3) throws SameNameException {
+        if (symbol1 == symbol2 || symbol1 == symbol3 || symbol2 == symbol3) {
+            throw new SameNameException("You can't have at least 2 horses of the same symbol");
+        }
+    }
+    
+    // check for same horse name
+    public static void checkHorseName(String horseName1, String horseName2, String horseName3) throws SameNameException {
+        if (horseName1.equals(horseName2) || horseName1.equals(horseName3) || horseName2.equals(horseName3)) {
+            throw new SameNameException("You can't have at least 2 horses of the same name");
+        }
     }
 }
