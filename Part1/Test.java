@@ -7,6 +7,10 @@ public class Test {
             // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
             System.out.println("Welcome to the horse race stimulator!");
             String l_str = inputString("Enter the length of the race: ");
+
+            double length = Double.parseDouble(l_str); // convert string to double
+
+            Race race = new Race(length);
             
 
             System.out.println("Please enter the horse names for three horses.");
@@ -17,15 +21,12 @@ public class Test {
 
             double confidence1 = inputDouble("Enter the confidence level of horse 1 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
             double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)");// Random confidence level between 0.0 and 1.0
-            double confidence3 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
+            double confidence3 = inputDouble("Enter the confidence level of horse 3 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
 
             char symbol1 = inputChar("Enter the symbol for horse 1 (first character of input is taken as the symbol): "); 
             char symbol2 = inputChar("Enter the symbol for horse 2 (first character of input is taken as the symbol): ");
             char symbol3 = inputChar("Enter the symbol for horse 3 (first character of input is taken as the symbol): ");
 
-            double length = Double.parseDouble(l_str); // convert string to double
-
-            Race race = new Race(length);
             Horse horse1 = new Horse(symbol1, horseName1, confidence1); // white horse, symbol: \u2658
             Horse horse2 = new Horse(symbol2, horseName2, confidence2); // white king, symbol: \u265A
             Horse horse3 = new Horse(symbol3, horseName3, confidence3); // white rook, symbol: \u2656
@@ -51,7 +52,7 @@ public class Test {
             System.out.println(e.getMessage());
             System.exit(1);
         } catch (NumberFormatException e ) { // Catching the exception of invalid number format for length of race
-            System.out.println("The length of the race must be a number.");
+            System.out.println("The length of the race must be a number, not a string.");
             System.exit(1);
         } catch (LengthOfRaceException e) {
             System.out.println(e.getMessage());
