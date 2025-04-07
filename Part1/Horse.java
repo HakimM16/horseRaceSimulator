@@ -42,7 +42,7 @@ public class Horse
         }
 
         // Check if the confidence is within the range of 0.0 to 1.0
-        if (horseConfidence < 0.0 || horseConfidence > 1.0) {
+        if (horseConfidence < 0.1 || horseConfidence > 1.0) {
             throw new rangeOfConfidenceException("Confidence must be between 0.0 and 1.0");
         }
 

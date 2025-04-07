@@ -12,9 +12,9 @@ public class Test {
         String horseName2 = inputString("Enter the name of horse 2: ");
         String horseName3 = inputString("Enter the name of horse 3: ");
 
-        double confidence1 = inputDouble("Enter the confidence level of horse 1 (0.0 - 1.0)"); // Random confidence level between 0.0 and 1.0
-        double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.0 - 1.0)");// Random confidence level between 0.0 and 1.0
-        double confidence3 = inputDouble("Enter the confidence level of horse 2 (0.0 - 1.0)"); // Random confidence level between 0.0 and 1.0
+        double confidence1 = inputDouble("Enter the confidence level of horse 1 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
+        double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)");// Random confidence level between 0.0 and 1.0
+        double confidence3 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
 
         char symbol1 = inputChar("Enter the symbol for horse 1 (first character of input is taken as the symbol): "); 
         char symbol2 = inputChar("Enter the symbol for horse 2 (first character of input is taken as the symbol): ");
