@@ -18,6 +18,11 @@ public class Test {
             String horseName2 = inputString("Enter the name of horse 2: ");
             String horseName3 = inputString("Enter the name of horse 3: ");
 
+            // remove spaces from the horse names
+            horseName1 = horseName1.replaceAll("\\s+", "");
+            horseName2 = horseName2.replaceAll("\\s+", "");
+            horseName3 = horseName3.replaceAll("\\s+", "");
+
             double confidence1 = inputDouble("Enter the confidence level of horse 1 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
             double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)");// Random confidence level between 0.0 and 1.0
             double confidence3 = inputDouble("Enter the confidence level of horse 3 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
