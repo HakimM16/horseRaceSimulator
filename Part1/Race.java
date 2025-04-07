@@ -32,6 +32,8 @@ public class Race
         // checks if raceLength is under the max length
         if (distance > 175) {
             throw new LengthOfRaceException("The length of the race can't be more than 175");
+        } else if (distance < 1) {
+            throw new LengthOfRaceException("The length of the race can't be less than 1");
         }
     }
     
