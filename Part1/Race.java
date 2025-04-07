@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Race
 {
-    private int raceLength;
+    private double raceLength;
     private Horse lane1Horse;
     private Horse lane2Horse;
     private Horse lane3Horse;
@@ -21,7 +21,7 @@ public class Race
      * 
      * @param distance the length of the racetrack (in metres/yards...)
      */
-    public Race(int distance) throws NumberFormatException
+    public Race(double distance) throws NumberFormatException
     {
         // initialise instance variables
         raceLength = distance;
@@ -182,7 +182,7 @@ public class Race
     {
         System.out.print('\u000C');  //clear the terminal window
         
-        multiplePrint('=',raceLength+4); //top edge of track
+        multiplePrint('=',(int) raceLength+4); //top edge of track
         System.out.println();
         
         // print the lanes for each horse
@@ -202,7 +202,7 @@ public class Race
         System.out.print(lane3Horse.getName() + " (Current confidence " + lane3Horse.getConfidence() + ")");
         System.out.println();
         
-        multiplePrint('=',raceLength+4); //bottom edge of track
+        multiplePrint('=',(int) raceLength+4); //bottom edge of track
         System.out.println();    
     }
     
@@ -217,7 +217,7 @@ public class Race
         //calculate how many spaces are needed before
         //and after the horse
         int spacesBefore = theHorse.getDistanceTravelled();
-        int spacesAfter = raceLength - theHorse.getDistanceTravelled();
+        int spacesAfter = (int) raceLength - theHorse.getDistanceTravelled();
         
         //print a | for the beginning of the lane
         System.out.print('|');

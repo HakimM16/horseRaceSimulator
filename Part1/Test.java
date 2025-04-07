@@ -21,7 +21,7 @@ public class Test {
         char symbol3 = inputChar("Enter the symbol for horse 3 (first character of input is taken as the symbol): ");
 
         try {
-            int length = Integer.parseInt(l_str); // Convert the string to an integer
+            double length = Double.parseDouble(l_str); // convert string to double
 
             Race race = new Race(length);
             Horse horse1 = new Horse(symbol1, horseName1, confidence1); // white horse, symbol: \u2658
