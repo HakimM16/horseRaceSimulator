@@ -140,13 +140,13 @@ public class Race
         } else if (winners == 2) {
             // prints if the user is right but it was a draw
             if (raceWonBy(lane1Horse) && raceWonBy(lane2Horse) && lane1Horse.getName().equals(predict)) { // 1 and 2 and 1 is the winner
-                System.out.println("The winner is " + lane1Horse.getName() + " and " + lane2Horse.getName() + " but you was right.");
+                System.out.println("The winner is " + lane1Horse.getName() + " and " + lane2Horse.getName() + " and you was right.");
             } else if (raceWonBy(lane1Horse) && raceWonBy(lane3Horse) && lane1Horse.getName().equals(predict)) { // 1 and 3 and 1 is the winner
-                System.out.println("The winner is " + lane1Horse.getName() + " and " + lane3Horse.getName() + " but you was right.");
+                System.out.println("The winner is " + lane1Horse.getName() + " and " + lane3Horse.getName() + " and you was right.");
             } else if (raceWonBy(lane2Horse) && raceWonBy(lane3Horse) && lane2Horse.getName().equals(predict)) { // 2 and 3 and 2 is the winner
-                System.out.println("The winner is " + lane2Horse.getName() + " and " + lane3Horse.getName() + " but you was right.");
+                System.out.println("The winner is " + lane2Horse.getName() + " and " + lane3Horse.getName() + " and you was right.");
             } else if (raceWonBy(lane1Horse) && raceWonBy(lane2Horse) && raceWonBy(lane3Horse)) {
-                System.out.println("The winner is " + lane1Horse.getName() + ", " + lane2Horse.getName() + " and " + lane3Horse.getName() + " but you was right.");
+                System.out.println("The winner is " + lane1Horse.getName() + ", " + lane2Horse.getName() + " and " + lane3Horse.getName() + " and you was right.");
             } // prints if the user is wrong but it was a draw
             else if (raceWonBy(lane1Horse) && raceWonBy(lane2Horse) && lane3Horse.getName().equals(predict)) { // 1 and 2 and predicted 3
                 System.out.println("The winner is " + lane1Horse.getName() + " and " + lane2Horse.getName() + " but you was wrong.");
@@ -157,7 +157,7 @@ public class Race
             } 
         } else if (winners == 3) {
             // prints if the user is right but it was a draw
-            System.out.println("The winner is " + lane1Horse.getName() + ", " + lane2Horse.getName() + " and " + lane3Horse.getName() + " but you was right.");
+            System.out.println("The winner is " + lane1Horse.getName() + ", " + lane2Horse.getName() + " and " + lane3Horse.getName() + " and you was right.");
         }
     }
     
