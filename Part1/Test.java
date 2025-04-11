@@ -30,6 +30,11 @@ public class Test {
             double confidence2 = inputDouble("Enter the confidence level of horse 2 (0.1 - 1.0)");// Random confidence level between 0.0 and 1.0
             double confidence3 = inputDouble("Enter the confidence level of horse 3 (0.1 - 1.0)"); // Random confidence level between 0.0 and 1.0
             
+            // round confidence level up to 1 decimal place
+            confidence1 = Math.round(confidence1 * 10.0) / 10.0;
+            confidence2 = Math.round(confidence2 * 10.0) / 10.0;
+            confidence3 = Math.round(confidence3 * 10.0) / 10.0;
+            
 
             char symbol1 = inputChar("Enter the symbol for horse 1 (first character of input is taken as the symbol): "); 
             char symbol2 = inputChar("Enter the symbol for horse 2 (first character of input is taken as the symbol): ");
