@@ -10,20 +10,44 @@ import javax.swing.JTextField;
 public class Track {
     private int lanes; // number of lanes in the track
     private int length; // length of the track
+    private String trackShape; // shape of the track
+    private String weatherCondition; // weather condition
 
+    // Constructor to initialize the track with lanes, length, shape, and weather condition
+    public Track(int lanes, int length, String trackShape, String weatherCondition) {
+        this.lanes = lanes; // set the number of lanes
+        this.length = length; // set the length of the track to 100 meters
+        this.trackShape = trackShape; // set the shape of the track
+        this.weatherCondition = weatherCondition; // set the weather condition
+    }
+
+    // Constructor to initialize the track with lanes and length
     public Track(int lanes, int length) {
         this.lanes = lanes; // set the number of lanes
         this.length = length; // set the length of the track to 100 meters
-
     }
+
+    // Constructor to initialize the track with default values
+    public Track() {
+        this.lanes = 1; // default number of lanes
+        this.length = 100; // default length of the track to 100 meters
+    }
+
     public int getLanes() {
-        return lanes; // return the number of lanes
+        return this.lanes; // return the number of lanes
     }
 
     public int getLength() {
-        return length; // return the length of the track
+        return this.length; // return the length of the track
     }
 
+    public String getTrackShape() {
+        return this.trackShape; // return the shape of the track
+    }
+
+    public String getWeatherCondition() {
+        return this.weatherCondition; // return the weather condition
+    }
 
     public void setLanes(int lanes) {
         this.lanes = lanes; // set the number of lanes
@@ -32,6 +56,16 @@ public class Track {
     public void setLength(int length) {
         this.length = length; // set the length of the track
     }
+
+    public void setTrackShape(String trackShape) {
+        this.trackShape = trackShape; // set the shape of the track
+    }
+
+    public void setWeatherCondition(String weatherCondition) {
+        this.weatherCondition = weatherCondition; // set the weather condition
+    }
+
+    // Main method to run the program
     public static void main(String[] args) {
         Track track = new Track(0, 0); // Create a new track with 1 lane
         track.selectLanes(); // Call the method to select lanes
