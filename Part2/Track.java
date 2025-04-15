@@ -90,15 +90,19 @@ public class Track {
         lanes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField inputField = new JTextField(3);  // 5 columns wide
 
-        JLabel length = new JLabel("Enter length of track (in meters): ");
+        JLabel length = new JLabel("Enter length of track (up to 180 meters): ");
         length.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField lengthField = new JTextField(3);  // 5 columns wide
 
         JLabel trackShapeLabel = new JLabel("Enter track shape: ");
+        JLabel trackShapes = new JLabel("(oval, Figure-eight, rectangular, triangular, zig-zag)");
+        trackShapes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         trackShapeLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField trackShapeField = new JTextField(3);  // 5 columns wide
 
         JLabel weatherConditionLabel = new JLabel("Enter weather condition: ");
+        JLabel weatherConditions = new JLabel("(sunny, rainy, snowy, foggy, windy, muddy, dry, wet, icy)");
+        weatherConditions.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         weatherConditionLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField weatherConditionField = new JTextField(3);  // 5 columns wide
 
@@ -230,8 +234,10 @@ public class Track {
         panel.add(length);  // Add label to panel
         panel.add(lengthField);  // Add text field to panel
         panel.add(trackShapeLabel);  // Add label to panel
+        panel.add(trackShapes);  // Add label to panel
         panel.add(trackShapeField);  // Add text field to panel
         panel.add(weatherConditionLabel);  // Add label to panel
+        panel.add(weatherConditions);  // Add label to panel
         panel.add(weatherConditionField);  // Add text field to panel
         buttonPanel.add(submitButton);  // Add button to panel
 
