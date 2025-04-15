@@ -1,4 +1,5 @@
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -83,17 +84,23 @@ public class Track {
 
         // Create panel and components
         JPanel panel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        panel.setLayout(new GridLayout(0, 1));  // Set layout to vertical grid
         JLabel lanes = new JLabel("Enter number of lanes (1-10): ");
-        JTextField inputField = new JTextField(5);  // 5 columns wide
+        lanes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField inputField = new JTextField(3);  // 5 columns wide
 
         JLabel length = new JLabel("Enter length of track (in meters): ");
-        JTextField lengthField = new JTextField(5);  // 5 columns wide
+        length.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField lengthField = new JTextField(3);  // 5 columns wide
 
         JLabel trackShapeLabel = new JLabel("Enter track shape: ");
-        JTextField trackShapeField = new JTextField(5);  // 5 columns wide
+        trackShapeLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField trackShapeField = new JTextField(3);  // 5 columns wide
 
         JLabel weatherConditionLabel = new JLabel("Enter weather condition: ");
-        JTextField weatherConditionField = new JTextField(5);  // 5 columns wide
+        weatherConditionLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField weatherConditionField = new JTextField(3);  // 5 columns wide
 
         // Create a button to submit the input
         JButton submitButton = new JButton("Submit");
@@ -226,11 +233,13 @@ public class Track {
         panel.add(trackShapeField);  // Add text field to panel
         panel.add(weatherConditionLabel);  // Add label to panel
         panel.add(weatherConditionField);  // Add text field to panel
-        panel.add(submitButton);  // Add button to panel
+        buttonPanel.add(submitButton);  // Add button to panel
 
         // Add panel to frame
         frame.add(panel);
-        frame.setSize(300, 300);  // Set frame size
+        frame.add(buttonPanel);  // Add button panel to frame
+        frame.setSize(400, 400);  // Set frame size
+        frame.setLayout(new GridLayout(0, 1));  // Set layout to vertical grid
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Close operation
         frame.setVisible(true);  // Make frame visible
         frame.setLocationRelativeTo(null);  // Center the frame on the screen
