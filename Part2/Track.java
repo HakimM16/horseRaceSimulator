@@ -244,7 +244,29 @@ public class Track {
         frame.setVisible(true);  // Make frame visible
         frame.setLocationRelativeTo(null);  // Center the frame on the screen
         frame.setResizable(false);  // Make frame not resizable
+        // Set background color for the panel
+        panel.setBackground(new java.awt.Color(240, 248, 255)); // Light blue background
+        buttonPanel.setBackground(new java.awt.Color(240, 248, 255)); // Match button panel background
 
+        // Customize the font and alignment of labels
+        java.awt.Font labelFont = new java.awt.Font("Arial", java.awt.Font.BOLD, 14);
+        lanes.setFont(labelFont);
+        length.setFont(labelFont);
+        trackShapeLabel.setFont(labelFont);
+        weatherConditionLabel.setFont(labelFont);
+
+        // Customize the font of the text fields
+        java.awt.Font textFieldFont = new java.awt.Font("Arial", java.awt.Font.PLAIN, 14);
+        inputField.setFont(textFieldFont);
+        lengthField.setFont(textFieldFont);
+        trackShapeField.setFont(textFieldFont);
+        weatherConditionField.setFont(textFieldFont);
+
+        // Customize the submit button
+        submitButton.setBackground(new java.awt.Color(100, 149, 237)); // Cornflower blue background
+        submitButton.setForeground(java.awt.Color.WHITE); // White text
+        submitButton.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+        submitButton.setFocusPainted(false); // Remove focus border
 
         
     }
