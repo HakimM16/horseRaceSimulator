@@ -68,11 +68,16 @@ public class Track {
     // Main method to run the program
     public static void main(String[] args) {
         Track track = new Track(0, 0); // Create a new track with 1 lane
-        track.selectLanes(); // Call the method to select lanes
-        System.out.println("Track created with " + track.getLanes() + " lanes and length of " + track.getLength() + " meters.");
+        track.inputValues(); // Call the inputValues method to get user input
+        // Print the track details
+        System.out.println("Number of lanes: " + track.getLanes()); // Print the number of lanes
+        System.out.println("Length of track: " + track.getLength() + " meters"); // Print the length of the track
+        System.out.println("Track shape: " + track.getTrackShape()); // Print the shape of the track
+        System.out.println("Weather condition: " + track.getWeatherCondition()); // Print the weather condition
     }
+
     // select number of lanes from user
-    public void selectLanes() {
+    public void inputValues() {
         // Create the frame
         JFrame frame = new JFrame("Select Number of Lanes");
 
@@ -83,6 +88,14 @@ public class Track {
 
         JLabel length = new JLabel("Enter length of track (in meters): ");
         JTextField lengthField = new JTextField(5);  // 5 columns wide
+
+        JLabel trackShapeLabel = new JLabel("Enter track shape: ");
+        JTextField trackShapeField = new JTextField(5);  // 5 columns wide
+
+        JLabel weatherConditionLabel = new JLabel("Enter weather condition: ");
+        JTextField weatherConditionField = new JTextField(5);  // 5 columns wide
+
+        // Create a button to submit the input
         JButton submitButton = new JButton("Submit");
 
         submitButton.addActionListener(new ActionListener() {
@@ -104,7 +117,6 @@ public class Track {
                 
                 String lanesInput = inputField.getText();  // Get text from field
                 String lengthInput = lengthField.getText();  // Get text from field
-                System.out.println("User entered: " + lanesInput + " lanes and " + lengthInput + " meters");
                 // check if lanes is between 1 and 10
                 if (Integer.parseInt(lanesInput) < 1 || Integer.parseInt(lanesInput) > 10) {
                     System.out.println("Invalid number of lanes. Please enter a number between 1 and 10.");
@@ -127,11 +139,79 @@ public class Track {
                     panel.repaint();  // Repaint the panel to show the error message
                     return; // Exit the method if invalid input
                 }
+
+                // check if track shape is not empty
+                if (trackShapeField.getText().isEmpty()) {
+                    System.out.println("Invalid track shape. Please enter a valid track shape.");
+                    // Show error message to user as a label
+                    JLabel errorLabel = new JLabel("Please enter a valid track shape.");
+                    panel.add(errorLabel);  // Add error label to panel
+                    // Repaint the panel to show the error message
+                    panel.revalidate();  // Revalidate the panel to show the error message
+                    panel.repaint();  // Repaint the panel to show the error message
+                    return; // Exit the method if invalid input
+                }
+
+                // check if track shape is in the list of valid shapes
+                String[] validShapes = {"oval", "Figure-eight", "rectangular", "triangular", "zig-zag"};
+                boolean isValidShape = false;
+                for (String shape : validShapes) {
+                    if (shape.equalsIgnoreCase(trackShapeField.getText())) {
+                        isValidShape = true;  // Set flag to true if valid shape is found
+                        break;  // Exit the loop if valid shape is found
+                    }
+                }
+                if (!isValidShape) {
+                    System.out.println("Invalid track shape. Please enter a valid track shape.");
+                    // Show error message to user as a label
+                    JLabel errorLabel = new JLabel("Please enter a valid track shape.");
+                    panel.add(errorLabel);  // Add error label to panel
+                    // Repaint the panel to show the error message
+                    panel.revalidate();  // Revalidate the panel to show the error message
+                    panel.repaint();  // Repaint the panel to show the error message
+                    return; // Exit the method if invalid input
+                }
+
+                // check if weather condition is in the list of valid conditions
+                String[] validConditions = {"sunny", "rainy", "snowy", "foggy", "windy", "muddy", "dry", "wet", "icy"};
+                boolean isValidCondition = false;
+                for (String condition : validConditions) {
+                    if (condition.equalsIgnoreCase(weatherConditionField.getText())) {
+                        isValidCondition = true;  // Set flag to true if valid condition is found
+                        break;  // Exit the loop if valid condition is found
+                    }
+                }
+                if (!isValidCondition) {
+                    System.out.println("Invalid weather condition. Please enter a valid weather condition.");
+                    // Show error message to user as a label
+                    JLabel errorLabel = new JLabel("Please enter a valid weather condition.");
+                    panel.add(errorLabel);  // Add error label to panel
+                    // Repaint the panel to show the error message
+                    panel.revalidate();  // Revalidate the panel to show the error message
+                    panel.repaint();  // Repaint the panel to show the error message
+                    return; // Exit the method if invalid input
+                }
+                // check if weather condition is not empty
+                if (weatherConditionField.getText().isEmpty()) {
+                    System.out.println("Invalid weather condition. Please enter a valid weather condition.");
+                    // Show error message to user as a label
+                    JLabel errorLabel = new JLabel("Please enter a valid weather condition.");
+                    panel.add(errorLabel);  // Add error label to panel
+                    // Repaint the panel to show the error message
+                    panel.revalidate();  // Revalidate the panel to show the error message
+                    panel.repaint();  // Repaint the panel to show the error message
+                    return; // Exit the method if invalid input
+                }
+
                 // Set the number of lanes and length of the track
                 setLanes(Integer.parseInt(lanesInput));  // Set the number of lanes
                 setLength(Integer.parseInt(lengthInput));  // Set the length of the track
+                setTrackShape(trackShapeField.getText());  // Set the shape of the track
+                setWeatherCondition(weatherConditionField.getText());  // Set the weather condition
                 inputField.setText("");  // Optionally clear the field after submit
                 lengthField.setText("");  // Optionally clear the field after submit
+                trackShapeField.setText("");  // Optionally clear the field after submit
+                weatherConditionField.setText("");  // Optionally clear the field after submit
                 // Close the frame after submission
                 frame.dispose();  // Close the frame
             }
@@ -142,6 +222,10 @@ public class Track {
         panel.add(inputField);  // Add text field to panel
         panel.add(length);  // Add label to panel
         panel.add(lengthField);  // Add text field to panel
+        panel.add(trackShapeLabel);  // Add label to panel
+        panel.add(trackShapeField);  // Add text field to panel
+        panel.add(weatherConditionLabel);  // Add label to panel
+        panel.add(weatherConditionField);  // Add text field to panel
         panel.add(submitButton);  // Add button to panel
 
         // Add panel to frame
