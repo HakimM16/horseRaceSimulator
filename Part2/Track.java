@@ -1,4 +1,7 @@
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 public class Track {
     private int lanes; // number of lanes in the track
@@ -68,9 +72,9 @@ public class Track {
 
     // Main method to run the program
     public static void main(String[] args) {
-        Track track = new Track(3, 40, "rectangular", "dry"); // Create a new track with 1 lane
+        Track track = new Track(3, 400, "rectangular", "dry"); // Create a new track with 1 lane
         //track.inputValues(); // Call the inputValues method to get user input
-        track.createTrack(); // Call the createTrack method to draw the track
+        track.createTrack(track.getLength(), track.getLanes()); // Call the createTrack method to draw the track
         
         // Print the track details
         System.out.println("Number of lanes: " + track.getLanes()); // Print the number of lanes
@@ -88,11 +92,11 @@ public class Track {
         JPanel panel = new JPanel();
         JPanel buttonPanel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));  // Set layout to vertical grid
-        JLabel lanes = new JLabel("Enter number of lanes (1-3): ");
+        JLabel lanes = new JLabel("Enter number of lanes (1-5): ");
         lanes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField inputField = new JTextField(3);  // 5 columns wide
 
-        JLabel length = new JLabel("Enter length of track (up to 180 meters): ");
+        JLabel length = new JLabel("Enter length of track (between 100 and 700 meters): ");
         length.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField lengthField = new JTextField(3);  // 5 columns wide
 
@@ -115,14 +119,14 @@ public class Track {
             public void actionPerformed(ActionEvent e) {
                 // remove error label for lanes if it exists
                 for (int i = 0; i < panel.getComponentCount(); i++) {
-                    if (panel.getComponent(i) instanceof JLabel && ((JLabel) panel.getComponent(i)).getText().equals("Please enter a number between 1 and 10.")) {
+                    if (panel.getComponent(i) instanceof JLabel && ((JLabel) panel.getComponent(i)).getText().equals("Please enter a number between 1 and 5.")) {
                         panel.remove(i);  // Remove the error label
                         break;  // Exit the loop after removing the label
                     }
                 }
                 // remove error label for length if it exists
                 for (int i = 0; i < panel.getComponentCount(); i++) {
-                    if (panel.getComponent(i) instanceof JLabel && ((JLabel) panel.getComponent(i)).getText().equals("Please enter a number between 1 and 180.")) {
+                    if (panel.getComponent(i) instanceof JLabel && ((JLabel) panel.getComponent(i)).getText().equals("Please enter a number between 100 and 700.")) {
                         panel.remove(i);  // Remove the error label
                         break;  // Exit the loop after removing the label
                     }
@@ -131,10 +135,10 @@ public class Track {
                 String lanesInput = inputField.getText();  // Get text from field
                 String lengthInput = lengthField.getText();  // Get text from field
                 // check if lanes is between 1 and 10
-                if (Integer.parseInt(lanesInput) < 1 || Integer.parseInt(lanesInput) > 3) {
-                    System.out.println("Invalid number of lanes. Please enter a number between 1 and 3.");
+                if (Integer.parseInt(lanesInput) < 1 || Integer.parseInt(lanesInput) > 5) {
+                    System.out.println("Invalid number of lanes. Please enter a number between 1 and 5.");
                     // Show error message to user as a label
-                    JLabel errorLabel = new JLabel("Please enter a number between 1 and 3.");
+                    JLabel errorLabel = new JLabel("Please enter a number between 1 and 5.");
                     panel.add(errorLabel);  // Add error label to panel
                     // Repaint the panel to show the error message
                     panel.revalidate();  // Revalidate the panel to show the error message
@@ -142,10 +146,10 @@ public class Track {
                     return; // Exit the method if invalid input
                 }
                 // check if length is between 1 and 180
-                if (Integer.parseInt(lengthInput) < 1 || Integer.parseInt(lengthInput) > 180) {
-                    System.out.println("Invalid length. Please enter a number between 1 and 180.");
+                if (Integer.parseInt(lengthInput) < 100 || Integer.parseInt(lengthInput) > 700) {
+                    System.out.println("Invalid length. Please enter a number between 100 and 700.");
                     // Show error message to user as a label
-                    JLabel errorLabel = new JLabel("Please enter a number between 1 and 180.");
+                    JLabel errorLabel = new JLabel("Please enter a number between 100 and 700.");
                     panel.add(errorLabel);  // Add error label to panel
                     // Repaint the panel to show the error message
                     panel.revalidate();  // Revalidate the panel to show the error message
@@ -228,7 +232,7 @@ public class Track {
                 // Close the frame after submission
                 frame.dispose();  // Close the frame
                 // Call the createTrack method to draw the track
-                createTrack();  // Call the method to create the track
+                // createTrack();  // Call the method to create the track
             }
         });
 
@@ -281,35 +285,38 @@ public class Track {
     }
 
     // method to draw the track
-    public void createTrack() {
+
+
+    public void createTrack(int length, int lanes) {
         // Create a frame for the track
         JFrame trackFrame = new JFrame("Race Track");
         trackFrame.setSize(800, 600);
         trackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        trackFrame.setLayout(null); // Use absolute positioning
         trackFrame.setLocationRelativeTo(null); // Center the frame on the screen
+        
+        // Use GridBagLayout for true centering
+        trackFrame.setLayout(new GridBagLayout());
 
         // Create a panel to represent the track
         JPanel trackPanel = new JPanel();
-        trackPanel.setBounds(50, 50, 700, 400); // Set position and size
+        trackPanel.setPreferredSize(new Dimension(length, 400)); // Set fixed size
         trackPanel.setBackground(new java.awt.Color(34, 139, 34)); // Green background for grass
         trackPanel.setLayout(null); // Use absolute positioning for lanes
 
         // Add lanes to the track
-        int laneHeight = trackPanel.getHeight() / lanes; // Calculate lane height
+        int laneHeight = 400 / lanes; // Calculate lane height based on fixed panel height
         for (int i = 0; i < lanes; i++) {
             JPanel lane = new JPanel();
-            lane.setBounds(0, i * laneHeight, trackPanel.getWidth(), laneHeight - 5); // Leave space between lanes
-            lane.setBackground(new java.awt.Color(173, 216, 230)); // Light blue color for lanes // Gray color for lanes
+            lane.setBounds(0, i * laneHeight, length, laneHeight - 5); // Leave space between lanes
+            lane.setBackground(new java.awt.Color(173, 216, 230)); // Light blue color for lanes
             trackPanel.add(lane);
         }
 
-        // Add the track panel to the frame
+        // Add the track panel to the frame using GridBagLayout
         trackFrame.add(trackPanel);
 
         // Display the frame
         trackFrame.setVisible(true);
     }
-    
-    
+
 }
