@@ -439,7 +439,7 @@ public class Race
     {
         System.out.print('\u000C');  //clear the terminal window
         
-        multiplePrint('=',(int) raceLength+4); //top edge of track
+        multiplePrint('=',(int) raceLength+3); //top edge of track
         System.out.println();
         
         // print the lanes for each horse
@@ -459,7 +459,7 @@ public class Race
         System.out.print(lane3Horse.getName() + " (Current confidence " + lane3Horse.getConfidence() + ")");
         System.out.println();
         
-        multiplePrint('=',(int) raceLength+4); //bottom edge of track
+        multiplePrint('=',(int) raceLength+3); //bottom edge of track
         System.out.println();    
     }
     
@@ -486,7 +486,7 @@ public class Race
         //else print the horse's symbol
         if(theHorse.hasFallen())
         {
-            System.out.print('\u274C'); //dead horse symbol
+            System.out.print('\u0078'); //dead horse symbol
         }
         else
         {
