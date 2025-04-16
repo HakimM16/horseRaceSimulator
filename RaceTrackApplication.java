@@ -21,14 +21,34 @@ class RaceTrackPanel extends JPanel {
     public int innerTrackHeight;
     public int outerTrackWidth;
     public int outerTrackHeight;
+    private boolean raceFinished = false;
+    private int lapCount = 0;
+    private boolean crossedStartLine = false;
     
     public RaceTrackPanel() {
         setBackground(Color.GREEN);
         
         // Add a timer to animate the car
         timer = new Timer(50, e -> {
-            carPosition = (carPosition + 2) % 360; // Move car
-            repaint();
+            if (!raceFinished) {
+                // Store previous position to detect finish line crossing
+                int previousPosition = carPosition;
+                carPosition = (carPosition + 2) % 360; // Move car
+                
+                // Check if car crossed start/finish line (from 350-359° to 0-10°)
+                if (previousPosition > 350 && carPosition < 10) {
+                    if (crossedStartLine) {
+                        lapCount++;
+                        if (lapCount >= 3) { // Stop after 3 laps
+                            raceFinished = true;
+                            timer.stop();
+                        }
+                    } else {
+                        crossedStartLine = true;
+                    }
+                }
+                repaint();
+            }
         });
         timer.start();
     }
@@ -42,6 +62,9 @@ class RaceTrackPanel extends JPanel {
         drawRaceTrack(g2d);
         // Call drawCar method to draw the car
         drawCar(g2d);
+        
+        // Draw race status
+        drawRaceStatus(g2d);
     }
     
     private void drawRaceTrack(Graphics2D g2d) {
@@ -115,5 +138,16 @@ class RaceTrackPanel extends JPanel {
         int headX = (int)(carX + 15 + 10 * Math.cos(headingAngle));
         int headY = (int)(carY + 10 + 10 * Math.sin(headingAngle));
         g2d.fillOval(headX-5, headY-5, 10, 10);
+    }
+    
+    private void drawRaceStatus(Graphics2D g2d) {
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(new Font("Arial", Font.BOLD, 16));
+        
+        if (raceFinished) {
+            g2d.drawString("RACE FINISHED! - Completed " + lapCount + " laps", 10, 30);
+        } else {
+            g2d.drawString("Lap: " + lapCount + " of 3", 10, 30);
+        }
     }
 }

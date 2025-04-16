@@ -68,8 +68,10 @@ public class Track {
 
     // Main method to run the program
     public static void main(String[] args) {
-        Track track = new Track(0, 0); // Create a new track with 1 lane
-        track.inputValues(); // Call the inputValues method to get user input
+        Track track = new Track(3, 40, "rectangular", "dry"); // Create a new track with 1 lane
+        //track.inputValues(); // Call the inputValues method to get user input
+        track.createTrack(); // Call the createTrack method to draw the track
+        
         // Print the track details
         System.out.println("Number of lanes: " + track.getLanes()); // Print the number of lanes
         System.out.println("Length of track: " + track.getLength() + " meters"); // Print the length of the track
@@ -86,7 +88,7 @@ public class Track {
         JPanel panel = new JPanel();
         JPanel buttonPanel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));  // Set layout to vertical grid
-        JLabel lanes = new JLabel("Enter number of lanes (1-10): ");
+        JLabel lanes = new JLabel("Enter number of lanes (1-3): ");
         lanes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField inputField = new JTextField(3);  // 5 columns wide
 
@@ -95,7 +97,7 @@ public class Track {
         JTextField lengthField = new JTextField(3);  // 5 columns wide
 
         JLabel trackShapeLabel = new JLabel("Enter track shape: ");
-        JLabel trackShapes = new JLabel("(oval, Figure-eight, rectangular, triangular, zig-zag)");
+        JLabel trackShapes = new JLabel("(oval, rectangular, zig-zag)");
         trackShapes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         trackShapeLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField trackShapeField = new JTextField(3);  // 5 columns wide
@@ -129,10 +131,10 @@ public class Track {
                 String lanesInput = inputField.getText();  // Get text from field
                 String lengthInput = lengthField.getText();  // Get text from field
                 // check if lanes is between 1 and 10
-                if (Integer.parseInt(lanesInput) < 1 || Integer.parseInt(lanesInput) > 10) {
-                    System.out.println("Invalid number of lanes. Please enter a number between 1 and 10.");
+                if (Integer.parseInt(lanesInput) < 1 || Integer.parseInt(lanesInput) > 3) {
+                    System.out.println("Invalid number of lanes. Please enter a number between 1 and 3.");
                     // Show error message to user as a label
-                    JLabel errorLabel = new JLabel("Please enter a number between 1 and 10.");
+                    JLabel errorLabel = new JLabel("Please enter a number between 1 and 3.");
                     panel.add(errorLabel);  // Add error label to panel
                     // Repaint the panel to show the error message
                     panel.revalidate();  // Revalidate the panel to show the error message
@@ -164,7 +166,7 @@ public class Track {
                 }
 
                 // check if track shape is in the list of valid shapes
-                String[] validShapes = {"oval", "Figure-eight", "rectangular", "triangular", "zig-zag"};
+                String[] validShapes = {"oval", "rectangular", "zig-zag"};
                 boolean isValidShape = false;
                 for (String shape : validShapes) {
                     if (shape.equalsIgnoreCase(trackShapeField.getText())) {
@@ -225,6 +227,8 @@ public class Track {
                 weatherConditionField.setText("");  // Optionally clear the field after submit
                 // Close the frame after submission
                 frame.dispose();  // Close the frame
+                // Call the createTrack method to draw the track
+                createTrack();  // Call the method to create the track
             }
         });
 
@@ -273,8 +277,38 @@ public class Track {
         submitButton.setForeground(java.awt.Color.WHITE); // White text
         submitButton.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
         submitButton.setFocusPainted(false); // Remove focus border
-
         
+    }
+
+    // method to draw the track
+    public void createTrack() {
+        // Create a frame for the track
+        JFrame trackFrame = new JFrame("Race Track");
+        trackFrame.setSize(800, 600);
+        trackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        trackFrame.setLayout(null); // Use absolute positioning
+        trackFrame.setLocationRelativeTo(null); // Center the frame on the screen
+
+        // Create a panel to represent the track
+        JPanel trackPanel = new JPanel();
+        trackPanel.setBounds(50, 50, 700, 400); // Set position and size
+        trackPanel.setBackground(new java.awt.Color(34, 139, 34)); // Green background for grass
+        trackPanel.setLayout(null); // Use absolute positioning for lanes
+
+        // Add lanes to the track
+        int laneHeight = trackPanel.getHeight() / lanes; // Calculate lane height
+        for (int i = 0; i < lanes; i++) {
+            JPanel lane = new JPanel();
+            lane.setBounds(0, i * laneHeight, trackPanel.getWidth(), laneHeight - 5); // Leave space between lanes
+            lane.setBackground(new java.awt.Color(173, 216, 230)); // Light blue color for lanes // Gray color for lanes
+            trackPanel.add(lane);
+        }
+
+        // Add the track panel to the frame
+        trackFrame.add(trackPanel);
+
+        // Display the frame
+        trackFrame.setVisible(true);
     }
     
     
