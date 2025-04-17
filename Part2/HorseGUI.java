@@ -5,9 +5,6 @@
  * Make a method where it customises the number of horses that the user wants and returns an arraylist of horses.
  */
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 import javax.swing.*;
 
 public class HorseGUI extends JFrame{
@@ -24,25 +21,9 @@ public class HorseGUI extends JFrame{
     private JProgressBar speedBar, staminaBar, confidenceBar;
     private JPanel horsePreviewPanel;
 
-    // make an arraylist of horses
-    private Map<Integer, Horse> horseList = new HashMap<>();
-    
-    // make final map of horses
-    public Map<Integer, Horse> finalHorseList;
-
-    // display the horse list
-    public Map<Integer, Horse> getHorseList() {
-        return this.horseList;
-    }
-
-    // number of horses the user wants to create
-    public int numberOfHorses;
-
-    public int num = 1; // number of horses created
 
     // Constructor
-    public HorseGUI(int numberOfHorses) {
-        this.numberOfHorses = numberOfHorses;
+    public HorseGUI() {
         horse = new Horse();
         initializeUI();
     }
@@ -171,7 +152,7 @@ public class HorseGUI extends JFrame{
         // Add buttons panel
         JPanel buttonPanel = new JPanel();
         JButton saveButton = new JButton("Save Horse");
-        saveButton.addActionListener(e -> saveHorse(horse));
+        saveButton.addActionListener(e -> saveHorse());
         
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> resetForm());
@@ -346,14 +327,8 @@ public class HorseGUI extends JFrame{
             g2d.drawString(horse.getName(), width/2 - textWidth/2, height - 20);
         }
     }
-
-    private Consumer<Map<Integer, Horse>> completionListener;
-
-    public void setCompletionListener(Consumer<Map<Integer, Horse>> listener) {
-        this.completionListener = listener;
-    }
     
-    private void saveHorse(Horse horse) {
+    private void saveHorse() {
         // Get the name from the text field
         horse.setName(nameField.getText());
         
@@ -362,44 +337,11 @@ public class HorseGUI extends JFrame{
             "Horse saved successfully!\n\n" + horse.toString(),
             "Horse Saved", JOptionPane.INFORMATION_MESSAGE);
         
-        // Add the horse to the list
-        int horseId = horseList.size() + 1; // Simple ID generation
-        horseList.put(horseId, horse);
-        
         // Here you would typically save to a database or file
         System.out.println("Horse saved: " + horse);
-        System.out.println("Horse size: " + this.horseList.size());
         
-        // Increment the number of horses created
-        this.num++;
-
-        // Check if we've created all required horses
-        if (this.num >= this.numberOfHorses) {
-            this.finalHorseList = new HashMap<>(this.horseList); // Create a defensive copy
-            JOptionPane.showMessageDialog(this, 
-                "All horses have been saved. Total: " + this.finalHorseList.size(), 
-                "Complete", 
-                JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("Final horse list: " + this.finalHorseList);
-            
-            // Notify listener if one exists
-            if (completionListener != null) {
-                completionListener.accept(new HashMap<>(this.finalHorseList));
-            }
-            
-            dispose(); // Close the window but don't terminate the application
-        } else {
-            // Reset the form for new entry only if we need to create more horses
-            resetForm();
-        }
-    }
-
-    /**
-     * Returns the final list of horses once all have been created.
-     * @return Map containing all created horses with their IDs, or null if not all horses have been created yet
-     */
-    public Map<Integer, Horse> getFinalHorseList() {
-        return this.finalHorseList != null ? new HashMap<>(this.finalHorseList) : null;
+        // close the GUI
+        dispose();
     }
     
     private void resetForm() {
@@ -424,17 +366,9 @@ public class HorseGUI extends JFrame{
         }
         
         // First approach: Create a GUI that returns results through a callback
-        HorseGUI gui = new HorseGUI(3);
-        // create horse List
-        Map<Integer, Horse> horseList = new HashMap<>();
-        // adds all of the horses in finalHorseList to horseList
-        gui.setCompletionListener(finalHorses -> {
-            horseList.putAll(finalHorses);
-            System.out.println("Final horse list received: " + finalHorses);
-            // Process the horses here
-            finalHorses.forEach((id, horse) -> 
-                System.out.println("Horse #" + id + ": " + horse));
-        });
+        HorseGUI gui = new HorseGUI();
+        
+        
         
         
         // Show the GUI on the Event Dispatch Thread
