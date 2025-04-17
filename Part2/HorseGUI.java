@@ -2,152 +2,18 @@
 /**
  * In the race, the horse is represented by a symbol and has attributes like speed, stamina, and confidence.
  * Add in rangeOfConfidenceException, CheckArgumentException
+ * Make a method where it customises the number of horses that the user wants and returns an arraylist of horses.
  */
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import javax.swing.*;
 
 public class HorseGUI extends JFrame{
-    // model class for Horse
-    public static class Horse {
-        private String name;
-        private String breed;
-        private String coatColor;
-        private String symbol;
-        private String saddle;
-        private String horseshoe;
-        private String accessory;
-        
-        // Attributes that could be affected by breed
-        private int speed;
-        private int stamina;
-        private int confidence;
-
-        // Maps to store attribute modifiers based on selections
-        private static final Map<String, int[]> BREED_ATTRIBUTES = new HashMap<>();
-        static {
-            // Format: {speed, stamina, confidence}
-            BREED_ATTRIBUTES.put("Thoroughbred", new int[]{10, 7, 8});
-            BREED_ATTRIBUTES.put("Arabian", new int[]{9, 9, 8});
-            BREED_ATTRIBUTES.put("Quarter Horse", new int[]{8, 8, 9});
-            BREED_ATTRIBUTES.put("Appaloosa", new int[]{7, 10, 8});
-            BREED_ATTRIBUTES.put("Mustang", new int[]{8, 9, 10});
-        }
-
-        private static final Map<String, int[]> HORSESHOE_ATTRIBUTES = new HashMap<>();
-        static {
-            // Format: {speed, stamina, confidence}
-            HORSESHOE_ATTRIBUTES.put("Regular", new int[]{0, 0, 0});
-            HORSESHOE_ATTRIBUTES.put("Lightweight", new int[]{2, -1, 0});
-            HORSESHOE_ATTRIBUTES.put("Endurance", new int[]{-1, 2, 0});
-            HORSESHOE_ATTRIBUTES.put("Confidence Booster", new int[]{0, 0, 2});
-        }
-
-        public Horse() {
-            this.name = "";
-            this.breed = "Thoroughbred"; // Default breed
-            this.coatColor = "Brown"; // Default coat color
-            this.symbol = "H"; // Default symbol
-            this.saddle = "Standard"; // Default saddle
-            this.horseshoe = "Regular"; // Default horseshoe
-            this.accessory = "None"; // Default accessory
-            updateAttributes();
-        }
-
-        private void updateAttributes() {
-            // Set base attributes from breed
-            int[] breedAttrs = BREED_ATTRIBUTES.getOrDefault(breed, new int[]{8, 8, 8});
-            this.speed = breedAttrs[0];
-            this.stamina = breedAttrs[1];
-            this.confidence = breedAttrs[2];
-            
-            // Apply horseshoe modifiers
-            int[] horseshoeModifiers = HORSESHOE_ATTRIBUTES.getOrDefault(horseshoe, new int[]{0, 0, 0});
-            this.speed += horseshoeModifiers[0];
-            this.stamina += horseshoeModifiers[1];
-            this.confidence += horseshoeModifiers[2];
-        }
-
-        public String getName() { 
-            return this.name; 
-        }
-        public void setName(String name) { 
-            this.name = name; 
-        }
-
-        public String getBreed() { 
-            return this.breed; 
-        }
-        public void setBreed(String breed) { 
-            this.breed = breed; 
-            updateAttributes();
-        }
-
-        public String getCoatColor() { 
-            return this.coatColor; 
-        }
-
-        public void setCoatColor(String coatColor) { 
-            this.coatColor = coatColor; 
-        }
-        
-        public String getSymbol() { 
-            return this.symbol; 
-        }
-
-        public void setSymbol(String symbol) { 
-            this.symbol = symbol; 
-        }
-        
-        public String getSaddle() { 
-            return this.saddle; 
-        }
-
-        public void setSaddle(String saddle) { 
-            this.saddle = saddle; 
-        }
-        
-        public String getHorseshoe() { 
-            return this.horseshoe; 
-        }
-
-        public void setHorseshoe(String horseshoe) { 
-            this.horseshoe = horseshoe; 
-            updateAttributes();
-        }
-        
-        public String getAccessory() { 
-            return this.accessory; 
-        }
-
-        public void setAccessory(String accessory) { 
-            this.accessory = accessory; 
-        }
-        
-        public int getSpeed() { 
-            return this.speed; 
-        }
-
-        public int getStamina() { 
-            return this.stamina; 
-        }
-
-        public int getConfidence() { 
-            return this.confidence; 
-        }
-        
-        @Override
-        public String toString() {
-            return "Horse [name=" + name + ", breed=" + breed + ", color=" + coatColor +
-                   ", symbol=" + symbol + ", attributes={speed=" + speed + 
-                   ", stamina=" + stamina + ", confidence=" + confidence + "}]";
-        }
-
-    }
 
     // GUI Components
-    private Horse horse;
+    private Horse horse = new Horse();
     private JTextField nameField;
     private JComboBox<String> breedComboBox;
     private JComboBox<String> colorComboBox;
@@ -158,8 +24,25 @@ public class HorseGUI extends JFrame{
     private JProgressBar speedBar, staminaBar, confidenceBar;
     private JPanel horsePreviewPanel;
 
+    // make an arraylist of horses
+    private Map<Integer, Horse> horseList = new HashMap<>();
+    
+    // make final map of horses
+    public Map<Integer, Horse> finalHorseList;
+
+    // display the horse list
+    public Map<Integer, Horse> getHorseList() {
+        return this.horseList;
+    }
+
+    // number of horses the user wants to create
+    public int numberOfHorses;
+
+    public int num = 1; // number of horses created
+
     // Constructor
-    public HorseGUI() {
+    public HorseGUI(int numberOfHorses) {
+        this.numberOfHorses = numberOfHorses;
         horse = new Horse();
         initializeUI();
     }
@@ -201,7 +84,7 @@ public class HorseGUI extends JFrame{
         mainPanel.add(colorComboBox);
         
         // Symbol representation
-        mainPanel.add(new JLabel("Symbol:"));
+        mainPanel.add(new JLabel("Symbol (Press enter to submit):"));
         symbolField = new JTextField(1);
         symbolField.setText("H");
         symbolField.addActionListener(e -> {
@@ -288,7 +171,7 @@ public class HorseGUI extends JFrame{
         // Add buttons panel
         JPanel buttonPanel = new JPanel();
         JButton saveButton = new JButton("Save Horse");
-        saveButton.addActionListener(e -> saveHorse());
+        saveButton.addActionListener(e -> saveHorse(horse));
         
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> resetForm());
@@ -463,8 +346,14 @@ public class HorseGUI extends JFrame{
             g2d.drawString(horse.getName(), width/2 - textWidth/2, height - 20);
         }
     }
+
+    private Consumer<Map<Integer, Horse>> completionListener;
+
+    public void setCompletionListener(Consumer<Map<Integer, Horse>> listener) {
+        this.completionListener = listener;
+    }
     
-    private void saveHorse() {
+    private void saveHorse(Horse horse) {
         // Get the name from the text field
         horse.setName(nameField.getText());
         
@@ -473,12 +362,48 @@ public class HorseGUI extends JFrame{
             "Horse saved successfully!\n\n" + horse.toString(),
             "Horse Saved", JOptionPane.INFORMATION_MESSAGE);
         
+        // Add the horse to the list
+        int horseId = horseList.size() + 1; // Simple ID generation
+        horseList.put(horseId, horse);
+        
         // Here you would typically save to a database or file
         System.out.println("Horse saved: " + horse);
+        System.out.println("Horse size: " + this.horseList.size());
+        
+        // Increment the number of horses created
+        this.num++;
+
+        // Check if we've created all required horses
+        if (this.num >= this.numberOfHorses) {
+            this.finalHorseList = new HashMap<>(this.horseList); // Create a defensive copy
+            JOptionPane.showMessageDialog(this, 
+                "All horses have been saved. Total: " + this.finalHorseList.size(), 
+                "Complete", 
+                JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Final horse list: " + this.finalHorseList);
+            
+            // Notify listener if one exists
+            if (completionListener != null) {
+                completionListener.accept(new HashMap<>(this.finalHorseList));
+            }
+            
+            dispose(); // Close the window but don't terminate the application
+        } else {
+            // Reset the form for new entry only if we need to create more horses
+            resetForm();
+        }
+    }
+
+    /**
+     * Returns the final list of horses once all have been created.
+     * @return Map containing all created horses with their IDs, or null if not all horses have been created yet
+     */
+    public Map<Integer, Horse> getFinalHorseList() {
+        return this.finalHorseList != null ? new HashMap<>(this.finalHorseList) : null;
     }
     
     private void resetForm() {
-        horse = new Horse();
+        Horse horse = new Horse();
         nameField.setText("");
         breedComboBox.setSelectedIndex(0);
         colorComboBox.setSelectedIndex(0);
@@ -498,9 +423,22 @@ public class HorseGUI extends JFrame{
             e.printStackTrace();
         }
         
-        // Create and show the GUI on the Event Dispatch Thread
+        // First approach: Create a GUI that returns results through a callback
+        HorseGUI gui = new HorseGUI(3);
+        // create horse List
+        Map<Integer, Horse> horseList = new HashMap<>();
+        // adds all of the horses in finalHorseList to horseList
+        gui.setCompletionListener(finalHorses -> {
+            horseList.putAll(finalHorses);
+            System.out.println("Final horse list received: " + finalHorses);
+            // Process the horses here
+            finalHorses.forEach((id, horse) -> 
+                System.out.println("Horse #" + id + ": " + horse));
+        });
+        
+        
+        // Show the GUI on the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
-            HorseGUI gui = new HorseGUI();
             gui.setVisible(true);
         });
     }
