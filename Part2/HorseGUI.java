@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.swing.*;
 
 public class HorseGUI extends JFrame{
-
     // GUI Components
     private Horse horse = new Horse();
     private JTextField nameField;
@@ -26,12 +25,29 @@ public class HorseGUI extends JFrame{
     // make arrayList of horses
     private Map<Integer, Horse> horseList = new HashMap<>();
     private int num = 0; // number of horses created
-    private int numberOfHorses = 3; // number of horses to be created
+    private int numberOfHorses; // number of horses to be created
     private Map<Integer, Horse> finalHorseList = null; // final list of horses created
 
 
     // Constructor
     public HorseGUI() {
+        horse = new Horse();
+        initializeUI();
+    }
+
+    // values from Track.java
+    private int lanes; // number of lanes in the track
+    private int length; // length of the track
+    private String trackShape; // shape of the track
+    private String weatherCondition; // weather condition
+
+    // Make a new constrcutor to get the values from inputValues() in Track.java
+    public HorseGUI(int lanes, int length, String trackShape, String weatherCondition) {
+        this.lanes = lanes;
+        this.length = length;
+        this.trackShape = trackShape;
+        this.weatherCondition = weatherCondition;
+        this.numberOfHorses = lanes; // number of horses to be created is equal to the number of lanes
         horse = new Horse();
         initializeUI();
     }
@@ -339,15 +355,14 @@ public class HorseGUI extends JFrame{
     private void saveHorse(Horse horse) {
         // Get the name from the text field
         horse.setName(nameField.getText());
-        
-        // Display confirmation message
-        JOptionPane.showMessageDialog(this, 
-            "Horse saved successfully!\n\n" + horse.toString(),
-            "Horse Saved", JOptionPane.INFORMATION_MESSAGE);
-        
+
         // Add the horse to the list
         int horseId = horseList.size() + 1; // Simple ID generation
         horseList.put(horseId, horse);
+        // Display confirmation message
+        JOptionPane.showMessageDialog(this, 
+            "Horse " + horseId + " saved successfully!\n\n" + horse.toString(),
+            "Horse Saved", JOptionPane.INFORMATION_MESSAGE);
         
         // Here you would typically save to a database or file
         System.out.println("Horse saved: " + horse);
@@ -367,6 +382,21 @@ public class HorseGUI extends JFrame{
             
             // Don't immediately exit - allow the calling code to get the finalHorseList
             dispose(); // Close the window but don't terminate the application
+
+            // call the Track class to start
+            Track track = new Track();
+            
+            switch (this.trackShape) {
+                case "oval":
+                    track.createSimpleOvalTrack(this.lanes);
+                    break;
+                case "rectangle":
+                    track.createRectangularTrack(this.length, this.lanes);
+                    break;
+                case "zig-zag":
+                    track.createZigZagTrack(this.length, this.lanes);
+                    break;
+            }
         } else {
             // Reset the form for new entry only if we need to create more horses
             resetForm();

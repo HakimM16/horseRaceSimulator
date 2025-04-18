@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Track {
-    private int lanes; // number of lanes in the track
-    private int length; // length of the track
-    private String trackShape; // shape of the track
-    private String weatherCondition; // weather condition
+    public int lanes; // number of lanes in the track
+    public int length; // length of the track
+    public String trackShape; // shape of the track
+    public String weatherCondition; // weather condition
 
     // Constructor to initialize the track with lanes, length, shape, and weather condition
     public Track(int lanes, int length, String trackShape, String weatherCondition) {
@@ -217,6 +217,13 @@ public class Track {
                 setLength(Integer.parseInt(lengthInput));  // Set the length of the track
                 setTrackShape(trackShapeField.getText());  // Set the shape of the track
                 setWeatherCondition(weatherConditionField.getText());  // Set the weather condition
+
+                // store values in variables for HorseGUI
+                int lanes = getLanes();  // Get the number of lanes
+                int length = getLength();  // Get the length of the track
+                String trackShape = getTrackShape();  // Get the shape of the track
+                String weatherCondition = getWeatherCondition();  // Get the weather condition
+
                 inputField.setText("");  // Optionally clear the field after submit
                 lengthField.setText("");  // Optionally clear the field after submit
                 trackShapeField.setText("");  // Optionally clear the field after submit
@@ -224,7 +231,7 @@ public class Track {
                 // Close the frame after submission
                 frame.dispose();  // Close the frame
                 // Call the createTrack method to draw the track
-                HorseGUI gui = new HorseGUI();
+                HorseGUI gui = new HorseGUI(lanes, length, trackShape, weatherCondition);  // Create a new HorseGUI object
                 gui.setVisible(true);
             }
         });
