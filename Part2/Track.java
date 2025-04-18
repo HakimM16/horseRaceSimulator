@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 public class Track {
     private int lanes; // number of lanes in the track
@@ -63,17 +62,17 @@ public class Track {
 
     // Main method to run the program
     public static void main(String[] args) {
-        Track track = new Track(5, 400, "rectangular", "dry"); // Create a new track with 1 lane
-        //track.inputValues(); // Call the inputValues method to get user input
-        track.createRectangularTrack(track.getLength(), track.getLanes());
-        track.createSimpleOvalTrack(track.getLanes()); // Call the createTrack method to draw the track
-        track.createZigZagTrack(track.getLength(), track.getLanes()); // Call the createTrack method to draw the track
+        Track track = new Track(); // Create a new track with 1 lane
+        track.inputValues(); // Call the inputValues method to get user input
+        // track.createRectangularTrack(track.getLength(), track.getLanes());
+        // track.createSimpleOvalTrack(track.getLanes()); // Call the createTrack method to draw the track
+        // track.createZigZagTrack(track.getLength(), track.getLanes()); // Call the createTrack method to draw the track
         
-        // Print the track details
-        System.out.println("Number of lanes: " + track.getLanes()); // Print the number of lanes
-        System.out.println("Length of track: " + track.getLength() + " meters"); // Print the length of the track
-        System.out.println("Track shape: " + track.getTrackShape()); // Print the shape of the track
-        System.out.println("Weather condition: " + track.getWeatherCondition()); // Print the weather condition
+        // // Print the track details
+        // System.out.println("Number of lanes: " + track.getLanes()); // Print the number of lanes
+        // System.out.println("Length of track: " + track.getLength() + " meters"); // Print the length of the track
+        // System.out.println("Track shape: " + track.getTrackShape()); // Print the shape of the track
+        // System.out.println("Weather condition: " + track.getWeatherCondition()); // Print the weather condition
     }
 
     // select number of lanes from user
@@ -225,7 +224,8 @@ public class Track {
                 // Close the frame after submission
                 frame.dispose();  // Close the frame
                 // Call the createTrack method to draw the track
-                // createTrack();  // Call the method to create the track
+                HorseGUI gui = new HorseGUI();
+                gui.setVisible(true);
             }
         });
 

@@ -5,6 +5,8 @@
  * Make a method where it customises the number of horses that the user wants and returns an arraylist of horses.
  */
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.*;
 
 public class HorseGUI extends JFrame{
@@ -20,6 +22,12 @@ public class HorseGUI extends JFrame{
     private JComboBox<String> accessoryComboBox;
     private JProgressBar speedBar, staminaBar, confidenceBar;
     private JPanel horsePreviewPanel;
+
+    // make arrayList of horses
+    private Map<Integer, Horse> horseList = new HashMap<>();
+    private int num = 0; // number of horses created
+    private int numberOfHorses = 3; // number of horses to be created
+    private Map<Integer, Horse> finalHorseList = null; // final list of horses created
 
 
     // Constructor
@@ -152,7 +160,7 @@ public class HorseGUI extends JFrame{
         // Add buttons panel
         JPanel buttonPanel = new JPanel();
         JButton saveButton = new JButton("Save Horse");
-        saveButton.addActionListener(e -> saveHorse());
+        saveButton.addActionListener(e -> saveHorse(horse));
         
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> resetForm());
@@ -328,7 +336,7 @@ public class HorseGUI extends JFrame{
         }
     }
     
-    private void saveHorse() {
+    private void saveHorse(Horse horse) {
         // Get the name from the text field
         horse.setName(nameField.getText());
         
@@ -337,12 +345,43 @@ public class HorseGUI extends JFrame{
             "Horse saved successfully!\n\n" + horse.toString(),
             "Horse Saved", JOptionPane.INFORMATION_MESSAGE);
         
+        // Add the horse to the list
+        int horseId = horseList.size() + 1; // Simple ID generation
+        horseList.put(horseId, horse);
+        
         // Here you would typically save to a database or file
         System.out.println("Horse saved: " + horse);
+        System.out.println("Horse size: " + this.horseList.size());
         
-        // close the GUI
-        dispose();
+        // Increment the number of horses created
+        this.num++;
+
+        // Check if we've created all required horses
+        if (this.num >= this.numberOfHorses) {
+            this.finalHorseList = new HashMap<>(this.horseList); // Create a defensive copy
+            JOptionPane.showMessageDialog(this, 
+                "All horses have been saved. Total: " + this.finalHorseList.size(), 
+                "Complete", 
+                JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Final horse list: " + this.finalHorseList);
+            
+            // Don't immediately exit - allow the calling code to get the finalHorseList
+            dispose(); // Close the window but don't terminate the application
+        } else {
+            // Reset the form for new entry only if we need to create more horses
+            resetForm();
+        }
     }
+
+    /**
+     * Returns the final list of horses once all have been created.
+     * @return Map containing all created horses with their IDs, or null if not all horses have been created yet
+     */
+    public Map<Integer, Horse> getFinalHorseList() {
+        return this.finalHorseList != null ? new HashMap<>(this.finalHorseList) : null;
+    }
+
+    
     
     private void resetForm() {
         Horse horse = new Horse();
@@ -366,14 +405,14 @@ public class HorseGUI extends JFrame{
         }
         
         // First approach: Create a GUI that returns results through a callback
-        HorseGUI gui = new HorseGUI();
         
-        
-        
-        
+    
         // Show the GUI on the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
-            gui.setVisible(true);
+            
+            HorseGUI horseGUI = new HorseGUI();
+            horseGUI.setVisible(true);
+            
         });
     }
 }
