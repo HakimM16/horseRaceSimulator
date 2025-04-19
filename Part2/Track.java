@@ -87,22 +87,26 @@ public class Track {
         JLabel lanes = new JLabel("Enter number of lanes (1-5): ");
         lanes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField inputField = new JTextField(3);  // 5 columns wide
+        inputField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
 
         JLabel length = new JLabel("Enter length of track (between 100 and 700 meters): ");
         length.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField lengthField = new JTextField(3);  // 5 columns wide
+        lengthField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
 
         JLabel trackShapeLabel = new JLabel("Enter track shape: ");
         JLabel trackShapes = new JLabel("(oval, rectangular, zig-zag)");
         trackShapes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         trackShapeLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField trackShapeField = new JTextField(3);  // 5 columns wide
+        trackShapeField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
 
         JLabel weatherConditionLabel = new JLabel("Enter weather condition: ");
         JLabel weatherConditions = new JLabel("(sunny, rainy, snowy, foggy, windy, muddy, dry, wet, icy)");
         weatherConditions.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         weatherConditionLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField weatherConditionField = new JTextField(3);  // 5 columns wide
+        weatherConditionField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
 
         // Create a button to submit the input
         JButton submitButton = new JButton("Submit");
