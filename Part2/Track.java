@@ -66,7 +66,7 @@ public class Track {
         track.inputValues(); // Call the inputValues method to get user input
         // track.createRectangularTrack(track.getLength(), track.getLanes());
         // track.createSimpleOvalTrack(track.getLanes()); // Call the createTrack method to draw the track
-        // track.createZigZagTrack(track.getLength(), track.getLanes()); // Call the createTrack method to draw the track
+        // track.createZigZagTrack(600, 2); // Call the createTrack method to draw the track
         
         // // Print the track details
         // System.out.println("Number of lanes: " + track.getLanes()); // Print the number of lanes
@@ -472,7 +472,7 @@ public class Track {
                 // Draw start/finish line
                 g2d.setColor(Color.WHITE);
                 g2d.setStroke(new BasicStroke(5));
-                g2d.drawLine(margin + 340, margin + 340, margin + 340, margin + totalLaneWidth);
+                g2d.drawLine(margin + 540, margin + 340, margin + 540, margin + totalLaneWidth);
             }
         };
         

@@ -79,7 +79,7 @@ public class RaceTrack{
             
             // Create result display (with darker text for visibility)
             resultLabel = new JLabel("Click 'Start Race' to begin");
-            resultLabel.setBounds(10, 10, trackLength - 20, 30);
+            resultLabel.setBounds(10, 0, trackLength - 20, 20);
             resultLabel.setForeground(Color.BLACK);
             resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
             trackPanel.add(resultLabel);
