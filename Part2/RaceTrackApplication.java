@@ -765,13 +765,12 @@ public class RaceTrackApplication {
                 horseMap.put(1, new Horse());
                 horseMap.put(2, new Horse("lightning", "Black", "L"));
                 horseMap.put(3, new Horse("thunder", "Pinto", "T"));
-                for (Horse horse : horseMap.values()) {
-                    System.out.println("Horse: " + horse.toString());
-                    System.out.println("Horse attributes: " + horse.getSpeed() + ", " + horse.getStamina() + ", " + horse.getConfidence());
-                }
+                horseMap.put(4, new Horse("storm", "Palomino", "S"));
+                horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
+                
                 
                 // Uncomment the track type you want to test
-                createRectangularTrack(300, 3, horseMap);
+                createRectangularTrack(600, 5, horseMap);
                 
             }
         });
