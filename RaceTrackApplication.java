@@ -377,10 +377,18 @@ public class RaceTrackApplication {
         JButton resetButton = new JButton("Reset Race");
         controlPanel.add(startButton);
         controlPanel.add(resetButton);
+
+        // create basic panel - this is for the statistics and other information
+        JPanel basicPanel = new JPanel();
+        basicPanel.setLayout(new BorderLayout());
+        basicPanel.setPreferredSize(new Dimension(length / 2, 50)); // Set fixed size for basic panel
         
         // Add panels to frame
-        trackFrame.add(trackPanel, BorderLayout.CENTER);
+        trackFrame.add(trackPanel, BorderLayout.WEST);
+        trackFrame.add(basicPanel, BorderLayout.EAST); // Add basic panel to the left
         trackFrame.add(controlPanel, BorderLayout.SOUTH);
+        trackFrame.setResizable(false); // Disable resizing
+
         
         // Create race manager - after all track elements are added
         RaceManager raceManager = new RaceManager(trackPanel, length, lanes, Car.TrackType.RECTANGULAR);
@@ -474,6 +482,8 @@ public class RaceTrackApplication {
         
         trackPanel.setPreferredSize(new Dimension(width, height));
         trackPanel.setLayout(null); // Use absolute positioning for cars and labels
+        trackFrame.setResizable(false);
+        
         
         // Create control panel
         JPanel controlPanel = new JPanel();
@@ -481,10 +491,16 @@ public class RaceTrackApplication {
         JButton resetButton = new JButton("Reset Race");
         controlPanel.add(startButton);
         controlPanel.add(resetButton);
-        
+
+        // create basic panel - this is for the statistics and other information
+        JPanel basicPanel = new JPanel();
+        basicPanel.setLayout(new BorderLayout());
+        basicPanel.setPreferredSize(new Dimension(width / 2, 50)); // Set fixed size for basic panel
+
         // Add panels to frame
-        trackFrame.add(trackPanel, BorderLayout.CENTER);
+        trackFrame.add(trackPanel, BorderLayout.WEST);
         trackFrame.add(controlPanel, BorderLayout.SOUTH);
+        trackFrame.add(basicPanel, BorderLayout.EAST);
         
         // Create race manager - after all track elements are added
         RaceManager raceManager = new RaceManager(trackPanel, width, lanes, Car.TrackType.OVAL);
@@ -584,12 +600,15 @@ public class RaceTrackApplication {
                 // Draw finish line
                 g2d.setColor(Color.WHITE);
                 g2d.setStroke(new BasicStroke(5));
-                g2d.drawLine(margin + trackWidth - 20, margin, margin + trackWidth - 20, margin + totalLaneWidth);
+                g2d.drawLine(margin + trackWidth, margin + 170, margin + trackWidth, margin + totalLaneWidth + 170);
             }
         };
         
         trackPanel.setPreferredSize(new Dimension(length, 400));
+        trackPanel.setMinimumSize(new Dimension(length, 400));
+        trackPanel.setMaximumSize(new Dimension(length, 400));
         trackPanel.setLayout(null); // Use absolute positioning for cars and labels
+        trackFrame.setResizable(false);
         
         // Create control panel
         JPanel controlPanel = new JPanel();
@@ -597,10 +616,17 @@ public class RaceTrackApplication {
         JButton resetButton = new JButton("Reset Race");
         controlPanel.add(startButton);
         controlPanel.add(resetButton);
+
+        // create basic panel - this is for the statistics and other information
+        JPanel basicPanel = new JPanel();
+        basicPanel.setLayout(new BorderLayout());
+        basicPanel.setPreferredSize(new Dimension(length / 2, 50)); // Set fixed size for basic panel
         
         // Add panels to frame
-        trackFrame.add(trackPanel, BorderLayout.CENTER);
+        trackFrame.add(trackPanel, BorderLayout.WEST);
         trackFrame.add(controlPanel, BorderLayout.SOUTH);
+        trackFrame.add(basicPanel, BorderLayout.EAST);
+       
         
         // Create race manager - after all track elements are added
         RaceManager raceManager = new RaceManager(trackPanel, length, lanes, Car.TrackType.ZIGZAG);
@@ -633,9 +659,9 @@ public class RaceTrackApplication {
             @Override
             public void run() {
                 // Uncomment the track type you want to test
-                //createRectangularTrack(600, 5);
-                //createSimpleOvalTrack(5);
-                createZigZagTrack(600, 5);
+                createRectangularTrack(600, 5);
+                createSimpleOvalTrack(5);
+                createZigZagTrack(600, 2);
             }
         });
     }
