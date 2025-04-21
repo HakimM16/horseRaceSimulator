@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,6 +128,28 @@ public class Horse {
 
     public int getConfidence() { 
         return this.confidence; 
+    }
+
+    public Color getColourFromString(String color) {
+        switch (color) {
+            case "Brown":
+                return new Color(165, 42, 42); // RGB for Brown
+            case "Black":
+                return Color.BLACK;
+            case "White":
+                return Color.WHITE;
+            case "Grey":
+                return Color.GRAY;
+            case "Chestnut":
+                return new Color(139, 69, 19); // RGB for Chestnut
+            case "Palomino":
+                return new Color(255, 228, 181); // RGB for Palomino
+            case "Pinto":
+                return new Color(255, 0, 0); // RGB for Pinto
+                
+            default:
+                return Color.WHITE; // Default color if not found
+        }
     }
     
     @Override

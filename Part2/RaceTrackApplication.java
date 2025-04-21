@@ -23,13 +23,13 @@ public class RaceTrackApplication {
 
         switch (this.trackShape) {
             case "oval":
-                createSimpleOvalTrack(this.lanes);
+                createSimpleOvalTrack(this.lanes, this.horses);
                 break;
             case "rectangular":
-                createRectangularTrack(this.length, this.lanes);
+                createRectangularTrack(this.length, this.lanes, this.horses);
                 break;
             case "zigzag":
-                createZigZagTrack(this.length, this.lanes);
+                createZigZagTrack(this.length, this.lanes, this.horses);
                 break;
             default:
                 throw new AssertionError();
@@ -40,6 +40,7 @@ public class RaceTrackApplication {
         private double x; // X position on track
         private double y; // Y position within lane
         private int laneNumber; // Which lane the horseGraphic is in
+        private String symbol; // horseGraphic symbol (e.g., "H")
         private double speed; // How fast the horseGraphic moves each update
         private Color color; // horseGraphic color
         private String name; // horseGraphic name/identifier
@@ -54,12 +55,13 @@ public class RaceTrackApplication {
             RECTANGULAR, OVAL, ZIGZAG
         }
         
-        public horseGraphic(String name, int laneNumber, int laneHeight, Color color, TrackType trackType) {
+        public horseGraphic(String name, int laneNumber, String symbol, int laneHeight, Color color, TrackType trackType) {
             this.name = name;
             this.laneNumber = laneNumber;
             this.trackType = trackType;
             this.speed = 1 + (Math.random() * 3); // Random speed between 1-3
             this.color = color;
+            this.symbol = symbol;
             
             // Initial position based on track type
             switch(trackType) {
@@ -87,8 +89,8 @@ public class RaceTrackApplication {
                 horseGraphicPanel.setBounds(0, 0, 30, laneHeight/2); // Will be positioned later
             }
             
-            // Add horseGraphic number label to make it more visible
-            JLabel horseGraphicLabel = new JLabel(name.substring(name.length()-1));
+            // Add horseGraphic symbol label to make it more visible
+            JLabel horseGraphicLabel = new JLabel(symbol);
             horseGraphicLabel.setForeground(Color.WHITE);
             horseGraphicLabel.setHorizontalAlignment(SwingConstants.CENTER);
             horseGraphicPanel.setLayout(new BorderLayout());
@@ -217,8 +219,10 @@ public class RaceTrackApplication {
         private JLabel resultLabel;
         private boolean raceInProgress = false;
         private horseGraphic.TrackType trackType;
+        public Map<Integer, Horse> horses;
         
-        public RaceManager(JPanel trackPanel, int trackLength, int lanes, horseGraphic.TrackType trackType) {
+        public RaceManager(JPanel trackPanel, int trackLength, int lanes, horseGraphic.TrackType trackType, Map<Integer, Horse> horses) {
+            this.horses = horses;
             this.trackPanel = trackPanel;
             this.trackLength = trackLength;
             this.trackType = trackType;
@@ -245,17 +249,18 @@ public class RaceTrackApplication {
             
             // Create horseGraphics with different colors
             Color[] horseGraphicColors = {Color.RED, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.ORANGE};
-            for (int i = 0; i < lanes; i++) {
-                horseGraphic horse = new horseGraphic("horseGraphic " + (i+1), i, laneHeight, horseGraphicColors[i % horseGraphicColors.length], trackType);
-                horsesGUI.add(horse);
-                
+            int i = 0;
+            for (Horse horse : horses.values()) {
+                horseGraphic horse1 = new horseGraphic("horse  " + (i+1), i, horse.getSymbol(), laneHeight, horse.getColourFromString(horse.getCoatColor()), trackType);
+                horsesGUI.add(horse1);
+                i++;
                 // For zigzag track, set path for each horseGraphic
                 if (trackType == horseGraphic.TrackType.ZIGZAG) {
-                    setupZigZagPath(horse, i, lanes);
+                    setupZigZagPath(horse1, i, lanes);
                 }
                 
                 // Add horseGraphic panel to track panel
-                trackPanel.add(horse.gethorseGraphicPanel());
+                trackPanel.add(horse1.gethorseGraphicPanel());
             }
             
             // Important: make sure horseGraphics are visible by setting their z-order to top
@@ -370,7 +375,8 @@ public class RaceTrackApplication {
     }
 
     // Method to create rectangular track
-    public static void createRectangularTrack(int length, int lanes) {
+    public static void createRectangularTrack(int length, int lanes, Map<Integer, Horse> horses) {
+        Map<Integer, Horse> horseMap = new HashMap<>(horses);
         // Create a frame for the track
         JFrame trackFrame = new JFrame("Rectangular Race Track");
         trackFrame.setSize(length + 50, 600); // Make sure frame is large enough
@@ -421,7 +427,7 @@ public class RaceTrackApplication {
 
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.RECTANGULAR);
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.RECTANGULAR, horses);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -445,7 +451,8 @@ public class RaceTrackApplication {
     }
 
     // Method to create oval track with racing functionality
-    public static void createSimpleOvalTrack(int lanes) {
+    public static void createSimpleOvalTrack(int lanes, Map<Integer, Horse> horses) {
+        Map<Integer, Horse> horseMap = new HashMap<>(horses);
         // Create width and height
         int width = 750;
         int height = 450;
@@ -533,7 +540,7 @@ public class RaceTrackApplication {
         trackFrame.add(basicPanel, BorderLayout.EAST);
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, horseGraphic.TrackType.OVAL);
+        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, horseGraphic.TrackType.OVAL, horses);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -557,7 +564,8 @@ public class RaceTrackApplication {
     }
 
     // Method to create zigzag track with racing functionality
-    public static void createZigZagTrack(int length, int lanes) {
+    public static void createZigZagTrack(int length, int lanes, Map<Integer, Horse> horses) {
+        Map<Integer, Horse> horseMap = new HashMap<>(horses);
         // Create a frame for the track
         JFrame trackFrame = new JFrame("Zig-Zag Race Track");
         trackFrame.setSize(800, 600);
@@ -659,7 +667,7 @@ public class RaceTrackApplication {
        
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.ZIGZAG);
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.ZIGZAG, horses);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -688,8 +696,11 @@ public class RaceTrackApplication {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                Map<Integer, Horse> horseMap = new HashMap<>();
+                horseMap.put(1, new Horse());
+                
                 // Uncomment the track type you want to test
-                createRectangularTrack(600, 2);
+                createRectangularTrack(600, 1, horseMap);
                 
             }
         });
