@@ -385,7 +385,7 @@ public class HorseGUI extends JFrame{
 
             // call the Track class to start
             Track track = new Track();
-            RaceTrackApplication raceTrackApp = new RaceTrackApplication(this.lanes, this.length, this.trackShape, this.weatherCondition);
+            RaceTrackApplication raceTrackApp = new RaceTrackApplication(this.lanes, this.length, this.trackShape, this.weatherCondition, this.finalHorseList);
             
         } else {
             // Reset the form for new entry only if we need to create more horses

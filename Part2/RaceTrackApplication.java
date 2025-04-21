@@ -3,19 +3,23 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RaceTrackApplication {
     public int lanes;
     public int length;
     public String trackShape;
     public String weather;
+    public Map<Integer, Horse> horses;
 
-    public RaceTrackApplication(int lanes, int length, String trackShape, String weather) {
+    public RaceTrackApplication(int lanes, int length, String trackShape, String weather, Map<Integer, Horse> horses) {
         // Constructor to initialize the application
         this.lanes = lanes;
         this.length = length;
         this.trackShape = trackShape;
         this.weather = weather;
+        this.horses = horses;
 
         switch (this.trackShape) {
             case "oval":
@@ -31,15 +35,15 @@ public class RaceTrackApplication {
                 throw new AssertionError();
         }
     }
-    // Car class to represent each racing car
-    static class Car {
+    // horseGraphic class to represent each racing horseGraphic
+    static class horseGraphic {
         private double x; // X position on track
         private double y; // Y position within lane
-        private int laneNumber; // Which lane the car is in
-        private double speed; // How fast the car moves each update
-        private Color color; // Car color
-        private String name; // Car name/identifier
-        private JPanel carPanel; // Visual representation
+        private int laneNumber; // Which lane the horseGraphic is in
+        private double speed; // How fast the horseGraphic moves each update
+        private Color color; // horseGraphic color
+        private String name; // horseGraphic name/identifier
+        private JPanel horseGraphicPanel; // Visual representation
         private double angle = 0; // For oval track rotation
         private Path2D.Double path; // For zigzag track
         private double pathPosition = 0; // Position along path (0.0 to 1.0)
@@ -50,7 +54,7 @@ public class RaceTrackApplication {
             RECTANGULAR, OVAL, ZIGZAG
         }
         
-        public Car(String name, int laneNumber, int laneHeight, Color color, TrackType trackType) {
+        public horseGraphic(String name, int laneNumber, int laneHeight, Color color, TrackType trackType) {
             this.name = name;
             this.laneNumber = laneNumber;
             this.trackType = trackType;
@@ -72,23 +76,23 @@ public class RaceTrackApplication {
             }
             
             // Create visual representation with border for better visibility
-            carPanel = new JPanel();
-            carPanel.setBackground(color);
-            carPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            horseGraphicPanel = new JPanel();
+            horseGraphicPanel.setBackground(color);
+            horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
             
             // For rectangular track initial positioning
             if (trackType == TrackType.RECTANGULAR) {
-                carPanel.setBounds((int)x, (int)y, 30, laneHeight/2);
+                horseGraphicPanel.setBounds((int)x, (int)y, 30, laneHeight/2);
             } else {
-                carPanel.setBounds(0, 0, 30, laneHeight/2); // Will be positioned later
+                horseGraphicPanel.setBounds(0, 0, 30, laneHeight/2); // Will be positioned later
             }
             
-            // Add car number label to make it more visible
-            JLabel carLabel = new JLabel(name.substring(name.length()-1));
-            carLabel.setForeground(Color.WHITE);
-            carLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            carPanel.setLayout(new BorderLayout());
-            carPanel.add(carLabel, BorderLayout.CENTER);
+            // Add horseGraphic number label to make it more visible
+            JLabel horseGraphicLabel = new JLabel(name.substring(name.length()-1));
+            horseGraphicLabel.setForeground(Color.WHITE);
+            horseGraphicLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            horseGraphicPanel.setLayout(new BorderLayout());
+            horseGraphicPanel.add(horseGraphicLabel, BorderLayout.CENTER);
         }
         
         public void setPath(Path2D.Double path) {
@@ -113,7 +117,7 @@ public class RaceTrackApplication {
             // Random speed variation to make race interesting
             double randomFactor = (Math.random() * 3) - 1; // -1 to 1
             x += speed + randomFactor;
-            carPanel.setBounds((int)x, (int)y, 30, carPanel.getHeight());
+            horseGraphicPanel.setBounds((int)x, (int)y, 30, horseGraphicPanel.getHeight());
         }
         
         private void moveOval() {
@@ -135,7 +139,7 @@ public class RaceTrackApplication {
             x = centerX + radiusX * Math.cos(angle);
             y = centerY + radiusY * Math.sin(angle);
             
-            carPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
+            horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
         }
         
         private void moveZigZag() {
@@ -157,12 +161,12 @@ public class RaceTrackApplication {
                 pi.currentSegment(coords);
                 x = coords[0];
                 y = coords[1];
-                carPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
+                horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
             }
         }
         
-        public JPanel getCarPanel() {
-            return carPanel;
+        public JPanel gethorseGraphicPanel() {
+            return horseGraphicPanel;
         }
         
         public double getX() {
@@ -185,12 +189,12 @@ public class RaceTrackApplication {
             return name;
         }
         
-        // Method to reset car position
+        // Method to reset horseGraphic position
         public void reset() {
             switch(trackType) {
                 case RECTANGULAR:
                     x = 10;
-                    carPanel.setBounds((int)x, (int)y, 30, carPanel.getHeight());
+                    horseGraphicPanel.setBounds((int)x, (int)y, 30, horseGraphicPanel.getHeight());
                     break;
                 case OVAL:
                     angle = Math.PI / 2; // Start at bottom of oval
@@ -206,22 +210,22 @@ public class RaceTrackApplication {
 
     // RaceManager class to handle race logic
     static class RaceManager {
-        private ArrayList<Car> cars = new ArrayList<>();
+        private ArrayList<horseGraphic> horsesGUI = new ArrayList<>();
         private JPanel trackPanel;
         private Timer raceTimer;
         private int trackLength;
         private JLabel resultLabel;
         private boolean raceInProgress = false;
-        private Car.TrackType trackType;
+        private horseGraphic.TrackType trackType;
         
-        public RaceManager(JPanel trackPanel, int trackLength, int lanes, Car.TrackType trackType) {
+        public RaceManager(JPanel trackPanel, int trackLength, int lanes, horseGraphic.TrackType trackType) {
             this.trackPanel = trackPanel;
             this.trackLength = trackLength;
             this.trackType = trackType;
             
             // Create result display (with darker text for visibility)
             resultLabel = new JLabel("Click 'Start Race' to begin");
-            resultLabel.setBounds(10, 10, trackLength - 20, 30);
+            resultLabel.setBounds(10, 0, trackLength - 20, 15);
             resultLabel.setForeground(Color.BLACK);
             resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
             trackPanel.add(resultLabel);
@@ -239,33 +243,33 @@ public class RaceTrackApplication {
                     break;
             }
             
-            // Create cars with different colors
-            Color[] carColors = {Color.RED, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.ORANGE};
+            // Create horseGraphics with different colors
+            Color[] horseGraphicColors = {Color.RED, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.ORANGE};
             for (int i = 0; i < lanes; i++) {
-                Car car = new Car("Car " + (i+1), i, laneHeight, carColors[i % carColors.length], trackType);
-                cars.add(car);
+                horseGraphic horse = new horseGraphic("horseGraphic " + (i+1), i, laneHeight, horseGraphicColors[i % horseGraphicColors.length], trackType);
+                horsesGUI.add(horse);
                 
-                // For zigzag track, set path for each car
-                if (trackType == Car.TrackType.ZIGZAG) {
-                    setupZigZagPath(car, i, lanes);
+                // For zigzag track, set path for each horseGraphic
+                if (trackType == horseGraphic.TrackType.ZIGZAG) {
+                    setupZigZagPath(horse, i, lanes);
                 }
                 
-                // Add car panel to track panel
-                trackPanel.add(car.getCarPanel());
+                // Add horseGraphic panel to track panel
+                trackPanel.add(horse.gethorseGraphicPanel());
             }
             
-            // Important: make sure cars are visible by setting their z-order to top
-            for (Car car : cars) {
-                trackPanel.setComponentZOrder(car.getCarPanel(), 0);
+            // Important: make sure horseGraphics are visible by setting their z-order to top
+            for (horseGraphic horse : horsesGUI) {
+                trackPanel.setComponentZOrder(horse.gethorseGraphicPanel(), 0);
             }
             trackPanel.setComponentZOrder(resultLabel, 0);
             
-            // Refresh panel to make cars visible
+            // Refresh panel to make horseGraphics visible
             trackPanel.revalidate();
             trackPanel.repaint();
         }
         
-        private void setupZigZagPath(Car car, int laneNumber, int totalLanes) {
+        private void setupZigZagPath(horseGraphic horse, int laneNumber, int totalLanes) {
             // Define the zig-zag path for this lane
             int segments = 5;
             int margin = 30;
@@ -286,7 +290,7 @@ public class RaceTrackApplication {
                 path.lineTo(x, y);
             }
             
-            car.setPath(path);
+            horse.setPath(path);
         }
         
         public void startRace() {
@@ -295,7 +299,7 @@ public class RaceTrackApplication {
             raceInProgress = true;
             resultLabel.setText("Race in progress...");
             
-            // Create timer to update car positions
+            // Create timer to update horseGraphic positions
             raceTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -313,34 +317,34 @@ public class RaceTrackApplication {
             boolean someoneFinished = false;
             String winner = "";
             
-            for (Car car : cars) {
-                car.move();
+            for (horseGraphic horse : horsesGUI) {
+                horse.move();
                 
-                // Check if any car has finished, based on track type
+                // Check if any horseGraphic has finished, based on track type
                 boolean hasFinished = false;
                 
                 switch(trackType) {
                     case RECTANGULAR:
-                        hasFinished = car.getX() >= trackLength - 40;
+                        hasFinished = horse.getX() >= trackLength - 40;
                         break;
                     case OVAL:
                         // Finish when crossing finish line at top (angle near 3π/2)
-                        double angleDiff = Math.abs(car.getAngle() - (3 * Math.PI / 2));
-                        hasFinished = angleDiff < 0.1 && car.getAngle() > Math.PI;
+                        double angleDiff = Math.abs(horse.getAngle() - (3 * Math.PI / 2));
+                        hasFinished = angleDiff < 0.1 && horse.getAngle() > Math.PI;
                         break;
                     case ZIGZAG:
                         // Finish when reaching end of path
-                        hasFinished = car.getPathPosition() >= 0.98 && car.getPathPosition() <= 1.0;
+                        hasFinished = horse.getPathPosition() >= 0.98 && horse.getPathPosition() <= 1.0;
                         break;
                 }
                 
                 if (hasFinished && !someoneFinished) {
                     someoneFinished = true;
-                    winner = car.getName();
+                    winner = horse.getName();
                 }
             }
             
-            // Manual repaint after all cars have moved
+            // Manual repaint after all horseGraphics have moved
             trackPanel.repaint();
             
             if (someoneFinished) {
@@ -355,8 +359,8 @@ public class RaceTrackApplication {
                 raceTimer.stop();
             }
             
-            for (Car car : cars) {
-                car.reset();
+            for (horseGraphic horseGraphic : horsesGUI) {
+                horseGraphic.reset();
             }
             
             resultLabel.setText("Click 'Start Race' to begin");
@@ -417,7 +421,7 @@ public class RaceTrackApplication {
 
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, Car.TrackType.RECTANGULAR);
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.RECTANGULAR);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -507,7 +511,7 @@ public class RaceTrackApplication {
         };
         
         trackPanel.setPreferredSize(new Dimension(width, height));
-        trackPanel.setLayout(null); // Use absolute positioning for cars and labels
+        trackPanel.setLayout(null); // Use absolute positioning for horseGraphics and labels
         trackFrame.setResizable(false);
         
         
@@ -529,7 +533,7 @@ public class RaceTrackApplication {
         trackFrame.add(basicPanel, BorderLayout.EAST);
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, Car.TrackType.OVAL);
+        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, horseGraphic.TrackType.OVAL);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -633,7 +637,7 @@ public class RaceTrackApplication {
         trackPanel.setPreferredSize(new Dimension(length, 400));
         trackPanel.setMinimumSize(new Dimension(length, 400));
         trackPanel.setMaximumSize(new Dimension(length, 400));
-        trackPanel.setLayout(null); // Use absolute positioning for cars and labels
+        trackPanel.setLayout(null); // Use absolute positioning for horseGraphics and labels
         trackFrame.setResizable(false);
         
         // Create control panel
@@ -655,7 +659,7 @@ public class RaceTrackApplication {
        
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, Car.TrackType.ZIGZAG);
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.ZIGZAG);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -685,9 +689,8 @@ public class RaceTrackApplication {
             @Override
             public void run() {
                 // Uncomment the track type you want to test
-                createRectangularTrack(600, 5);
-                createSimpleOvalTrack(5);
-                createZigZagTrack(600, 2);
+                createRectangularTrack(600, 2);
+                
             }
         });
     }
