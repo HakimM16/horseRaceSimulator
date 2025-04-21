@@ -5,6 +5,32 @@ import java.awt.geom.*;
 import java.util.ArrayList;
 
 public class RaceTrackApplication {
+    public int lanes;
+    public int length;
+    public String trackShape;
+    public String weather;
+
+    public RaceTrackApplication(int lanes, int length, String trackShape, String weather) {
+        // Constructor to initialize the application
+        this.lanes = lanes;
+        this.length = length;
+        this.trackShape = trackShape;
+        this.weather = weather;
+
+        switch (this.trackShape) {
+            case "oval":
+                createSimpleOvalTrack(this.lanes);
+                break;
+            case "rectangular":
+                createRectangularTrack(this.length, this.lanes);
+                break;
+            case "zigzag":
+                createZigZagTrack(this.length, this.lanes);
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }
     // Car class to represent each racing car
     static class Car {
         private double x; // X position on track
