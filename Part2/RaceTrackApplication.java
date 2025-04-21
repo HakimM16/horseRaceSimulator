@@ -557,7 +557,7 @@ public class RaceTrackApplication {
                 int laneSpacing = Math.min(trackWidth, trackHeight) / (lanes * 3);
                 
                 // Draw concentric ovals for each lane
-                for (int i = 0; i < lanes; i++) {
+                for (int i = 0; i < lanes + 1; i++) {
                     int x = margin + (i * laneSpacing);
                     int y = margin + (i * laneSpacing);
                     int width = trackWidth - (2 * i * laneSpacing);
@@ -766,11 +766,12 @@ public class RaceTrackApplication {
                 horseMap.put(2, new Horse("lightning", "Black", "L"));
                 horseMap.put(3, new Horse("thunder", "Pinto", "T"));
                 horseMap.put(4, new Horse("storm", "Palomino", "S"));
-                horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
+                // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
                 
                 
                 // Uncomment the track type you want to test
-                createRectangularTrack(600, 5, horseMap);
+                //createRectangularTrack(600, 5, horseMap);
+                //createSimpleOvalTrack(5, horseMap);
                 
             }
         });
