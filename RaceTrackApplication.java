@@ -1,153 +1,642 @@
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.*;
+import java.util.ArrayList;
 
 public class RaceTrackApplication {
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Race Track");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+    // Car class to represent each racing car
+    static class Car {
+        private double x; // X position on track
+        private double y; // Y position within lane
+        private int laneNumber; // Which lane the car is in
+        private double speed; // How fast the car moves each update
+        private Color color; // Car color
+        private String name; // Car name/identifier
+        private JPanel carPanel; // Visual representation
+        private double angle = 0; // For oval track rotation
+        private Path2D.Double path; // For zigzag track
+        private double pathPosition = 0; // Position along path (0.0 to 1.0)
+        private TrackType trackType;
         
-        RaceTrackPanel trackPanel = new RaceTrackPanel();
-        frame.add(trackPanel);
+        // Track type enum
+        public enum TrackType {
+            RECTANGULAR, OVAL, ZIGZAG
+        }
         
-        frame.setVisible(true);
+        public Car(String name, int laneNumber, int laneHeight, Color color, TrackType trackType) {
+            this.name = name;
+            this.laneNumber = laneNumber;
+            this.trackType = trackType;
+            this.speed = 1 + (Math.random() * 3); // Random speed between 1-3
+            this.color = color;
+            
+            // Initial position based on track type
+            switch(trackType) {
+                case RECTANGULAR:
+                    this.x = 10;
+                    this.y = laneNumber * laneHeight + laneHeight/4;
+                    break;
+                case OVAL:
+                    this.angle = Math.PI / 2; // Start at bottom of oval
+                    break;
+                case ZIGZAG:
+                    this.pathPosition = 0.0;
+                    break;
+            }
+            
+            // Create visual representation with border for better visibility
+            carPanel = new JPanel();
+            carPanel.setBackground(color);
+            carPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            
+            // For rectangular track initial positioning
+            if (trackType == TrackType.RECTANGULAR) {
+                carPanel.setBounds((int)x, (int)y, 30, laneHeight/2);
+            } else {
+                carPanel.setBounds(0, 0, 30, laneHeight/2); // Will be positioned later
+            }
+            
+            // Add car number label to make it more visible
+            JLabel carLabel = new JLabel(name.substring(name.length()-1));
+            carLabel.setForeground(Color.WHITE);
+            carLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            carPanel.setLayout(new BorderLayout());
+            carPanel.add(carLabel, BorderLayout.CENTER);
+        }
+        
+        public void setPath(Path2D.Double path) {
+            this.path = path;
+        }
+        
+        public void move() {
+            switch(trackType) {
+                case RECTANGULAR:
+                    moveRectangular();
+                    break;
+                case OVAL:
+                    moveOval();
+                    break;
+                case ZIGZAG:
+                    moveZigZag();
+                    break;
+            }
+        }
+        
+        private void moveRectangular() {
+            // Random speed variation to make race interesting
+            double randomFactor = (Math.random() * 3) - 1; // -1 to 1
+            x += speed + randomFactor;
+            carPanel.setBounds((int)x, (int)y, 30, carPanel.getHeight());
+        }
+        
+        private void moveOval() {
+            // Random speed variation
+            double randomFactor = (Math.random() * 0.02) - 0.01; // Small random factor
+            angle += (speed * 0.01) + randomFactor; // Adjust speed for oval movement
+            
+            // Keep angle in range 0-2π
+            if (angle >= 2 * Math.PI) {
+                angle -= 2 * Math.PI;
+            }
+            
+            // Calculate position on oval
+            int centerX = 375; // Center X of oval
+            int centerY = 225; // Center Y of oval
+            int radiusX = 275 - (laneNumber * 20); // X radius, decreasing for inner lanes
+            int radiusY = 150 - (laneNumber * 20); // Y radius, decreasing for inner lanes
+            
+            x = centerX + radiusX * Math.cos(angle);
+            y = centerY + radiusY * Math.sin(angle);
+            
+            carPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
+        }
+        
+        private void moveZigZag() {
+            if (path == null) return;
+            
+            // Random speed variation
+            double randomFactor = (Math.random() * 0.003) - 0.001;
+            pathPosition += (speed * 0.003) + randomFactor;
+            
+            // Reset position if completed path
+            if (pathPosition > 1.0) {
+                pathPosition = 0.0;
+            }
+            
+            // Calculate position along path
+            PathIterator pi = path.getPathIterator(null, pathPosition);
+            float[] coords = new float[6];
+            if (!pi.isDone()) {
+                pi.currentSegment(coords);
+                x = coords[0];
+                y = coords[1];
+                carPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
+            }
+        }
+        
+        public JPanel getCarPanel() {
+            return carPanel;
+        }
+        
+        public double getX() {
+            return x;
+        }
+        
+        public double getY() {
+            return y;
+        }
+        
+        public double getAngle() {
+            return angle;
+        }
+        
+        public double getPathPosition() {
+            return pathPosition;
+        }
+        
+        public String getName() {
+            return name;
+        }
+        
+        // Method to reset car position
+        public void reset() {
+            switch(trackType) {
+                case RECTANGULAR:
+                    x = 10;
+                    carPanel.setBounds((int)x, (int)y, 30, carPanel.getHeight());
+                    break;
+                case OVAL:
+                    angle = Math.PI / 2; // Start at bottom of oval
+                    moveOval(); // Update position
+                    break;
+                case ZIGZAG:
+                    pathPosition = 0.0;
+                    moveZigZag(); // Update position
+                    break;
+            }
+        }
     }
-}
 
-class RaceTrackPanel extends JPanel {
-    private int carPosition = 0; // Angle in degrees
-    private Timer timer;
-    public int innerTrackWidth;
-    public int innerTrackHeight;
-    public int outerTrackWidth;
-    public int outerTrackHeight;
-    private boolean raceFinished = false;
-    private int lapCount = 0;
-    private boolean crossedStartLine = false;
-    
-    public RaceTrackPanel() {
-        setBackground(Color.GREEN);
+    // RaceManager class to handle race logic
+    static class RaceManager {
+        private ArrayList<Car> cars = new ArrayList<>();
+        private JPanel trackPanel;
+        private Timer raceTimer;
+        private int trackLength;
+        private JLabel resultLabel;
+        private boolean raceInProgress = false;
+        private Car.TrackType trackType;
         
-        // Add a timer to animate the car
-        timer = new Timer(50, e -> {
-            if (!raceFinished) {
-                // Store previous position to detect finish line crossing
-                int previousPosition = carPosition;
-                carPosition = (carPosition + 2) % 360; // Move car
+        public RaceManager(JPanel trackPanel, int trackLength, int lanes, Car.TrackType trackType) {
+            this.trackPanel = trackPanel;
+            this.trackLength = trackLength;
+            this.trackType = trackType;
+            
+            // Create result display (with darker text for visibility)
+            resultLabel = new JLabel("Click 'Start Race' to begin");
+            resultLabel.setBounds(10, 10, trackLength - 20, 30);
+            resultLabel.setForeground(Color.BLACK);
+            resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            trackPanel.add(resultLabel);
+            
+            // Calculate lane height based on track type
+            int laneHeight;
+            switch(trackType) {
+                case RECTANGULAR:
+                    laneHeight = 400 / lanes;
+                    break;
+                case OVAL:
+                case ZIGZAG:
+                default:
+                    laneHeight = 20; // Fixed height for oval and zigzag
+                    break;
+            }
+            
+            // Create cars with different colors
+            Color[] carColors = {Color.RED, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.ORANGE};
+            for (int i = 0; i < lanes; i++) {
+                Car car = new Car("Car " + (i+1), i, laneHeight, carColors[i % carColors.length], trackType);
+                cars.add(car);
                 
-                // Check if car crossed start/finish line (from 350-359° to 0-10°)
-                if (previousPosition > 350 && carPosition < 10) {
-                    if (crossedStartLine) {
-                        lapCount++;
-                        if (lapCount >= 3) { // Stop after 3 laps
-                            raceFinished = true;
-                            timer.stop();
-                        }
-                    } else {
-                        crossedStartLine = true;
+                // For zigzag track, set path for each car
+                if (trackType == Car.TrackType.ZIGZAG) {
+                    setupZigZagPath(car, i, lanes);
+                }
+                
+                // Add car panel to track panel
+                trackPanel.add(car.getCarPanel());
+            }
+            
+            // Important: make sure cars are visible by setting their z-order to top
+            for (Car car : cars) {
+                trackPanel.setComponentZOrder(car.getCarPanel(), 0);
+            }
+            trackPanel.setComponentZOrder(resultLabel, 0);
+            
+            // Refresh panel to make cars visible
+            trackPanel.revalidate();
+            trackPanel.repaint();
+        }
+        
+        private void setupZigZagPath(Car car, int laneNumber, int totalLanes) {
+            // Define the zig-zag path for this lane
+            int segments = 5;
+            int margin = 30;
+            int trackWidth = trackPanel.getWidth() - (2 * margin);
+            int trackHeight = trackPanel.getHeight() - (2 * margin);
+            int segmentWidth = trackWidth / segments;
+            
+            int totalLaneWidth = trackHeight / 2;
+            int singleLaneWidth = totalLaneWidth / totalLanes;
+            int laneOffset = laneNumber * singleLaneWidth;
+            
+            Path2D.Double path = new Path2D.Double();
+            path.moveTo(margin, margin + laneOffset + singleLaneWidth/2);
+            
+            for (int i = 1; i <= segments; i++) {
+                int x = margin + (i * segmentWidth);
+                int y = margin + (i % 2 == 0 ? 0 : trackHeight - totalLaneWidth) + laneOffset + singleLaneWidth/2;
+                path.lineTo(x, y);
+            }
+            
+            car.setPath(path);
+        }
+        
+        public void startRace() {
+            if (raceInProgress) return;
+            
+            raceInProgress = true;
+            resultLabel.setText("Race in progress...");
+            
+            // Create timer to update car positions
+            raceTimer = new Timer(50, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    boolean raceFinished = updateRace();
+                    if (raceFinished) {
+                        raceTimer.stop();
+                        raceInProgress = false;
                     }
                 }
-                repaint();
+            });
+            raceTimer.start();
+        }
+        
+        private boolean updateRace() {
+            boolean someoneFinished = false;
+            String winner = "";
+            
+            for (Car car : cars) {
+                car.move();
+                
+                // Check if any car has finished, based on track type
+                boolean hasFinished = false;
+                
+                switch(trackType) {
+                    case RECTANGULAR:
+                        hasFinished = car.getX() >= trackLength - 40;
+                        break;
+                    case OVAL:
+                        // Finish when crossing finish line at top (angle near 3π/2)
+                        double angleDiff = Math.abs(car.getAngle() - (3 * Math.PI / 2));
+                        hasFinished = angleDiff < 0.1 && car.getAngle() > Math.PI;
+                        break;
+                    case ZIGZAG:
+                        // Finish when reaching end of path
+                        hasFinished = car.getPathPosition() >= 0.98 && car.getPathPosition() <= 1.0;
+                        break;
+                }
+                
+                if (hasFinished && !someoneFinished) {
+                    someoneFinished = true;
+                    winner = car.getName();
+                }
+            }
+            
+            // Manual repaint after all cars have moved
+            trackPanel.repaint();
+            
+            if (someoneFinished) {
+                resultLabel.setText(winner + " wins the race!");
+                return true;
+            }
+            return false;
+        }
+        
+        public void resetRace() {
+            if (raceTimer != null && raceTimer.isRunning()) {
+                raceTimer.stop();
+            }
+            
+            for (Car car : cars) {
+                car.reset();
+            }
+            
+            resultLabel.setText("Click 'Start Race' to begin");
+            raceInProgress = false;
+            trackPanel.repaint();
+        }
+    }
+
+    // Method to create rectangular track
+    public static void createRectangularTrack(int length, int lanes) {
+        // Create a frame for the track
+        JFrame trackFrame = new JFrame("Rectangular Race Track");
+        trackFrame.setSize(length + 50, 600); // Make sure frame is large enough
+        trackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        trackFrame.setLocationRelativeTo(null); // Center the frame on the screen
+        
+        // Use BorderLayout for overall organization
+        trackFrame.setLayout(new BorderLayout());
+
+        // Create a panel to represent the track
+        JPanel trackPanel = new JPanel();
+        trackPanel.setPreferredSize(new Dimension(length, 400)); // Set fixed size
+        trackPanel.setBackground(new Color(34, 139, 34)); // Green background for grass
+        trackPanel.setLayout(null); // Use absolute positioning for lanes
+
+        // Add lanes to the track
+        int laneHeight = 400 / lanes; // Calculate lane height based on fixed panel height
+        for (int i = 0; i < lanes; i++) {
+            JPanel lane = new JPanel();
+            lane.setBounds(0, i * laneHeight, length, laneHeight - 5); // Leave space between lanes
+            lane.setBackground(new Color(173, 216, 230)); // Light blue color for lanes
+            trackPanel.add(lane);
+        }
+
+        // Make finish line
+        JPanel finishLine = new JPanel();
+        finishLine.setBounds(length - 10, 0, 10, 400); // Position at the end of the track
+        finishLine.setBackground(Color.WHITE); // White color for the finish line
+        trackPanel.add(finishLine);
+        
+        // Create control panel
+        JPanel controlPanel = new JPanel();
+        JButton startButton = new JButton("Start Race");
+        JButton resetButton = new JButton("Reset Race");
+        controlPanel.add(startButton);
+        controlPanel.add(resetButton);
+        
+        // Add panels to frame
+        trackFrame.add(trackPanel, BorderLayout.CENTER);
+        trackFrame.add(controlPanel, BorderLayout.SOUTH);
+        
+        // Create race manager - after all track elements are added
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, Car.TrackType.RECTANGULAR);
+        
+        // Add action for start button
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                raceManager.startRace();
             }
         });
-        timer.start();
-    }
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
         
-        // Draw race track here
-        drawRaceTrack(g2d);
-        // Call drawCar method to draw the car
-        drawCar(g2d);
-        
-        // Draw race status
-        drawRaceStatus(g2d);
-    }
-    
-    private void drawRaceTrack(Graphics2D g2d) {
-        int width = getWidth();
-        int height = getHeight();
-        
-        // Set up rendering quality
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        // Draw outer track boundary
-        g2d.setColor(Color.GRAY);
-        outerTrackWidth = width - 100;
-        outerTrackHeight = height - 100;
-        g2d.fillOval(50, 50, outerTrackWidth, outerTrackHeight);
-        
-        // Draw inner track boundary (creates the actual track)
-        g2d.setColor(Color.GREEN);
-        innerTrackWidth = outerTrackWidth - 100;
-        innerTrackHeight = outerTrackHeight - 100;
-        g2d.fillOval(100, 100, innerTrackWidth, innerTrackHeight);
-        
-        // Draw starting/finish line
-        g2d.setColor(Color.WHITE);
-        g2d.setStroke(new BasicStroke(5));
-        g2d.drawLine(width / 2, 50, width / 2, 100);
+        // Add action for reset button
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                raceManager.resetRace();
+            }
+        });
 
-        // Draw lane markings
-        g2d.setColor(Color.WHITE);
-        g2d.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{10}, 0));
-        
-        // Draw dashed lines to separate lanes
-        int middleX = width / 2;
-        int middleY = height / 2;
-        
-        // Draw some lane dividers
-        for (int i = 0; i < 8; i++) {
-            double angle = Math.PI * i / 4;
-            int x1 = (int)(middleX + (outerTrackWidth/2) * Math.cos(angle));
-            int y1 = (int)(middleY + (outerTrackHeight/2) * Math.sin(angle));
-            int x2 = (int)(middleX + (innerTrackWidth/2) * Math.cos(angle));
-            int y2 = (int)(middleY + (innerTrackHeight/2) * Math.sin(angle));
-            
-            g2d.drawLine(x1, y1, x2, y2);
-        }
+        // Display the frame
+        trackFrame.pack();
+        trackFrame.setVisible(true);
     }
 
-    private void drawCar(Graphics2D g2d) {
-        int width = getWidth();
-        int height = getHeight();
-        int middleX = width / 2;
-        int middleY = height / 2;
+    // Method to create oval track with racing functionality
+    public static void createSimpleOvalTrack(int lanes) {
+        // Create width and height
+        int width = 750;
+        int height = 450;
         
-        // Calculate car position along track - corrected to keep car on track
-        double angle = Math.toRadians(carPosition);
+        // Create a frame for the track
+        JFrame trackFrame = new JFrame("Oval Race Track");
+        trackFrame.setSize(800, 600);
+        trackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        trackFrame.setLocationRelativeTo(null); // Center the frame on the screen
         
-        // Calculate the middle of the track (between outer and inner boundaries)
-        int trackRadiusX = (outerTrackWidth - innerTrackWidth) / 4 + innerTrackWidth / 2;
-        int trackRadiusY = (outerTrackHeight - innerTrackHeight) / 4 + innerTrackHeight / 2;
+        // Use BorderLayout for overall organization
+        trackFrame.setLayout(new BorderLayout());
+
+        // Create a panel to represent the oval track
+        JPanel trackPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                
+                // Enable antialiasing for smoother curves
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                // Set the background 
+                g2d.setColor(new Color(34, 139, 34)); // Green background for grass
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+                
+                // Set the stroke width
+                g2d.setStroke(new BasicStroke(1.5f));
+                
+                // Calculate dimensions for the oval track
+                int margin = 50;
+                int trackWidth = getWidth() - (2 * margin);
+                int trackHeight = getHeight() - (2 * margin);
+                
+                // Calculate lane spacing
+                int laneSpacing = Math.min(trackWidth, trackHeight) / (lanes * 3);
+                
+                // Draw concentric ovals for each lane
+                for (int i = 0; i < lanes; i++) {
+                    int x = margin + (i * laneSpacing);
+                    int y = margin + (i * laneSpacing);
+                    int width = trackWidth - (2 * i * laneSpacing);
+                    int height = trackHeight - (2 * i * laneSpacing);
+                    
+                    // Fill the lane
+                    g2d.setColor(new Color(173, 216, 230)); // Light blue color for lanes
+                    g2d.fillOval(x, y, width, height);
+                    
+                    // Draw the lane border
+                    g2d.setColor(new Color(34, 139, 34)); // Green color for the track
+                    g2d.drawOval(x, y, width, height);
+                }
+
+                // Draw the start/finish line
+                g2d.setColor(Color.WHITE);
+                g2d.setStroke(new BasicStroke(5));
+                
+                // Draw finish line at top of track
+                int finishX = margin + (trackWidth / 2);
+                g2d.drawLine(finishX, margin, finishX, margin + laneSpacing * lanes);
+            }
+        };
         
-        // Position car in the middle of the track
-        int carX = (int)(middleX + trackRadiusX * Math.cos(angle)) - 15;
-        int carY = (int)(middleY + trackRadiusY * Math.sin(angle)) - 10;
+        trackPanel.setPreferredSize(new Dimension(width, height));
+        trackPanel.setLayout(null); // Use absolute positioning for cars and labels
         
-        // Draw car
-        g2d.setColor(Color.RED);
-        g2d.fillRect(carX, carY, 30, 20);
+        // Create control panel
+        JPanel controlPanel = new JPanel();
+        JButton startButton = new JButton("Start Race");
+        JButton resetButton = new JButton("Reset Race");
+        controlPanel.add(startButton);
+        controlPanel.add(resetButton);
         
-        // Add car direction indicator (front of car)
-        g2d.setColor(Color.BLUE);
-        double headingAngle = angle + Math.PI/2; // Car faces tangent to circle
-        int headX = (int)(carX + 15 + 10 * Math.cos(headingAngle));
-        int headY = (int)(carY + 10 + 10 * Math.sin(headingAngle));
-        g2d.fillOval(headX-5, headY-5, 10, 10);
+        // Add panels to frame
+        trackFrame.add(trackPanel, BorderLayout.CENTER);
+        trackFrame.add(controlPanel, BorderLayout.SOUTH);
+        
+        // Create race manager - after all track elements are added
+        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, Car.TrackType.OVAL);
+        
+        // Add action for start button
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                raceManager.startRace();
+            }
+        });
+        
+        // Add action for reset button
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                raceManager.resetRace();
+            }
+        });
+
+        // Display the frame
+        trackFrame.pack();
+        trackFrame.setVisible(true);
     }
-    
-    private void drawRaceStatus(Graphics2D g2d) {
-        g2d.setColor(Color.BLACK);
-        g2d.setFont(new Font("Arial", Font.BOLD, 16));
+
+    // Method to create zigzag track with racing functionality
+    public static void createZigZagTrack(int length, int lanes) {
+        // Create a frame for the track
+        JFrame trackFrame = new JFrame("Zig-Zag Race Track");
+        trackFrame.setSize(800, 600);
+        trackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        trackFrame.setLocationRelativeTo(null); // Center the frame on the screen
         
-        if (raceFinished) {
-            g2d.drawString("RACE FINISHED! - Completed " + lapCount + " laps", 10, 30);
-        } else {
-            g2d.drawString("Lap: " + lapCount + " of 3", 10, 30);
-        }
+        // Use BorderLayout for overall organization
+        trackFrame.setLayout(new BorderLayout());
+
+        // Create a panel to represent the zig-zag track
+        JPanel trackPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                
+                // Enable antialiasing for smoother lines
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                // Draw the green background for the entire area
+                g2d.setColor(new Color(34, 139, 34)); // Green background for grass
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+                
+                // Define the zig-zag path
+                int segments = 5; // Number of zigs and zags
+                int margin = 30;
+                int trackWidth = getWidth() - (2 * margin);
+                int trackHeight = getHeight() - (2 * margin);
+                int segmentWidth = trackWidth / segments;
+                
+                // Calculate lane parameters
+                int totalLaneWidth = trackHeight / 2;
+                int singleLaneWidth = totalLaneWidth / lanes;
+                
+                // Create points for the zig-zag path
+                int[] xPoints = new int[segments + 1];
+                int[] yPoints = new int[segments + 1];
+                
+                for (int i = 0; i <= segments; i++) {
+                    xPoints[i] = margin + (i * segmentWidth);
+                    yPoints[i] = margin + (i % 2 == 0 ? 0 : trackHeight - totalLaneWidth);
+                }
+                
+                // Draw each lane
+                for (int lane = 0; lane < lanes; lane++) {
+                    int laneOffset = lane * singleLaneWidth;
+                    
+                    Polygon lanePolygon = new Polygon();
+                    
+                    // Top path of lane
+                    for (int i = 0; i <= segments; i++) {
+                        lanePolygon.addPoint(xPoints[i], yPoints[i] + laneOffset);
+                    }
+                    
+                    // Bottom path of lane (in reverse)
+                    for (int i = segments; i >= 0; i--) {
+                        lanePolygon.addPoint(xPoints[i], yPoints[i] + laneOffset + singleLaneWidth);
+                    }
+                    
+                    // Fill the lane
+                    g2d.setColor(new Color(173, 216, 230)); // Light blue color for lanes
+                    g2d.fill(lanePolygon);
+                    
+                    // Draw lane borders
+                    g2d.setColor(new Color(34, 139, 34)); // Green color for borders
+                    g2d.setStroke(new BasicStroke(2));
+                    g2d.draw(lanePolygon);
+                }
+                
+                // Draw finish line
+                g2d.setColor(Color.WHITE);
+                g2d.setStroke(new BasicStroke(5));
+                g2d.drawLine(margin + trackWidth - 20, margin, margin + trackWidth - 20, margin + totalLaneWidth);
+            }
+        };
+        
+        trackPanel.setPreferredSize(new Dimension(length, 400));
+        trackPanel.setLayout(null); // Use absolute positioning for cars and labels
+        
+        // Create control panel
+        JPanel controlPanel = new JPanel();
+        JButton startButton = new JButton("Start Race");
+        JButton resetButton = new JButton("Reset Race");
+        controlPanel.add(startButton);
+        controlPanel.add(resetButton);
+        
+        // Add panels to frame
+        trackFrame.add(trackPanel, BorderLayout.CENTER);
+        trackFrame.add(controlPanel, BorderLayout.SOUTH);
+        
+        // Create race manager - after all track elements are added
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, Car.TrackType.ZIGZAG);
+        
+        // Add action for start button
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                raceManager.startRace();
+            }
+        });
+        
+        // Add action for reset button
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                raceManager.resetRace();
+            }
+        });
+
+        // Display the frame
+        trackFrame.pack();
+        trackFrame.setVisible(true);
+    }
+
+    // Main method to run the application
+    public static void main(String[] args) {
+        // Run GUI construction on the Event Dispatch Thread
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // Uncomment the track type you want to test
+                //createRectangularTrack(600, 5);
+                //createSimpleOvalTrack(5);
+                createZigZagTrack(600, 5);
+            }
+        });
     }
 }

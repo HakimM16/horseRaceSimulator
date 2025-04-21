@@ -105,6 +105,9 @@ public class RaceTrack{
             // Refresh panel to make cars visible
             trackPanel.revalidate();
             trackPanel.repaint();
+
+            // Set layout to null to allow absolute positioning
+            trackPanel.setLayout(null);
         }
         
         public void startRace() {
@@ -204,10 +207,16 @@ public class RaceTrack{
         JButton resetButton = new JButton("Reset Race");
         controlPanel.add(startButton);
         controlPanel.add(resetButton);
+
+        // create basic panel - this is for the statistics and other information
+        JPanel basicPanel = new JPanel();
+        basicPanel.setLayout(new BorderLayout());
+        basicPanel.setPreferredSize(new Dimension(length / 2, 50)); // Set fixed size for basic panel
         
         // Add panels to frame
-        trackFrame.add(trackPanel, BorderLayout.CENTER);
+        trackFrame.add(trackPanel, BorderLayout.WEST);
         trackFrame.add(controlPanel, BorderLayout.SOUTH);
+        trackFrame.add(basicPanel, BorderLayout.EAST); // Add basic panel to the top
         
         // Create race manager - after all track elements are added
         RaceManager raceManager = new RaceManager(trackPanel, length, lanes);
