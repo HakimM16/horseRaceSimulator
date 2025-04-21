@@ -38,10 +38,21 @@ public class Horse {
     }
 
     public Horse() {
-        this.name = "";
+        this.name = "highlander"; // Default name
         this.breed = "Thoroughbred"; // Default breed
         this.coatColor = "Brown"; // Default coat color
         this.symbol = "H"; // Default symbol
+        this.saddle = "Standard"; // Default saddle
+        this.horseshoe = "Regular"; // Default horseshoe
+        this.accessory = "None"; // Default accessory
+        updateAttributes();
+    }
+
+    public Horse(String name, String coatColor, String symbol) {
+        this.name = name;
+        this.breed = "Thoroughbred"; // Default breed
+        this.coatColor = coatColor; // Set coat color from parameter
+        this.symbol = symbol; // Set symbol from parameter
         this.saddle = "Standard"; // Default saddle
         this.horseshoe = "Regular"; // Default horseshoe
         this.accessory = "None"; // Default accessory
@@ -151,7 +162,7 @@ public class Horse {
             case "Palomino":
                 return new Color(255, 228, 181); // RGB for Palomino
             case "Pinto":
-                return new Color(255, 0, 0); // RGB for Pinto
+                return new Color(128, 0, 0); // RGB for Pinto
                 
             default:
                 return Color.WHITE; // Default color if not found

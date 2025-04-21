@@ -49,19 +49,28 @@ public class RaceTrackApplication {
         private Path2D.Double path; // For zigzag track
         private double pathPosition = 0; // Position along path (0.0 to 1.0)
         private TrackType trackType;
+        private boolean hasFallen; // Flag to indicate if horseGraphic has fallen
+        private double confidence; // horseGraphic confidence level
+        private double stamina; // horseGraphic stamina level
+        private double speedFactor; // horseGraphic speed factor
+        private String fallenSymbol = "X"; // Symbol to show when horseGraphic has fallen
         
         // Track type enum
         public enum TrackType {
             RECTANGULAR, OVAL, ZIGZAG
         }
         
-        public horseGraphic(String name, int laneNumber, String symbol, int laneHeight, Color color, TrackType trackType) {
+        public horseGraphic(String name, int laneNumber, String symbol, int laneHeight, Color color, TrackType trackType, double confidence, double stamina, int speedFactor) {
             this.name = name;
             this.laneNumber = laneNumber;
             this.trackType = trackType;
             this.speed = 1 + (Math.random() * 3); // Random speed between 1-3
             this.color = color;
             this.symbol = symbol;
+            this.hasFallen = false;
+            this.confidence = confidence;
+            this.stamina = stamina;
+            this.speedFactor = speedFactor;
             
             // Initial position based on track type
             switch(trackType) {
@@ -116,10 +125,24 @@ public class RaceTrackApplication {
         }
         
         private void moveRectangular() {
-            // Random speed variation to make race interesting
-            double randomFactor = (Math.random() * 3) - 1; // -1 to 1
-            x += speed + randomFactor;
-            horseGraphicPanel.setBounds((int)x, (int)y, 30, horseGraphicPanel.getHeight());
+            // if horseGraphic has fallen, stop moving
+            if (!this.hasFallen) {
+                // Random speed variation to make race interesting
+                double randomFactor = (Math.random() * 3) - 1; // -1 to 1
+                x += speed + randomFactor * this.speedFactor; // Adjust speed with random factor
+                horseGraphicPanel.setBounds((int)x, (int)y, 30, horseGraphicPanel.getHeight());
+                if (Math.random() < this.confidence) {
+                    // Random chance to fall
+                    if (Math.random() < 0.05) { // 5% chance to fall
+                        this.hasFallen = true;
+                        horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
+                        horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
+                        setFallenSymbol();// Change symbol to "X"
+                    } else {
+                        this.hasFallen = false; // Reset fall status
+                    }
+                } 
+            }
         }
         
         private void moveOval() {
@@ -188,7 +211,33 @@ public class RaceTrackApplication {
         }
         
         public String getName() {
-            return name;
+            return this.name;
+        }
+
+        public void resetFallen() {
+            this.hasFallen = false;
+            horseGraphicPanel.setBackground(color); // Reset color to original
+            horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Reset border
+            setSymbol(symbol); // Reset symbol to original
+        }
+
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
+            JLabel horseGraphicLabel = new JLabel(symbol);
+            horseGraphicLabel.setForeground(Color.WHITE);
+            horseGraphicLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            horseGraphicPanel.removeAll(); // Remove old label
+            horseGraphicPanel.add(horseGraphicLabel, BorderLayout.CENTER); // Add new label
+            horseGraphicPanel.revalidate(); // Refresh panel to show new label
+        }
+
+        public void setFallenSymbol() {
+            JLabel horseGraphicLabel = new JLabel(fallenSymbol);
+            horseGraphicLabel.setForeground(Color.WHITE);
+            horseGraphicLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            horseGraphicPanel.removeAll(); // Remove old label
+            horseGraphicPanel.add(horseGraphicLabel, BorderLayout.CENTER); // Add new label
+            horseGraphicPanel.revalidate(); // Refresh panel to show new label
         }
         
         // Method to reset horseGraphic position
@@ -197,14 +246,17 @@ public class RaceTrackApplication {
                 case RECTANGULAR:
                     x = 10;
                     horseGraphicPanel.setBounds((int)x, (int)y, 30, horseGraphicPanel.getHeight());
+                    resetFallen(); // Reset fallen status
                     break;
                 case OVAL:
                     angle = Math.PI / 2; // Start at bottom of oval
                     moveOval(); // Update position
+                    resetFallen();
                     break;
                 case ZIGZAG:
                     pathPosition = 0.0;
                     moveZigZag(); // Update position
+                    resetFallen();
                     break;
             }
         }
@@ -251,7 +303,7 @@ public class RaceTrackApplication {
             Color[] horseGraphicColors = {Color.RED, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.ORANGE};
             int i = 0;
             for (Horse horse : horses.values()) {
-                horseGraphic horse1 = new horseGraphic("horse  " + (i+1), i, horse.getSymbol(), laneHeight, horse.getColourFromString(horse.getCoatColor()), trackType);
+                horseGraphic horse1 = new horseGraphic(horse.getName(), i, horse.getSymbol(), laneHeight, horse.getColourFromString(horse.getCoatColor()), trackType, horse.getConfidence(), horse.getStamina(), horse.getSpeed());
                 horsesGUI.add(horse1);
                 i++;
                 // For zigzag track, set path for each horseGraphic
@@ -319,6 +371,7 @@ public class RaceTrackApplication {
         }
         
         private boolean updateRace() {
+            int count = 0;
             boolean someoneFinished = false;
             String winner = "";
             
@@ -346,6 +399,12 @@ public class RaceTrackApplication {
                 if (hasFinished && !someoneFinished) {
                     someoneFinished = true;
                     winner = horse.getName();
+                    System.out.println(horse.getName() + " has finished");
+                }
+
+                // Check if horseGraphic has fallen
+                if (horse.hasFallen) {
+                    count++;
                 }
             }
             
@@ -354,6 +413,11 @@ public class RaceTrackApplication {
             
             if (someoneFinished) {
                 resultLabel.setText(winner + " wins the race!");
+                return true;
+            }
+            // set label to say that all horses fell
+            if (count == horsesGUI.size()) {
+                resultLabel.setText("All horses have fallen!");
                 return true;
             }
             return false;
@@ -366,6 +430,7 @@ public class RaceTrackApplication {
             
             for (horseGraphic horseGraphic : horsesGUI) {
                 horseGraphic.reset();
+
             }
             
             resultLabel.setText("Click 'Start Race' to begin");
@@ -698,13 +763,15 @@ public class RaceTrackApplication {
             public void run() {
                 Map<Integer, Horse> horseMap = new HashMap<>();
                 horseMap.put(1, new Horse());
+                horseMap.put(2, new Horse("lightning", "Black", "L"));
+                horseMap.put(3, new Horse("thunder", "Pinto", "T"));
                 for (Horse horse : horseMap.values()) {
                     System.out.println("Horse: " + horse.toString());
                     System.out.println("Horse attributes: " + horse.getSpeed() + ", " + horse.getStamina() + ", " + horse.getConfidence());
                 }
                 
                 // Uncomment the track type you want to test
-                createRectangularTrack(600, 1, horseMap);
+                createRectangularTrack(300, 3, horseMap);
                 
             }
         });

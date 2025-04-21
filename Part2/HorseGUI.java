@@ -195,7 +195,7 @@ public class HorseGUI extends JFrame{
     private void updateAttributeBars() {
         speedBar.setValue(horse.getSpeed());
         staminaBar.setValue(horse.getStamina());
-        confidenceBar.setValue(horse.getConfidence());
+        confidenceBar.setValue((int) (horse.getConfidence() * 10));
     }
     
     private void updateHorsePreview() {
