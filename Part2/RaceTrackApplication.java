@@ -698,6 +698,10 @@ public class RaceTrackApplication {
             public void run() {
                 Map<Integer, Horse> horseMap = new HashMap<>();
                 horseMap.put(1, new Horse());
+                for (Horse horse : horseMap.values()) {
+                    System.out.println("Horse: " + horse.toString());
+                    System.out.println("Horse attributes: " + horse.getSpeed() + ", " + horse.getStamina() + ", " + horse.getConfidence());
+                }
                 
                 // Uncomment the track type you want to test
                 createRectangularTrack(600, 1, horseMap);

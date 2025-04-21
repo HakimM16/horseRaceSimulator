@@ -126,8 +126,14 @@ public class Horse {
         return this.stamina; 
     }
 
-    public int getConfidence() { 
-        return this.confidence; 
+    public double getConfidence() { 
+        double d_confidence = this.confidence / 10.0; // Convert to a scale of 0-1
+        if (d_confidence > 1) {
+            d_confidence = 1; // Cap at 1
+        } else if (d_confidence < 0) {
+            d_confidence = 0; // Cap at 0
+        }
+        return d_confidence; 
     }
 
     public Color getColourFromString(String color) {
