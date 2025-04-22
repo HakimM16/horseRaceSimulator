@@ -11,7 +11,7 @@ import javax.swing.*;
 
 public class HorseGUI extends JFrame{
     // GUI Components
-    private Horse horse = new Horse();
+    private Horse horse;
     private JTextField nameField;
     private JComboBox<String> breedComboBox;
     private JComboBox<String> colorComboBox;
@@ -23,7 +23,7 @@ public class HorseGUI extends JFrame{
     private JPanel horsePreviewPanel;
 
     // make arrayList of horses
-    private Map<Integer, Horse> horseList = new HashMap<>();
+    private static Map<Integer, Horse> horseList = new HashMap<>();
     private int num = 0; // number of horses created
     private int numberOfHorses; // number of horses to be created
     private Map<Integer, Horse> finalHorseList = null; // final list of horses created
@@ -53,6 +53,7 @@ public class HorseGUI extends JFrame{
     }
 
     private void initializeUI() {
+        
         setTitle("Horse Customization");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -353,12 +354,22 @@ public class HorseGUI extends JFrame{
     }
     
     private void saveHorse(Horse horse) {
-        // Get the name from the text field
-        horse.setName(nameField.getText());
-
-        // Add the horse to the list
-        int horseId = horseList.size() + 1; // Simple ID generation
-        horseList.put(horseId, horse);
+        // Create a new Horse instance or create a copy of the existing one
+        Horse newHorse = new Horse(); // Assuming you have a constructor
+        
+        // Set properties on the new horse object
+        newHorse.setName(nameField.getText());
+        newHorse.setBreed(horse.getBreed());  // Copy from your template horse
+        newHorse.setCoatColor(horse.getCoatColor());
+        newHorse.setSymbol(horse.getSymbol());
+        
+        // Copy attributes (assuming they're stored in a Map)
+        //Map<String, Integer> attributesCopy = new HashMap<>(horse.getAttributes());
+        newHorse.setAttributes(horse.getSpeed(), horse.getStamina(), horse.getConfidenceRaw());
+    
+        // Add the new horse to the list
+        int horseId = horseList.size() + 1;
+        horseList.put(horseId, newHorse);
         // Display confirmation message
         JOptionPane.showMessageDialog(this, 
             "Horse " + horseId + " saved successfully!\n\n" + horse.toString(),
@@ -367,6 +378,7 @@ public class HorseGUI extends JFrame{
         // Here you would typically save to a database or file
         System.out.println("Horse saved: " + horse);
         System.out.println("Horse size: " + this.horseList.size());
+        System.out.println("Horse list: " + this.horseList);
         
         // Increment the number of horses created
         this.num++;
@@ -384,7 +396,7 @@ public class HorseGUI extends JFrame{
             dispose(); // Close the window but don't terminate the application
 
             // call the Track class to start
-            Track track = new Track();
+            //Track track = new Track();
             RaceTrackApplication raceTrackApp = new RaceTrackApplication(this.lanes, this.length, this.trackShape, this.weatherCondition, this.finalHorseList);
             
         } else {

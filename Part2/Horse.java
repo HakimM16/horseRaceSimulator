@@ -128,6 +128,12 @@ public class Horse {
     public void setAccessory(String accessory) { 
         this.accessory = accessory; 
     }
+
+    public void setAttributes(int speed, int stamina, int confidence) {
+        this.speed = speed;
+        this.stamina = stamina;
+        this.confidence = confidence;
+    }
     
     public int getSpeed() { 
         return this.speed; 
@@ -135,6 +141,10 @@ public class Horse {
 
     public int getStamina() { 
         return this.stamina; 
+    }
+
+    public int getConfidenceRaw() { 
+        return this.confidence; 
     }
 
     public double getConfidence() { 

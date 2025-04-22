@@ -300,10 +300,10 @@ public class RaceTrackApplication {
             }
             
             // Create horseGraphics with different colors
-            Color[] horseGraphicColors = {Color.RED, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.ORANGE};
             int i = 0;
             for (Horse horse : horses.values()) {
                 horseGraphic horse1 = new horseGraphic(horse.getName(), i, horse.getSymbol(), laneHeight, horse.getColourFromString(horse.getCoatColor()), trackType, horse.getConfidence(), horse.getStamina(), horse.getSpeed());
+                System.out.println("Horse " + horse1.getName() + " created with color: " + horse1.color);
                 horsesGUI.add(horse1);
                 i++;
                 // For zigzag track, set path for each horseGraphic
@@ -492,7 +492,7 @@ public class RaceTrackApplication {
 
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.RECTANGULAR, horses);
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.RECTANGULAR, horseMap);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -770,7 +770,7 @@ public class RaceTrackApplication {
                 
                 
                 // Uncomment the track type you want to test
-                //createRectangularTrack(600, 5, horseMap);
+                createRectangularTrack(600, 5, horseMap);
                 //createSimpleOvalTrack(5, horseMap);
                 
             }
