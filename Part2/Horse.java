@@ -129,7 +129,74 @@ public class Horse {
         this.accessory = accessory; 
     }
 
-    public void setAttributes(int speed, int stamina, int confidence) {
+    public void setAttributes(int speed, int stamina, int confidence, String weather) {
+        /** weather conditions
+         * Sunny:
+         * - Speed: +2 - stamina: +1 - confidence: +2
+         * Rainy:
+         * - Speed: -1 - stamina: +1 - confidence: -1
+         * snowy:
+         * - Speed: -3 - stamina: -2 - confidence: -2
+         * foggy:
+         * - Speed: -1 - stamina: +1 - confidence: 0
+         * windy:
+         * - Speed: -2 - stamina: +1 - confidence: 0
+         * muddy:
+         * - Speed: -2 - stamina: -1 - confidence: -1
+         * dry:
+         * - Speed: +1 - stamina: +1 - confidence: +1
+         * wet:
+         * - Speed: -1 - stamina: +1 - confidence: 0
+         * icy:
+         * - Speed: -3 - stamina: -2 - confidence: -3
+         */
+        switch (weather) {
+            case "Sunny":
+                speed += 2;
+                stamina += 1;
+                confidence += 2;
+                break;
+            case "Rainy":
+                speed -= 1;
+                stamina += 1;
+                confidence -= 1;
+                break;
+            case "Snowy":
+                speed -= 3;
+                stamina -= 2;
+                confidence -= 2;
+                break;
+            case "Foggy":
+                speed -= 1;
+                stamina += 1;
+                confidence += 0;
+                break;
+            case "Windy":
+                speed -= 2;
+                stamina += 1;
+                confidence += 0;
+                break;
+            case "Muddy":
+                speed -= 2;
+                stamina -= 1;
+                confidence -= 1;
+                break;
+            case "Dry":
+                speed += 1;
+                stamina += 1;
+                confidence += 1;
+                break; 
+            case "Wet":
+                speed -= 1; 
+                stamina += 1; 
+                confidence += 0; 
+                break; 
+            case "Icy":
+                speed -= 3; 
+                stamina -= 2; 
+                confidence -= 3; 
+                break;
+        }
         this.speed = speed;
         this.stamina = stamina;
         this.confidence = confidence;
@@ -142,6 +209,7 @@ public class Horse {
     public int getStamina() { 
         return this.stamina; 
     }
+    
 
     public int getConfidenceRaw() { 
         return this.confidence; 

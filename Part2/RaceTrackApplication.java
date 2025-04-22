@@ -603,7 +603,7 @@ public class RaceTrackApplication {
                 
                 // Uncomment the track type you want to test
                 //createRectangularTrack(600, 4, horseMap);
-                //createSimpleOvalTrack(5, horseMap);
+                createSimpleOvalTrack(5, horseMap);
                 
             }
         });

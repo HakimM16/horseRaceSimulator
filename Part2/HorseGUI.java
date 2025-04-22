@@ -362,21 +362,18 @@ public class HorseGUI extends JFrame{
         newHorse.setBreed(horse.getBreed());  // Copy from your template horse
         newHorse.setCoatColor(horse.getCoatColor());
         newHorse.setSymbol(horse.getSymbol());
-        
-        // Copy attributes (assuming they're stored in a Map)
-        //Map<String, Integer> attributesCopy = new HashMap<>(horse.getAttributes());
-        newHorse.setAttributes(horse.getSpeed(), horse.getStamina(), horse.getConfidenceRaw());
+        newHorse.setAttributes(horse.getSpeed(), horse.getStamina(), horse.getConfidenceRaw(), this.weatherCondition);
     
         // Add the new horse to the list
         int horseId = horseList.size() + 1;
         horseList.put(horseId, newHorse);
         // Display confirmation message
         JOptionPane.showMessageDialog(this, 
-            "Horse " + horseId + " saved successfully!\n\n" + horse.toString(),
+            "Horse " + horseId + " saved successfully!\n\n" + newHorse.toString(),
             "Horse Saved", JOptionPane.INFORMATION_MESSAGE);
         
         // Here you would typically save to a database or file
-        System.out.println("Horse saved: " + horse);
+        System.out.println("Horse saved: " + newHorse);
         System.out.println("Horse size: " + this.horseList.size());
         System.out.println("Horse list: " + this.horseList);
         
