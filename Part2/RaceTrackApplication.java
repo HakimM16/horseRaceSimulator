@@ -23,10 +23,10 @@ public class RaceTrackApplication {
 
         switch (this.trackShape) {
             case "oval":
-                createSimpleOvalTrack(this.lanes, this.horses);
+                createSimpleOvalTrack(this.lanes, this.horses, this.weather);
                 break;
             case "rectangular":
-                createRectangularTrack(this.length, this.lanes, this.horses);
+                createRectangularTrack(this.length, this.lanes, this.horses, this.weather);
                 break;
             default:
                 throw new AssertionError();
@@ -399,10 +399,10 @@ public class RaceTrackApplication {
     }
 
     // Method to create rectangular track
-    public static void createRectangularTrack(int length, int lanes, Map<Integer, Horse> horses) {
+    public static void createRectangularTrack(int length, int lanes, Map<Integer, Horse> horses, String weather) {
         Map<Integer, Horse> horseMap = new HashMap<>(horses);
         // Create a frame for the track
-        JFrame trackFrame = new JFrame("Rectangular Race Track");
+        JFrame trackFrame = new JFrame("Rectangular Race Track - " + weather);
         trackFrame.setSize(length + 50, 600); // Make sure frame is large enough
         trackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         trackFrame.setLocationRelativeTo(null); // Center the frame on the screen
@@ -475,14 +475,14 @@ public class RaceTrackApplication {
     }
 
     // Method to create oval track with racing functionality
-    public static void createSimpleOvalTrack(int lanes, Map<Integer, Horse> horses) {
+    public static void createSimpleOvalTrack(int lanes, Map<Integer, Horse> horses, String weather) {
         Map<Integer, Horse> horseMap = new HashMap<>(horses);
         // Create width and height
         int width = 750;
         int height = 450;
         
         // Create a frame for the track
-        JFrame trackFrame = new JFrame("Oval Race Track");
+        JFrame trackFrame = new JFrame("Oval Race Track - " + weather);
         trackFrame.setSize(800, 600);
         trackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         trackFrame.setLocationRelativeTo(null); // Center the frame on the screen
@@ -605,7 +605,7 @@ public class RaceTrackApplication {
                 
                 // Uncomment the track type you want to test
                 //createRectangularTrack(600, 4, horseMap);
-                createSimpleOvalTrack(5, horseMap);
+                createSimpleOvalTrack(5, horseMap, "Sunny");
                 
             }
         });
