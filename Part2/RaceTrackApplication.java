@@ -146,47 +146,74 @@ public class RaceTrackApplication {
         }
         
         private void moveOval() {
-            // Random speed variation
-            double randomFactor = (Math.random() * 0.02) - 0.01; // Small random factor
-            angle += (speed * 0.01) + randomFactor; // Adjust speed for oval movement
-            
-            // Keep angle in range 0-2π
-            if (angle >= 2 * Math.PI) {
-                angle -= 2 * Math.PI;
+            // if horseGraphic has fallen, stop moving
+            if (!this.hasFallen) {
+                // Random speed variation
+                double randomFactor = (Math.random() * 0.02) - 0.01; // Small random factor
+                angle += (speed * 0.01) + randomFactor; // Adjust speed for oval movement
+                
+                // Keep angle in range 0-2π
+                if (angle >= 2 * Math.PI) {
+                    angle -= 2 * Math.PI;
+                }
+                
+                // Calculate position on oval
+                int centerX = 375; // Center X of oval
+                int centerY = 225; // Center Y of oval
+                int radiusX = 275 - (laneNumber * 20); // X radius, decreasing for inner lanes
+                int radiusY = 150 - (laneNumber * 20); // Y radius, decreasing for inner lanes
+                
+                x = centerX + radiusX * Math.cos(angle);
+                y = centerY + radiusY * Math.sin(angle);
+                
+                horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
+                if (Math.random() < this.confidence) {
+                    // Random chance to fall
+                    if (Math.random() < 0.05) { // 5% chance to fall
+                        this.hasFallen = true;
+                        horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
+                        horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
+                        setFallenSymbol();// Change symbol to "X"
+                    } else {
+                        this.hasFallen = false; // Reset fall status
+                    }
+                } 
             }
-            
-            // Calculate position on oval
-            int centerX = 375; // Center X of oval
-            int centerY = 225; // Center Y of oval
-            int radiusX = 275 - (laneNumber * 20); // X radius, decreasing for inner lanes
-            int radiusY = 150 - (laneNumber * 20); // Y radius, decreasing for inner lanes
-            
-            x = centerX + radiusX * Math.cos(angle);
-            y = centerY + radiusY * Math.sin(angle);
-            
-            horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
         }
         
         private void moveZigZag() {
-            if (path == null) return;
-            
-            // Random speed variation
-            double randomFactor = (Math.random() * 0.003) - 0.001;
-            pathPosition += (speed * 0.003) + randomFactor;
-            
-            // Reset position if completed path
-            if (pathPosition > 1.0) {
-                pathPosition = 0.0;
-            }
-            
-            // Calculate position along path
-            PathIterator pi = path.getPathIterator(null, pathPosition);
-            float[] coords = new float[6];
-            if (!pi.isDone()) {
-                pi.currentSegment(coords);
-                x = coords[0];
-                y = coords[1];
-                horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
+            if (!this.hasFallen) {
+                if (path == null) return;
+                
+                // Random speed variation
+                double randomFactor = (Math.random() * 0.003) - 0.001;
+                pathPosition += (speed * 0.003) + randomFactor;
+                
+                // Reset position if completed path
+                if (pathPosition > 1.0) {
+                    pathPosition = 0.0;
+                }
+                
+                // Calculate position along path
+                PathIterator pi = path.getPathIterator(null, pathPosition);
+                float[] coords = new float[6];
+                if (!pi.isDone()) {
+                    pi.currentSegment(coords);
+                    x = coords[0];
+                    y = coords[1];
+                    horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
+                }
+                if (Math.random() < this.confidence) {
+                    // Random chance to fall
+                    if (Math.random() < 0.05) { // 5% chance to fall
+                        this.hasFallen = true;
+                        horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
+                        horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
+                        setFallenSymbol();// Change symbol to "X"
+                    } else {
+                        this.hasFallen = false; // Reset fall status
+                    }
+                }
             }
         }
         
@@ -770,8 +797,8 @@ public class RaceTrackApplication {
                 
                 
                 // Uncomment the track type you want to test
-                createRectangularTrack(600, 5, horseMap);
-                //createSimpleOvalTrack(5, horseMap);
+                //createRectangularTrack(600, 4, horseMap);
+                //createSimpleOvalTrack(4, horseMap);
                 
             }
         });
