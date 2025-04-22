@@ -195,7 +195,7 @@ public class HorseGUI extends JFrame{
     
     private void updateAttributeBars() {
         speedBar.setValue(horse.getSpeed());
-        staminaBar.setValue(horse.getStamina());
+        staminaBar.setValue(horse.getStaminaRaw());
         confidenceBar.setValue((int) (horse.getConfidence() * 10));
     }
     
@@ -362,7 +362,7 @@ public class HorseGUI extends JFrame{
         newHorse.setBreed(horse.getBreed());  // Copy from your template horse
         newHorse.setCoatColor(horse.getCoatColor());
         newHorse.setSymbol(horse.getSymbol());
-        newHorse.setAttributes(horse.getSpeed(), horse.getStamina(), horse.getConfidenceRaw(), this.weatherCondition);
+        newHorse.setAttributes(horse.getSpeed(), horse.getStaminaRaw(), horse.getConfidenceRaw(), this.weatherCondition);
     
         // Add the new horse to the list
         int horseId = horseList.size() + 1;

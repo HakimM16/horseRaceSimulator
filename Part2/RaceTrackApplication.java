@@ -124,7 +124,8 @@ public class RaceTrackApplication {
                 horseGraphicPanel.setBounds((int)x, (int)y, 30, horseGraphicPanel.getHeight());
                 if (Math.random() < this.confidence) {
                     // Random chance to fall
-                    if (Math.random() < 0.05) { // 5% chance to fall
+                    // use stamina to decrease the chance of falling
+                    if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
                         this.hasFallen = true;
                         horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
                         horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
@@ -160,7 +161,8 @@ public class RaceTrackApplication {
                 horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
                 if (Math.random() < this.confidence) {
                     // Random chance to fall
-                    if (Math.random() < 0.01) { // 5% chance to fall
+                    // use stamina to decrease the chance of falling
+                    if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
                         this.hasFallen = true;
                         horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
                         horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility

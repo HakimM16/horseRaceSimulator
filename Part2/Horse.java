@@ -206,8 +206,18 @@ public class Horse {
         return this.speed; 
     }
 
-    public int getStamina() { 
+    public int getStaminaRaw() { 
         return this.stamina; 
+    }
+
+    public double getStamina() { 
+        double d_stamina = this.stamina / 10.0; // Convert to a scale of 0-1
+        if (d_stamina > 1) {
+            d_stamina = 1; // Cap at 1
+        } else if (d_stamina < 0) {
+            d_stamina = 0; // Cap at 0
+        }
+        return d_stamina; 
     }
     
 
