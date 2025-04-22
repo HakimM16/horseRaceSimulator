@@ -169,7 +169,7 @@ public class RaceTrackApplication {
                 horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
                 if (Math.random() < this.confidence) {
                     // Random chance to fall
-                    if (Math.random() < 0.025) { // 5% chance to fall
+                    if (Math.random() < 0.01) { // 5% chance to fall
                         this.hasFallen = true;
                         horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
                         horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
@@ -805,12 +805,12 @@ public class RaceTrackApplication {
                 horseMap.put(2, new Horse("lightning", "Black", "L"));
                 horseMap.put(3, new Horse("thunder", "Pinto", "T"));
                 horseMap.put(4, new Horse("storm", "Palomino", "S"));
-                // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
+                horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
                 
                 
                 // Uncomment the track type you want to test
                 //createRectangularTrack(600, 4, horseMap);
-                createSimpleOvalTrack(4, horseMap);
+                createSimpleOvalTrack(5, horseMap);
                 
             }
         });
