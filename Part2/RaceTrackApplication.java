@@ -150,7 +150,7 @@ public class RaceTrackApplication {
             if (!this.hasFallen) {
                 // Random speed variation
                 double randomFactor = (Math.random() * 0.02) - 0.01; // Small random factor
-                angle += (speed * 0.01) + randomFactor; // Adjust speed for oval movement
+                angle += (speed * 0.01 * (this.speedFactor * 0.2)) + randomFactor; // Adjust speed for oval movement
                 
                 // Keep angle in range 0-2π
                 if (angle >= 2 * Math.PI) {
@@ -163,13 +163,13 @@ public class RaceTrackApplication {
                 int radiusX = 275 - (laneNumber * 20); // X radius, decreasing for inner lanes
                 int radiusY = 150 - (laneNumber * 20); // Y radius, decreasing for inner lanes
                 
-                x = centerX + radiusX * Math.cos(angle);
-                y = centerY + radiusY * Math.sin(angle);
+                x = centerX - radiusX * Math.cos(angle);
+                y = centerY - radiusY * Math.sin(angle);
                 
                 horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
                 if (Math.random() < this.confidence) {
                     // Random chance to fall
-                    if (Math.random() < 0.05) { // 5% chance to fall
+                    if (Math.random() < 0.025) { // 5% chance to fall
                         this.hasFallen = true;
                         horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
                         horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
@@ -413,9 +413,21 @@ public class RaceTrackApplication {
                         hasFinished = horse.getX() >= trackLength - 40;
                         break;
                     case OVAL:
+                        // Track lap completion
+                        boolean hasCompletedLap = false;
+
                         // Finish when crossing finish line at top (angle near 3π/2)
                         double angleDiff = Math.abs(horse.getAngle() - (3 * Math.PI / 2));
-                        hasFinished = angleDiff < 0.1 && horse.getAngle() > Math.PI;
+                    
+                        // assign hasCompletedLap based on angleDiff being at near the finish line
+                        if (angleDiff > 3) {
+                            hasCompletedLap = true;
+                        }
+                        
+                        // assign hasFinished based on angleDiff and hasCompletedLap
+                        hasFinished = (angleDiff > 3.2 && angleDiff < 3.24) && hasCompletedLap;
+                        
+                        System.out.println("has finished: " + hasFinished + " angleDiff: " + angleDiff + " hasCompletedLap: " + hasCompletedLap);
                         break;
                     case ZIGZAG:
                         // Finish when reaching end of path
@@ -798,7 +810,7 @@ public class RaceTrackApplication {
                 
                 // Uncomment the track type you want to test
                 //createRectangularTrack(600, 4, horseMap);
-                //createSimpleOvalTrack(4, horseMap);
+                createSimpleOvalTrack(4, horseMap);
                 
             }
         });
