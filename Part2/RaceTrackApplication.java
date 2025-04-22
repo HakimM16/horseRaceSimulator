@@ -28,9 +28,6 @@ public class RaceTrackApplication {
             case "rectangular":
                 createRectangularTrack(this.length, this.lanes, this.horses);
                 break;
-            case "zigzag":
-                createZigZagTrack(this.length, this.lanes, this.horses);
-                break;
             default:
                 throw new AssertionError();
         }
@@ -57,7 +54,7 @@ public class RaceTrackApplication {
         
         // Track type enum
         public enum TrackType {
-            RECTANGULAR, OVAL, ZIGZAG
+            RECTANGULAR, OVAL
         }
         
         public horseGraphic(String name, int laneNumber, String symbol, int laneHeight, Color color, TrackType trackType, double confidence, double stamina, int speedFactor) {
@@ -80,9 +77,6 @@ public class RaceTrackApplication {
                     break;
                 case OVAL:
                     this.angle = Math.PI / 2; // Start at bottom of oval
-                    break;
-                case ZIGZAG:
-                    this.pathPosition = 0.0;
                     break;
             }
             
@@ -117,9 +111,6 @@ public class RaceTrackApplication {
                     break;
                 case OVAL:
                     moveOval();
-                    break;
-                case ZIGZAG:
-                    moveZigZag();
                     break;
             }
         }
@@ -181,41 +172,6 @@ public class RaceTrackApplication {
             }
         }
         
-        private void moveZigZag() {
-            if (!this.hasFallen) {
-                if (path == null) return;
-                
-                // Random speed variation
-                double randomFactor = (Math.random() * 0.003) - 0.001;
-                pathPosition += (speed * 0.003) + randomFactor;
-                
-                // Reset position if completed path
-                if (pathPosition > 1.0) {
-                    pathPosition = 0.0;
-                }
-                
-                // Calculate position along path
-                PathIterator pi = path.getPathIterator(null, pathPosition);
-                float[] coords = new float[6];
-                if (!pi.isDone()) {
-                    pi.currentSegment(coords);
-                    x = coords[0];
-                    y = coords[1];
-                    horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
-                }
-                if (Math.random() < this.confidence) {
-                    // Random chance to fall
-                    if (Math.random() < 0.05) { // 5% chance to fall
-                        this.hasFallen = true;
-                        horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
-                        horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
-                        setFallenSymbol();// Change symbol to "X"
-                    } else {
-                        this.hasFallen = false; // Reset fall status
-                    }
-                }
-            }
-        }
         
         public JPanel gethorseGraphicPanel() {
             return horseGraphicPanel;
@@ -280,11 +236,6 @@ public class RaceTrackApplication {
                     moveOval(); // Update position
                     resetFallen();
                     break;
-                case ZIGZAG:
-                    pathPosition = 0.0;
-                    moveZigZag(); // Update position
-                    resetFallen();
-                    break;
             }
         }
     }
@@ -320,7 +271,6 @@ public class RaceTrackApplication {
                     laneHeight = 400 / lanes;
                     break;
                 case OVAL:
-                case ZIGZAG:
                 default:
                     laneHeight = 20; // Fixed height for oval and zigzag
                     break;
@@ -333,10 +283,6 @@ public class RaceTrackApplication {
                 System.out.println("Horse " + horse1.getName() + " created with color: " + horse1.color);
                 horsesGUI.add(horse1);
                 i++;
-                // For zigzag track, set path for each horseGraphic
-                if (trackType == horseGraphic.TrackType.ZIGZAG) {
-                    setupZigZagPath(horse1, i, lanes);
-                }
                 
                 // Add horseGraphic panel to track panel
                 trackPanel.add(horse1.gethorseGraphicPanel());
@@ -351,30 +297,6 @@ public class RaceTrackApplication {
             // Refresh panel to make horseGraphics visible
             trackPanel.revalidate();
             trackPanel.repaint();
-        }
-        
-        private void setupZigZagPath(horseGraphic horse, int laneNumber, int totalLanes) {
-            // Define the zig-zag path for this lane
-            int segments = 5;
-            int margin = 30;
-            int trackWidth = trackPanel.getWidth() - (2 * margin);
-            int trackHeight = trackPanel.getHeight() - (2 * margin);
-            int segmentWidth = trackWidth / segments;
-            
-            int totalLaneWidth = trackHeight / 2;
-            int singleLaneWidth = totalLaneWidth / totalLanes;
-            int laneOffset = laneNumber * singleLaneWidth;
-            
-            Path2D.Double path = new Path2D.Double();
-            path.moveTo(margin, margin + laneOffset + singleLaneWidth/2);
-            
-            for (int i = 1; i <= segments; i++) {
-                int x = margin + (i * segmentWidth);
-                int y = margin + (i % 2 == 0 ? 0 : trackHeight - totalLaneWidth) + laneOffset + singleLaneWidth/2;
-                path.lineTo(x, y);
-            }
-            
-            horse.setPath(path);
         }
         
         public void startRace() {
@@ -427,11 +349,7 @@ public class RaceTrackApplication {
                         // assign hasFinished based on angleDiff and hasCompletedLap
                         hasFinished = (angleDiff > 3.2 && angleDiff < 3.24) && hasCompletedLap;
                         
-                        System.out.println("has finished: " + hasFinished + " angleDiff: " + angleDiff + " hasCompletedLap: " + hasCompletedLap);
-                        break;
-                    case ZIGZAG:
-                        // Finish when reaching end of path
-                        hasFinished = horse.getPathPosition() >= 0.98 && horse.getPathPosition() <= 1.0;
+                        //System.out.println("has finished: " + hasFinished + " angleDiff: " + angleDiff + " hasCompletedLap: " + hasCompletedLap);
                         break;
                 }
                 
@@ -668,131 +586,6 @@ public class RaceTrackApplication {
     }
 
     // Method to create zigzag track with racing functionality
-    public static void createZigZagTrack(int length, int lanes, Map<Integer, Horse> horses) {
-        Map<Integer, Horse> horseMap = new HashMap<>(horses);
-        // Create a frame for the track
-        JFrame trackFrame = new JFrame("Zig-Zag Race Track");
-        trackFrame.setSize(800, 600);
-        trackFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        trackFrame.setLocationRelativeTo(null); // Center the frame on the screen
-        
-        // Use BorderLayout for overall organization
-        trackFrame.setLayout(new BorderLayout());
-
-        // Create a panel to represent the zig-zag track
-        JPanel trackPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                
-                // Enable antialiasing for smoother lines
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                
-                // Draw the green background for the entire area
-                g2d.setColor(new Color(34, 139, 34)); // Green background for grass
-                g2d.fillRect(0, 0, getWidth(), getHeight());
-                
-                // Define the zig-zag path
-                int segments = 5; // Number of zigs and zags
-                int margin = 30;
-                int trackWidth = getWidth() - (2 * margin);
-                int trackHeight = getHeight() - (2 * margin);
-                int segmentWidth = trackWidth / segments;
-                
-                // Calculate lane parameters
-                int totalLaneWidth = trackHeight / 2;
-                int singleLaneWidth = totalLaneWidth / lanes;
-                
-                // Create points for the zig-zag path
-                int[] xPoints = new int[segments + 1];
-                int[] yPoints = new int[segments + 1];
-                
-                for (int i = 0; i <= segments; i++) {
-                    xPoints[i] = margin + (i * segmentWidth);
-                    yPoints[i] = margin + (i % 2 == 0 ? 0 : trackHeight - totalLaneWidth);
-                }
-                
-                // Draw each lane
-                for (int lane = 0; lane < lanes; lane++) {
-                    int laneOffset = lane * singleLaneWidth;
-                    
-                    Polygon lanePolygon = new Polygon();
-                    
-                    // Top path of lane
-                    for (int i = 0; i <= segments; i++) {
-                        lanePolygon.addPoint(xPoints[i], yPoints[i] + laneOffset);
-                    }
-                    
-                    // Bottom path of lane (in reverse)
-                    for (int i = segments; i >= 0; i--) {
-                        lanePolygon.addPoint(xPoints[i], yPoints[i] + laneOffset + singleLaneWidth);
-                    }
-                    
-                    // Fill the lane
-                    g2d.setColor(new Color(173, 216, 230)); // Light blue color for lanes
-                    g2d.fill(lanePolygon);
-                    
-                    // Draw lane borders
-                    g2d.setColor(new Color(34, 139, 34)); // Green color for borders
-                    g2d.setStroke(new BasicStroke(2));
-                    g2d.draw(lanePolygon);
-                }
-                
-                // Draw finish line
-                g2d.setColor(Color.WHITE);
-                g2d.setStroke(new BasicStroke(5));
-                g2d.drawLine(margin + trackWidth, margin + 170, margin + trackWidth, margin + totalLaneWidth + 170);
-            }
-        };
-        
-        trackPanel.setPreferredSize(new Dimension(length, 400));
-        trackPanel.setMinimumSize(new Dimension(length, 400));
-        trackPanel.setMaximumSize(new Dimension(length, 400));
-        trackPanel.setLayout(null); // Use absolute positioning for horseGraphics and labels
-        trackFrame.setResizable(false);
-        
-        // Create control panel
-        JPanel controlPanel = new JPanel();
-        JButton startButton = new JButton("Start Race");
-        JButton resetButton = new JButton("Reset Race");
-        controlPanel.add(startButton);
-        controlPanel.add(resetButton);
-
-        // create basic panel - this is for the statistics and other information
-        JPanel basicPanel = new JPanel();
-        basicPanel.setLayout(new BorderLayout());
-        basicPanel.setPreferredSize(new Dimension(length / 2, 50)); // Set fixed size for basic panel
-        
-        // Add panels to frame
-        trackFrame.add(trackPanel, BorderLayout.WEST);
-        trackFrame.add(controlPanel, BorderLayout.SOUTH);
-        trackFrame.add(basicPanel, BorderLayout.EAST);
-       
-        
-        // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, horseGraphic.TrackType.ZIGZAG, horses);
-        
-        // Add action for start button
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                raceManager.startRace();
-            }
-        });
-        
-        // Add action for reset button
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                raceManager.resetRace();
-            }
-        });
-
-        // Display the frame
-        trackFrame.pack();
-        trackFrame.setVisible(true);
-    }
 
     // Main method to run the application
     public static void main(String[] args) {
@@ -810,7 +603,7 @@ public class RaceTrackApplication {
                 
                 // Uncomment the track type you want to test
                 //createRectangularTrack(600, 4, horseMap);
-                createSimpleOvalTrack(5, horseMap);
+                //createSimpleOvalTrack(5, horseMap);
                 
             }
         });

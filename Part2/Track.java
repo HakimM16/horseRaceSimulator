@@ -95,7 +95,7 @@ public class Track {
         lengthField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
 
         JLabel trackShapeLabel = new JLabel("Enter track shape: ");
-        JLabel trackShapes = new JLabel("(oval, rectangular, zig-zag)");
+        JLabel trackShapes = new JLabel("(oval, rectangular)");
         trackShapes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         trackShapeLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField trackShapeField = new JTextField(3);  // 5 columns wide
