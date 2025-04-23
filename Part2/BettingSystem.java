@@ -52,7 +52,7 @@ public class BettingSystem {
 
         // Create a text field for the user to enter the horse name
         JTextField horseNameField = new JTextField(); // Create a text field for the horse name
-        horseNameField.setBounds(250, 100, 150, 30); // Set position and size of the text field
+        horseNameField.setBounds(300, 100, 150, 30); // Set position and size of the text field
         horseNameField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
         bettingPanel.add(horseNameField); // Add the text field to the betting panel
         
@@ -64,7 +64,7 @@ public class BettingSystem {
 
         // Create a text field for the user to enter the bet amount
         JTextField betAmountField = new JTextField();
-        betAmountField.setBounds(250, 150, 150, 30); // Set position and size of the text field
+        betAmountField.setBounds(300, 150, 150, 30); // Set position and size of the text field
         betAmountField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
         bettingPanel.add(betAmountField); // Add the text field to the betting panel
 
