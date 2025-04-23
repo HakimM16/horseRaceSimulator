@@ -78,7 +78,7 @@ public class Track {
     // select number of lanes from user
     public void inputValues() {
         // Create the frame
-        JFrame frame = new JFrame("Select Number of Lanes");
+        JFrame frame = new JFrame("Select Race");
 
         // Create panel and components
         JPanel panel = new JPanel();
