@@ -511,10 +511,10 @@ public class RaceTrackApplication {
         basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
         basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
-            JPanel horsePanel = new JPanel();
+            JPanel horsePanel = new JPanel(new GridLayout(0, 1));
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
-            JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getCoatColor() + " - " + horse.getSymbol());
-            JLabel horseStats = new JLabel("Speed: " + horse.getSpeed() + " Stamina: " + horse.getStamina() + " Confidence: " + horse.getConfidence());
+            JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
+            JLabel horseStats = new JLabel("Average Speed: " + horse.getSpeed() + " | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
             horseLabel.setForeground(Color.WHITE);
             horseStats.setForeground(Color.WHITE);
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -525,7 +525,7 @@ public class RaceTrackApplication {
             basicPanel.add(horsePanel);
         }
 
-        basicPanel.setPreferredSize(new Dimension(375, 50)); // Set fixed size for basic panel
+        basicPanel.setPreferredSize(new Dimension(400, 50)); // Set fixed size for basic panel
         
         // Add panels to frame
         trackFrame.add(trackPanel, BorderLayout.WEST);
@@ -647,10 +647,10 @@ public class RaceTrackApplication {
         basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
         basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
-            JPanel horsePanel = new JPanel();
+            JPanel horsePanel = new JPanel(new GridLayout(0, 1));
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
-            JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getCoatColor() + " - " + horse.getSymbol());
-            JLabel horseStats = new JLabel("Speed: " + horse.getSpeed() + " Stamina: " + horse.getStamina() + " Confidence: " + horse.getConfidence());
+            JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
+            JLabel horseStats = new JLabel("Average Speed: " + horse.getSpeed() + " | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
             horseLabel.setForeground(Color.WHITE);
             horseStats.setForeground(Color.WHITE);
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -787,10 +787,10 @@ public class RaceTrackApplication {
         basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
         basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
-            JPanel horsePanel = new JPanel();
+            JPanel horsePanel = new JPanel(new GridLayout(0, 1));
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
-            JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getCoatColor() + " - " + horse.getSymbol());
-            JLabel horseStats = new JLabel("Speed: " + horse.getSpeed() + " Stamina: " + horse.getStamina() + " Confidence: " + horse.getConfidence());
+            JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
+            JLabel horseStats = new JLabel("Average Speed: " + horse.getSpeed() + " | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
             horseLabel.setForeground(Color.WHITE);
             horseStats.setForeground(Color.WHITE);
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -848,9 +848,9 @@ public class RaceTrackApplication {
                 
                 
                 // Uncomment the track type you want to test
-                // createRectangularTrack(600, 4, horseMap, "Sunny");
+                createRectangularTrack(600, 4, horseMap, "Sunny");
                 createSimpleOvalTrack(1, horseMap, "Sunny");
-                // createHalfOvalTrack(3, horseMap, "Rainy");
+                createHalfOvalTrack(3, horseMap, "Rainy");
             }
         });
     }
