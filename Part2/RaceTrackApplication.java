@@ -135,6 +135,7 @@ public class RaceTrackApplication {
                     // use stamina to decrease the chance of falling
                     if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
                         this.hasFallen = true;
+                        setConfidence(this.confidence - 0.1); // Decrease confidence on fall
                         horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
                         horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
                         setFallenSymbol();// Change symbol to "X"
@@ -172,6 +173,7 @@ public class RaceTrackApplication {
                     // use stamina to decrease the chance of falling
                     if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
                         this.hasFallen = true;
+                        setConfidence(this.confidence - 0.1); // Decrease confidence on fall
                         horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
                         horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
                         setFallenSymbol();// Change symbol to "X"
@@ -209,6 +211,7 @@ public class RaceTrackApplication {
                     // use stamina to decrease the chance of falling
                     if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
                         this.hasFallen = true;
+                        setConfidence(this.confidence - 0.1); // Decrease confidence on fall
                         horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
                         horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
                         setFallenSymbol();// Change symbol to "X"
@@ -268,6 +271,11 @@ public class RaceTrackApplication {
             horseGraphicPanel.removeAll(); // Remove old label
             horseGraphicPanel.add(horseGraphicLabel, BorderLayout.CENTER); // Add new label
             horseGraphicPanel.revalidate(); // Refresh panel to show new label
+        }
+
+        // set new confidence
+        public void setConfidence(double confidence) {
+            this.confidence = confidence;
         }
         
         // Method to reset horseGraphic position
@@ -400,9 +408,9 @@ public class RaceTrackApplication {
                         }
                         
                         // assign hasFinished based on angleDiff and hasCompletedLap
-                        hasFinished = (angleDiff > 3.2 && angleDiff < 3.24) && hasCompletedLap;
+                        hasFinished = (angleDiff > 3.2 && angleDiff < 3.25) && hasCompletedLap;
                         
-                        //System.out.println("has finished: " + hasFinished + " angleDiff: " + angleDiff + " hasCompletedLap: " + hasCompletedLap);
+                        System.out.println("has finished: " + hasFinished + " angleDiff: " + angleDiff + " hasCompletedLap: " + hasCompletedLap);
                         break;
                     case HALFOVAL:
                         // Finish when crossing finish line at top (angle near 3π/2)
@@ -840,8 +848,8 @@ public class RaceTrackApplication {
                 
                 
                 // Uncomment the track type you want to test
-                createRectangularTrack(600, 4, horseMap, "Sunny");
-                // createSimpleOvalTrack(5, horseMap, "Sunny");
+                // createRectangularTrack(600, 4, horseMap, "Sunny");
+                createSimpleOvalTrack(5, horseMap, "Sunny");
                 // createHalfOvalTrack(3, horseMap, "Rainy");
             }
         });
