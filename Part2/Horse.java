@@ -16,6 +16,9 @@ public class Horse {
     private int speed;
     private int stamina;
     private int confidence;
+    private int newSpeed;
+    private int newStamina;
+    private int newConfidence;
 
     // Maps to store attribute modifiers based on selections
     private static final Map<String, int[]> BREED_ATTRIBUTES = new HashMap<>();
@@ -151,55 +154,55 @@ public class Horse {
          * - Speed: -3 - stamina: -2 - confidence: -3
          */
         switch (weather) {
-            case "Sunny":
+            case "sunny":
                 speed += 2;
                 stamina += 1;
                 confidence += 2;
                 break;
-            case "Rainy":
+            case "rainy":
                 speed -= 1;
                 stamina += 1;
                 confidence -= 1;
                 break;
-            case "Snowy":
+            case "snowy":
                 speed -= 3;
                 stamina -= 2;
                 confidence -= 2;
                 break;
-            case "Foggy":
+            case "foggy":
                 speed -= 1;
                 stamina += 1;
                 confidence += 0;
                 break;
-            case "Windy":
+            case "windy":
                 speed -= 2;
                 stamina += 1;
                 confidence += 0;
                 break;
-            case "Muddy":
+            case "muddy":
                 speed -= 2;
                 stamina -= 1;
                 confidence -= 1;
                 break;
-            case "Dry":
+            case "dry":
                 speed += 1;
                 stamina += 1;
                 confidence += 1;
                 break; 
-            case "Wet":
+            case "wet":
                 speed -= 1; 
                 stamina += 1; 
                 confidence += 0; 
                 break; 
-            case "Icy":
+            case "icy":
                 speed -= 3; 
                 stamina -= 2; 
                 confidence -= 3; 
                 break;
         }
-        this.speed = speed;
-        this.stamina = stamina;
-        this.confidence = confidence;
+        this.newSpeed = speed;
+        this.newStamina = stamina;
+        this.newConfidence = confidence;
     }
     
     public int getSpeed() { 
@@ -260,7 +263,7 @@ public class Horse {
     @Override
     public String toString() {
         return "Horse [name=" + name + ", breed=" + breed + ", color=" + coatColor +
-                ", symbol=" + symbol + ", attributes={speed=" + speed + 
-                ", stamina=" + stamina + ", confidence=" + confidence + "}]";
+                ", symbol=" + symbol + ", attributes={speed=" + newSpeed + 
+                ", stamina=" + newStamina + ", confidence=" + newConfidence + "}]";
     }
 }

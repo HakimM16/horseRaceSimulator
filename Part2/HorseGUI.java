@@ -66,6 +66,7 @@ public class HorseGUI extends JFrame{
         // Name field
         mainPanel.add(new JLabel("Horse Name:"));
         nameField = new JTextField(20);
+        nameField.setText("Highlander"); // Default name
         nameField.addActionListener(e -> horse.setName(nameField.getText()));
         mainPanel.add(nameField);
         
@@ -141,19 +142,19 @@ public class HorseGUI extends JFrame{
         
         // Speed attribute
         attributePanel.add(new JLabel("Speed:"));
-        speedBar = new JProgressBar(0, 12);
+        speedBar = new JProgressBar(0, 10);
         speedBar.setStringPainted(true);
         attributePanel.add(speedBar);
         
         // Stamina attribute
         attributePanel.add(new JLabel("Stamina:"));
-        staminaBar = new JProgressBar(0, 12);
+        staminaBar = new JProgressBar(0, 10);
         staminaBar.setStringPainted(true);
         attributePanel.add(staminaBar);
         
         // Confidence attribute
         attributePanel.add(new JLabel("Confidence:"));
-        confidenceBar = new JProgressBar(0, 12);
+        confidenceBar = new JProgressBar(0, 10);
         confidenceBar.setStringPainted(true);
         attributePanel.add(confidenceBar);
         
@@ -197,6 +198,7 @@ public class HorseGUI extends JFrame{
         speedBar.setValue(horse.getSpeed());
         staminaBar.setValue(horse.getStaminaRaw());
         confidenceBar.setValue(horse.getConfidenceRaw() );
+        System.out.println("Speed: " + horse.getSpeed() + ", Stamina: " + horse.getStaminaRaw() + ", Confidence: " + horse.getConfidenceRaw());
     }
     
     private void updateHorsePreview() {

@@ -841,16 +841,16 @@ public class RaceTrackApplication {
             public void run() {
                 Map<Integer, Horse> horseMap = new HashMap<>();
                 horseMap.put(1, new Horse());
-                // horseMap.put(2, new Horse("lightning", "Black", "L"));
-                // horseMap.put(3, new Horse("thunder", "Pinto", "T"));
-                // horseMap.put(4, new Horse("storm", "Palomino", "S"));
+                horseMap.put(2, new Horse("lightning", "Black", "L"));
+                horseMap.put(3, new Horse("thunder", "Pinto", "T"));
+                horseMap.put(4, new Horse("storm", "Palomino", "S"));
                 // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
                 
                 
                 // Uncomment the track type you want to test
                 createRectangularTrack(600, 4, horseMap, "Sunny");
-                createSimpleOvalTrack(1, horseMap, "Sunny");
-                createHalfOvalTrack(3, horseMap, "Rainy");
+                // createSimpleOvalTrack(1, horseMap, "Sunny");
+                // createHalfOvalTrack(3, horseMap, "Rainy");
             }
         });
     }
