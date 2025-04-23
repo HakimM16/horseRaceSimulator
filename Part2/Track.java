@@ -166,7 +166,7 @@ public class Track {
                 }
 
                 // check if track shape is in the list of valid shapes
-                String[] validShapes = {"oval", "rectangular", "zig-zag"};
+                String[] validShapes = {"oval", "rectangular", "half-oval"};
                 boolean isValidShape = false;
                 for (String shape : validShapes) {
                     if (shape.equalsIgnoreCase(trackShapeField.getText())) {
