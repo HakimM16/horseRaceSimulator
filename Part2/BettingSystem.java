@@ -5,6 +5,7 @@ public class BettingSystem {
     // Create a GUI for the betting system
     private JFrame bettingFrame;
     private JTextField betAmountField;
+    private JTextField horseNameField;
 
     public static void main(String[] args) {
         // Create an instance of the BettingSystem class to display the GUI
@@ -12,7 +13,7 @@ public class BettingSystem {
         bettingSystem.bettingGUI();
     }
 
-    public static void bettingGUI() {
+    public void bettingGUI() {
         // Create a frame for the betting
         JFrame bettingFrame = new JFrame("Betting System");
         bettingFrame.setSize(800, 600);
@@ -28,8 +29,6 @@ public class BettingSystem {
         // Set a black border for the betting panel
         bettingPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
        
-
-
         // display the list of horses in the betting panel
         JLabel horseListLabel = new JLabel("List of Horses:"); // Set the label for the horse list
         horseListLabel.setBounds(350, 10, 200, 30); // Set position and size of the label
@@ -43,9 +42,10 @@ public class BettingSystem {
             // Create a label for each horse and add it to the betting panel
             JLabel horseLabel = new JLabel(horse); // Create a label for the horse name
             horseLabel.setBounds(200 + num, 40, 200, 30); // Set position and size of the label
-            horseLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the label
+            horseLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Set font for the label
+            horseLabel.setForeground(Color.BLACK); // Set text color for the label
             bettingPanel.add(horseLabel); // Add the label to the betting panel
-            num += 80; // Increment the position for the next horse label
+            num += 90; // Increment the position for the next horse label
         }
 
         // Create a label for the name of the horse
@@ -58,6 +58,7 @@ public class BettingSystem {
         JTextField horseNameField = new JTextField(); // Create a text field for the horse name
         horseNameField.setBounds(450, 100, 150, 30); // Set position and size of the text field
         horseNameField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
+        horseNameField.setText(""); // Set default text for the text field
         bettingPanel.add(horseNameField); // Add the text field to the betting panel
         
         // Create a label for the betting amount
@@ -72,7 +73,21 @@ public class BettingSystem {
         betAmountField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
         bettingPanel.add(betAmountField); // Add the text field to the betting panel
 
+        // add buttons to the betting panel
+        JPanel buttonPanel = new JPanel();
+        JButton saveButton = new JButton("Save Horse");
+        saveButton.addActionListener(e -> saveBet());
         
+        JButton resetButton = new JButton("Reset");
+        resetButton.addActionListener(e -> resetForm());
+        
+        buttonPanel.add(saveButton);
+        buttonPanel.add(resetButton);
+        
+        buttonPanel.setBounds(200, 200, 400, 50); // Set position and size of the button panel
+        buttonPanel.setBackground(Color.LIGHT_GRAY); // Set background color for the button panel
+        
+        bettingFrame.add(buttonPanel); // Add the button panel to the betting panel
         
         bettingFrame.add(bettingPanel); // Add the betting panel to the frame
         
@@ -81,5 +96,15 @@ public class BettingSystem {
         bettingFrame.setVisible(true);
         bettingFrame.setResizable(false); // Disable resizing of the frame
 
+    }
+
+    public static void saveBet() {
+        System.out.println("Bet saved successfully!"); // Display a message when the bet is saved
+    }
+
+    public void resetForm() {
+        // Reset the form fields to their default values
+        horseNameField.setText(""); // Clear the horse name field
+        betAmountField.setText(""); // Clear the bet amount field
     }
 }
