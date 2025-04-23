@@ -89,7 +89,6 @@ public class RaceTrackApplication {
             // Create visual representation with border for better visibility
             horseGraphicPanel = new JPanel();
             horseGraphicPanel.setBackground(color);
-            horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
             
             // For rectangular track initial positioning
             if (trackType == TrackType.RECTANGULAR) {
@@ -497,6 +496,12 @@ public class RaceTrackApplication {
         // create basic panel - this is for the statistics and other information
         // make a loop to show the horseGraphic names and stats in the basic panel
         JPanel basicPanel = new JPanel(new FlowLayout());
+        JLabel basicLabel = new JLabel("Horse Statistics");
+        basicLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        basicLabel.setForeground(Color.BLACK);
+        basicPanel.add(basicLabel);
+        basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
+        basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
             JPanel horsePanel = new JPanel();
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
@@ -509,7 +514,6 @@ public class RaceTrackApplication {
             horsePanel.add(horseLabel);
             horsePanel.add(horseStats);
             horsePanel.setPreferredSize(new Dimension(300, 50)); // Set fixed size for horse panel
-            horsePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
             basicPanel.add(horsePanel);
         }
 
@@ -628,6 +632,12 @@ public class RaceTrackApplication {
         // create basic panel - this is for the statistics and other information
         // make a loop to show the horseGraphic names and stats in the basic panel
         JPanel basicPanel = new JPanel(new FlowLayout());
+        JLabel basicLabel = new JLabel("Horse Statistics");
+        basicLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        basicLabel.setForeground(Color.BLACK);
+        basicPanel.add(basicLabel);
+        basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
+        basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
             JPanel horsePanel = new JPanel();
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
@@ -640,7 +650,6 @@ public class RaceTrackApplication {
             horsePanel.add(horseLabel);
             horsePanel.add(horseStats);
             horsePanel.setPreferredSize(new Dimension(300, 50)); // Set fixed size for horse panel
-            horsePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
             basicPanel.add(horsePanel);
         }
         
@@ -763,6 +772,12 @@ public class RaceTrackApplication {
         // create basic panel - this is for the statistics and other information
         // make a loop to show the horseGraphic names and stats in the basic panel
         JPanel basicPanel = new JPanel(new FlowLayout());
+        JLabel basicLabel = new JLabel("Horse Statistics");
+        basicLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        basicLabel.setForeground(Color.BLACK);
+        basicPanel.add(basicLabel);
+        basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
+        basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
             JPanel horsePanel = new JPanel();
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
@@ -775,7 +790,6 @@ public class RaceTrackApplication {
             horsePanel.add(horseLabel);
             horsePanel.add(horseStats);
             horsePanel.setPreferredSize(new Dimension(300, 50)); // Set fixed size for horse panel
-            horsePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
             basicPanel.add(horsePanel);
         }
 
@@ -827,8 +841,8 @@ public class RaceTrackApplication {
                 
                 // Uncomment the track type you want to test
                 createRectangularTrack(600, 4, horseMap, "Sunny");
-                createSimpleOvalTrack(5, horseMap, "Sunny");
-                createHalfOvalTrack(3, horseMap, "Rainy");
+                // createSimpleOvalTrack(5, horseMap, "Sunny");
+                // createHalfOvalTrack(3, horseMap, "Rainy");
             }
         });
     }
