@@ -188,7 +188,7 @@ public class RaceTrackApplication {
             if (!this.hasFallen) {
                 // Random speed variation
                 double randomFactor = (Math.random() * 0.02) - 0.01; // Small random factor
-                angle += (speed * 0.01) + randomFactor; // Adjust speed for oval movement
+                angle += (speed * 0.01 * (this.speedFactor * 0.2)) + randomFactor; // Adjust speed for oval movement
                 
                 // Keep angle in range 0-2π
                 if (angle >= 2 * Math.PI) {
@@ -207,7 +207,8 @@ public class RaceTrackApplication {
                 horseGraphicPanel.setBounds((int)x - 15, (int)y - 10, 30, 20);
                 if (Math.random() < this.confidence) {
                     // Random chance to fall
-                    if (Math.random() < 0.05) { // 5% chance to fall
+                    // use stamina to decrease the chance of falling
+                    if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
                         this.hasFallen = true;
                         horseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
                         horseGraphicPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); // Add border for visibility
@@ -325,11 +326,11 @@ public class RaceTrackApplication {
                 case OVAL:
                 case HALFOVAL:
                 default:
-                    laneHeight = 20; // Fixed height for oval and zigzag
+                    laneHeight = 20; // Fixed height for oval and half-oval
                     break;
             }
             
-            // Create horseGraphics with different colors
+            // Create horseGraphics 
             int i = 0;
             for (Horse horse : horses.values()) {
                 horseGraphic horse1 = new horseGraphic(horse.getName(), i, horse.getSymbol(), laneHeight, horse.getColourFromString(horse.getCoatColor()), trackType, horse.getConfidence(), horse.getStamina(), horse.getSpeed());
@@ -771,14 +772,14 @@ public class RaceTrackApplication {
                 horseMap.put(1, new Horse());
                 horseMap.put(2, new Horse("lightning", "Black", "L"));
                 horseMap.put(3, new Horse("thunder", "Pinto", "T"));
-                horseMap.put(4, new Horse("storm", "Palomino", "S"));
-                horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
+                // horseMap.put(4, new Horse("storm", "Palomino", "S"));
+                // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
                 
                 
                 // Uncomment the track type you want to test
                 //createRectangularTrack(600, 4, horseMap);
                 //createSimpleOvalTrack(5, horseMap, "Sunny");
-                createHalfOvalTrack(5, horseMap, "Rainy");
+                createHalfOvalTrack(3, horseMap, "Rainy");
             }
         });
     }
