@@ -104,7 +104,7 @@ public class RaceTrackApplication {
             horsePanel.add(horseLabel);
             horsePanel.add(horseStats);
             horsePanel.add(horseOdd);
-            horsePanel.setPreferredSize(new Dimension(300, 50)); // Set fixed size for horse panel
+            horsePanel.setPreferredSize(new Dimension(350, 50)); // Set fixed size for horse panel
             basicPanel.add(horsePanel);
         }
 
@@ -244,7 +244,7 @@ public class RaceTrackApplication {
             horsePanel.add(horseLabel);
             horsePanel.add(horseStats);
             horsePanel.add(horseOdd);
-            horsePanel.setPreferredSize(new Dimension(300, 50)); // Set fixed size for horse panel
+            horsePanel.setPreferredSize(new Dimension(350, 50)); // Set fixed size for horse panel
             basicPanel.add(horsePanel);
         }
         
