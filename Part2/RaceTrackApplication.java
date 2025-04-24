@@ -27,13 +27,13 @@ public class RaceTrackApplication {
 
         switch (this.trackShape) {
             case "oval":
-                createSimpleOvalTrack(this.lanes, this.horses, this.weather);
+                createSimpleOvalTrack(this.lanes, this.horses, this.weather, this.horseBet, this.betAmount);
                 break;
             case "rectangular":
-                createRectangularTrack(this.length, this.lanes, this.horses, this.weather);
+                createRectangularTrack(this.length, this.lanes, this.horses, this.weather, this.horseBet, this.betAmount);
                 break;
             case "half-oval":
-                createHalfOvalTrack(this.lanes, this.horses, this.weather);
+                createHalfOvalTrack(this.lanes, this.horses, this.weather, this.horseBet, this.betAmount);
                 break;
             default:
                 throw new AssertionError();
@@ -41,7 +41,7 @@ public class RaceTrackApplication {
     }
 
     // Method to create rectangular track
-    public static void createRectangularTrack(int length, int lanes, Map<Integer, Horse> horses, String weather) {
+    public static void createRectangularTrack(int length, int lanes, Map<Integer, Horse> horses, String weather, String horseBet, int betAmount) {
         Map<Integer, Horse> horseMap = new HashMap<>(horses);
         // Create a frame for the track
         JFrame trackFrame = new JFrame("Rectangular Race Track - " + weather);
@@ -118,7 +118,7 @@ public class RaceTrackApplication {
 
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, HorseGraphic.TrackType.RECTANGULAR, horseMap);
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, HorseGraphic.TrackType.RECTANGULAR, horseMap, horseBet, betAmount);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -142,7 +142,7 @@ public class RaceTrackApplication {
     }
 
     // Method to create oval track with racing functionality
-    public static void createSimpleOvalTrack(int lanes, Map<Integer, Horse> horses, String weather) {
+    public static void createSimpleOvalTrack(int lanes, Map<Integer, Horse> horses, String weather, String horseBet, int betAmount) {
         Map<Integer, Horse> horseMap = new HashMap<>(horses);
         // Create width and height
         int width = 750;
@@ -257,7 +257,7 @@ public class RaceTrackApplication {
         trackFrame.add(basicPanel, BorderLayout.EAST);
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, HorseGraphic.TrackType.OVAL, horses);
+        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, HorseGraphic.TrackType.OVAL, horses, horseBet, betAmount);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -281,7 +281,7 @@ public class RaceTrackApplication {
     }
 
     // Method to create oval track with racing functionality
-    public static void createHalfOvalTrack(int lanes, Map<Integer, Horse> horses, String weather) {
+    public static void createHalfOvalTrack(int lanes, Map<Integer, Horse> horses, String weather, String horseBet, int betAmount) {
 
         Map<Integer, Horse> horseMap = new HashMap<>(horses);
         // Create width and height
@@ -401,7 +401,7 @@ public class RaceTrackApplication {
         trackFrame.add(basicPanel, BorderLayout.EAST);
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, HorseGraphic.TrackType.HALFOVAL, horses);
+        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, HorseGraphic.TrackType.HALFOVAL, horses, horseBet, betAmount);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -439,9 +439,9 @@ public class RaceTrackApplication {
                 // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
                 
                 // Uncomment the track type you want to test
-                createRectangularTrack(600, 4, horseMap, "Sunny");
-                createSimpleOvalTrack(4, horseMap, "Sunny");
-                createHalfOvalTrack(4, horseMap, "Rainy");
+                createRectangularTrack(600, 4, horseMap, "Sunny", "Thunder", 100);
+                // createSimpleOvalTrack(4, horseMap, "Sunny");
+                // createHalfOvalTrack(4, horseMap, "Rainy");
             }
         });
     }

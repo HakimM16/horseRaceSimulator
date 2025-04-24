@@ -21,6 +21,7 @@ public class HorseGraphic {
     public double confidence; // HorseGraphic confidence level
     public double stamina; // HorseGraphic stamina level
     public double speedFactor; // HorseGraphic speed factor
+    public double bettingOdd; // HorseGraphic betting odds
     public String fallenSymbol = "X"; // Symbol to show when HorseGraphic has fallen
     
     // Track type enum
@@ -28,7 +29,7 @@ public class HorseGraphic {
         RECTANGULAR, OVAL, HALFOVAL
     }
     
-    public HorseGraphic(String name, int laneNumber, String symbol, int laneHeight, Color color, TrackType trackType, double confidence, double stamina, int speedFactor) {
+    public HorseGraphic(String name, int laneNumber, String symbol, int laneHeight, Color color, TrackType trackType, double confidence, double stamina, int speedFactor, double bettingOdd) {
         this.name = name;
         this.laneNumber = laneNumber;
         this.trackType = trackType;
@@ -39,6 +40,7 @@ public class HorseGraphic {
         this.confidence = confidence;
         this.stamina = stamina;
         this.speedFactor = speedFactor;
+        this.bettingOdd = bettingOdd;
         
         // Initial position based on track type
         switch(trackType) {
@@ -213,6 +215,10 @@ public class HorseGraphic {
     
     public String getName() {
         return this.name;
+    }
+
+    public double getOdd() {
+        return this.bettingOdd;
     }
 
     public void resetFallen() {

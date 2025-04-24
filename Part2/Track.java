@@ -108,6 +108,10 @@ public class Track {
         JTextField weatherConditionField = new JTextField(3);  // 5 columns wide
         weatherConditionField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
 
+        JLabel oddLabel = new JLabel("Betting odds range from 0 to 3");
+        oddLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField oddField = new JTextField(3);  // 5 columns wide
+
         // Create a button to submit the input
         JButton submitButton = new JButton("Submit");
 
@@ -228,6 +232,7 @@ public class Track {
         panel.add(weatherConditionLabel);  // Add label to panel
         panel.add(weatherConditions);  // Add label to panel
         panel.add(weatherConditionField);  // Add text field to panel
+        panel.add(oddLabel);  // Add label to panel
         buttonPanel.add(submitButton);  // Add button to panel
 
         // Add panel to frame
