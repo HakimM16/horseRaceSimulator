@@ -18,6 +18,7 @@ public class RaceManager {
     public Map<Integer, Horse> horses;
     public String horseBet;
     public int betAmount;
+    public long raceStartTime;
     
     public RaceManager(JPanel trackPanel, int trackLength, int lanes, HorseGraphic.TrackType trackType, Map<Integer, Horse> horses, String horseBet, int betAmount) {
         this.horses = horses;
@@ -71,6 +72,8 @@ public class RaceManager {
     }
     
     public void startRace() {
+        raceStartTime = System.currentTimeMillis();
+
         if (raceInProgress) return;
         
         raceInProgress = true;
@@ -94,9 +97,23 @@ public class RaceManager {
         int count = 0;
         boolean someoneFinished = false;
         String winner = "";
+
+        // calculate elapsed time
+        long currentTime = System.currentTimeMillis();
+        long elapsedTimeMs = currentTime - raceStartTime;
+
+        // Convert to minutes:seconds.milliseconds format
+        long minutes = (elapsedTimeMs / 60000);
+        long seconds = (elapsedTimeMs % 60000) / 1000;
+        long milliseconds = elapsedTimeMs % 1000;
+
+        String timeString = String.format("%02d:%02d.%03d", minutes, seconds, milliseconds);
+
         
         for (HorseGraphic horse : horsesGUI) {
             horse.move();
+
+            resultLabel.setText("Race in progress... Time: " + timeString + "s");
             
             // Check if any HorseGraphic has finished, based on track type
             boolean hasFinished = false;
@@ -144,14 +161,14 @@ public class RaceManager {
         trackPanel.repaint();
         
         if (someoneFinished) {
-            resultLabel.setText(winner + " wins the race!");
-            displayBet(winner);
+            resultLabel.setText(winner + " wins the race! Final time: " + timeString + "s");
+            displayBet(winner, timeString);
             return true;
         }
         // set label to say that all horses fell
         if (count == horsesGUI.size()) {
-            resultLabel.setText("All horses have fallen!");
-            displayBetForFallenHorses();
+            resultLabel.setText("All horses have fallen! Race time: " + timeString + "s");
+            displayBetForFallenHorses(timeString);
             return true;
         }
         return false;
@@ -172,7 +189,7 @@ public class RaceManager {
         trackPanel.repaint();
     }
 
-    public void displayBet(String winner) {
+    public void displayBet(String winner, String timestring) {
         /**
          * * Display the betting result based on the winner and the horse bet
          * If the horse bet is the same as the winner, display a message saying that the user won
@@ -190,7 +207,8 @@ public class RaceManager {
             }
             double oddPercent = oddPredict / 3;
             double lostAmount = betAmount * oddPercent;
-            JOptionPane.showMessageDialog(trackPanel, "You lost £" + (int) lostAmount + " on " + this.horseBet + " with betting odd of " + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(trackPanel, winner + " has won the race in " + timestring + "s\nYou lost £" + (int) lostAmount + " on " + this.horseBet + " with betting odd of " 
+            + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         } else {
             // calculate the amount won based on the betting odd of the horse
             double oddPredict = 0;
@@ -201,11 +219,12 @@ public class RaceManager {
             }
             double oddPercent = oddPredict / 3;
             double wonAmount = betAmount + (betAmount * oddPercent);
-            JOptionPane.showMessageDialog(trackPanel, "You won £" + (int) wonAmount + " on " + this.horseBet + " with betting odd of " + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(trackPanel, winner + " has won the race in " + timestring + "s\nYou won £" + (int) wonAmount + " on " + this.horseBet + " with betting odd of "
+             + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-    public void displayBetForFallenHorses() {
+    public void displayBetForFallenHorses(String timestring) {
         // Calculate the amount lost based on the betting odd of the horse
         double oddPredict = 0;
         for (HorseGraphic horse : horsesGUI) {
@@ -215,7 +234,8 @@ public class RaceManager {
         }
         double oddPercent = oddPredict / 3;
         double lostAmount = betAmount * oddPercent;
-        JOptionPane.showMessageDialog(trackPanel, "All horses have fallen! \nYou lost £" + (int) lostAmount + " on " + this.horseBet + " with betting odd of " + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(trackPanel, "Race completed at " + timestring + "s\nAll horses have fallen! \nYou lost £" + (int) lostAmount + " on " + this.horseBet 
+        + " with betting odd of " + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         
     }
 }
