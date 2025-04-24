@@ -134,22 +134,14 @@ public class Track {
                 if (Integer.parseInt(lanesInput) < 1 || Integer.parseInt(lanesInput) > 5) {
                     System.out.println("Invalid number of lanes. Please enter a number between 1 and 5.");
                     // Show error message to user as a label
-                    JLabel errorLabel = new JLabel("Please enter a number between 1 and 5.");
-                    panel.add(errorLabel);  // Add error label to panel
-                    // Repaint the panel to show the error message
-                    panel.revalidate();  // Revalidate the panel to show the error message
-                    panel.repaint();  // Repaint the panel to show the error message
+                    JOptionPane.showMessageDialog(null, "Please enter a number between 1 and 5.", "Invalid Input - Lanes", JOptionPane.ERROR_MESSAGE);
                     return; // Exit the method if invalid input
                 }
                 // check if length is between 1 and 180
                 if (Integer.parseInt(lengthInput) < 100 || Integer.parseInt(lengthInput) > 700) {
                     System.out.println("Invalid length. Please enter a number between 100 and 700.");
                     // Show error message to user as a label
-                    JLabel errorLabel = new JLabel("Please enter a number between 100 and 700.");
-                    panel.add(errorLabel);  // Add error label to panel
-                    // Repaint the panel to show the error message
-                    panel.revalidate();  // Revalidate the panel to show the error message
-                    panel.repaint();  // Repaint the panel to show the error message
+                    JOptionPane.showMessageDialog(null, "Please enter a length between 100 and 700.", "Invalid Input - Length", JOptionPane.ERROR_MESSAGE);
                     return; // Exit the method if invalid input
                 }
 
@@ -157,11 +149,7 @@ public class Track {
                 if (trackShapeField.getText().isEmpty()) {
                     System.out.println("Invalid track shape. Please enter a valid track shape.");
                     // Show error message to user as a label
-                    JLabel errorLabel = new JLabel("Please enter a valid track shape.");
-                    panel.add(errorLabel);  // Add error label to panel
-                    // Repaint the panel to show the error message
-                    panel.revalidate();  // Revalidate the panel to show the error message
-                    panel.repaint();  // Repaint the panel to show the error message
+                    JOptionPane.showMessageDialog(null, "Please enter a track shape.", "Invalid Input - Track Shape", JOptionPane.ERROR_MESSAGE);
                     return; // Exit the method if invalid input
                 }
 
@@ -177,11 +165,7 @@ public class Track {
                 if (!isValidShape) {
                     System.out.println("Invalid track shape. Please enter a valid track shape.");
                     // Show error message to user as a label
-                    JLabel errorLabel = new JLabel("Please enter a valid track shape.");
-                    panel.add(errorLabel);  // Add error label to panel
-                    // Repaint the panel to show the error message
-                    panel.revalidate();  // Revalidate the panel to show the error message
-                    panel.repaint();  // Repaint the panel to show the error message
+                    JOptionPane.showMessageDialog(null, "Please enter a track shape.", "Invalid Input - Track Shape", JOptionPane.ERROR_MESSAGE);
                     return; // Exit the method if invalid input
                 }
 
@@ -198,21 +182,14 @@ public class Track {
                     System.out.println("Invalid weather condition. Please enter a valid weather condition.");
                     // Show error message to user as a label
                     JLabel errorLabel = new JLabel("Please enter a valid weather condition.");
-                    panel.add(errorLabel);  // Add error label to panel
-                    // Repaint the panel to show the error message
-                    panel.revalidate();  // Revalidate the panel to show the error message
-                    panel.repaint();  // Repaint the panel to show the error message
+                    JOptionPane.showMessageDialog(null, "Please enter a valid weather condition.", "Invalid Input - Weather", JOptionPane.ERROR_MESSAGE);
                     return; // Exit the method if invalid input
                 }
                 // check if weather condition is not empty
                 if (weatherConditionField.getText().isEmpty()) {
                     System.out.println("Invalid weather condition. Please enter a valid weather condition.");
                     // Show error message to user as a label
-                    JLabel errorLabel = new JLabel("Please enter a valid weather condition.");
-                    panel.add(errorLabel);  // Add error label to panel
-                    // Repaint the panel to show the error message
-                    panel.revalidate();  // Revalidate the panel to show the error message
-                    panel.repaint();  // Repaint the panel to show the error message
+                    JOptionPane.showMessageDialog(null, "Please enter a weather condition.", "Invalid Input - Weather", JOptionPane.ERROR_MESSAGE);
                     return; // Exit the method if invalid input
                 }
 
