@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
 
 public class BettingSystem {
@@ -6,11 +7,23 @@ public class BettingSystem {
     private JFrame bettingFrame;
     private JTextField betAmountField;
     private JTextField horseNameField;
+    // values from HorseGUI
+    private int lanes; // number of lanes in the track
+    private int length; // length of the track
+    private String trackShape; // shape of the track
+    private String weatherCondition; // weather condition
+    private Map<Integer, Horse> HorseList;
+    // name of horse and the amount of bet
+    private String horseName; // name of the horse
+    private int betAmount; // amount of the bet
 
-    public static void main(String[] args) {
-        // Create an instance of the BettingSystem class to display the GUI
-        BettingSystem bettingSystem = new BettingSystem();
-        bettingSystem.bettingGUI();
+    public BettingSystem(int lanes, int length, String trackShape, String weatherCondition, Map<Integer, Horse> finalHorseList) {
+        this.lanes = lanes; // Set the number of lanes in the track
+        this.length = length; // Set the length of the track
+        this.trackShape = trackShape; // Set the shape of the track
+        this.weatherCondition = weatherCondition; // Set the weather condition
+        this.HorseList = finalHorseList; // Set the horse list
+        bettingGUI();
     }
 
     public void bettingGUI() {
@@ -35,12 +48,11 @@ public class BettingSystem {
         horseListLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Set font for the label
         bettingPanel.add(horseListLabel); // Add the label to the betting panel  
 
-        // Create a list of horses (this should be replaced with actual horse data)
-        String[] horseNames = {"Thunder", "Lightning", "Storm", "Blaze", "Shadow"}; // Example horse names
+        // output the horse names in the betting panel
         int num = 0;
-        for (String horse : horseNames) {
+        for (Horse horse : HorseList.values()) {
             // Create a label for each horse and add it to the betting panel
-            JLabel horseLabel = new JLabel(horse); // Create a label for the horse name
+            JLabel horseLabel = new JLabel(horse.getName()); // Create a label for the horse name
             horseLabel.setBounds(200 + num, 40, 200, 30); // Set position and size of the label
             horseLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Set font for the label
             horseLabel.setForeground(Color.BLACK); // Set text color for the label
@@ -55,10 +67,12 @@ public class BettingSystem {
         bettingPanel.add(horseNameLabel); // Add the label to the betting panel
 
         // Create a text field for the user to enter the horse name
-        JTextField horseNameField = new JTextField(); // Create a text field for the horse name
+        horseNameField = new JTextField(); // Create a text field for the horse name
         horseNameField.setBounds(450, 100, 150, 30); // Set position and size of the text field
         horseNameField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
-        horseNameField.setText(""); // Set default text for the text field
+        horseNameField.setHorizontalAlignment(JTextField.CENTER); // Center the text in the text field
+        horseNameField.setText("Thunder"); // Set default text for the text field
+        horseNameField.addActionListener(e -> setName(horseNameField.getText())); // Set action listener for the text field
         bettingPanel.add(horseNameField); // Add the text field to the betting panel
         
         // Create a label for the betting amount
@@ -68,9 +82,13 @@ public class BettingSystem {
         bettingPanel.add(betAmountLabel); // Add the label to the betting panel
 
         // Create a text field for the user to enter the bet amount
-        JTextField betAmountField = new JTextField();
+        betAmountField = new JTextField();
         betAmountField.setBounds(450, 150, 150, 30); // Set position and size of the text field
         betAmountField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
+        betAmountField.setHorizontalAlignment(JTextField.CENTER); // Center the text in the text field
+        betAmountField.setText("400"); // Set default text for the text field
+        betAmountField.addActionListener(e -> setBetAmount(Integer.parseInt(betAmountField.getText()))); // Set action listener for the text field
+        betAmountField.setToolTipText("Enter the amount in numbers"); // Set tooltip for the text field
         bettingPanel.add(betAmountField); // Add the text field to the betting panel
 
         // add buttons to the betting panel
@@ -98,13 +116,61 @@ public class BettingSystem {
 
     }
 
-    public static void saveBet() {
+    public void saveBet() {
+        // Get the horse name and bet amount from the text fields
+        System.out.println("horseName: " + horseNameField.getText()); // Display the horse name in the console
+        System.out.println("betAmount: " + betAmountField.getText()); // Display the bet amount in the console
+        this.horseName = horseNameField.getText(); // Get the horse name from the text field
+        try {
+            this.betAmount = Integer.parseInt(betAmountField.getText()); // Get the bet amount from the text field
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter the amount in numbers.", "Invalid Input", JOptionPane.ERROR_MESSAGE); // Display an error message if the input is invalid
+            return; // Exit the method if the input is invalid
+        }
+
+        // check if the horse name is empty
+        if (horseName.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter a horse name.", "Invalid Input", JOptionPane.ERROR_MESSAGE); // Display an error message if the horse name is empty
+            return; // Exit the method if the horse name is empty
+        }
+
+        // check if horse name is in the horse list
+        boolean horseExists = false; // Flag to check if the horse exists in the list
+        for (Horse horse : HorseList.values()) {
+            if (horse.getName().equalsIgnoreCase(horseName)) { // Check if the horse name matches any horse in the list
+                horseExists = true; // Set the flag to true if the horse exists
+                break; // Exit the loop if the horse is found
+            }
+        }
+        if (!horseExists) {
+            JOptionPane.showMessageDialog(null, "Horse not found in the list.", "Invalid Input", JOptionPane.ERROR_MESSAGE); // Display an error message if the horse is not found
+            return; // Exit the method if the horse is not found
+        }
+        if (betAmount <= 0 || betAmount > 1000) { // Check if the bet amount is valid (between 1 and 1000)
+            JOptionPane.showMessageDialog(null, "Please enter a valid bet amount between 0 to 1000.", "Invalid Input", JOptionPane.ERROR_MESSAGE); // Display an error message if the bet amount is invalid
+            return; // Exit the method if the bet amount is invalid
+        }
+
+
         System.out.println("Bet saved successfully!"); // Display a message when the bet is saved
+        // display the horse name and the bet amount
+        JOptionPane.showMessageDialog(null, "Horse Name: " + horseName + "\nBet Amount: " + betAmount, "Bet Confirmation", JOptionPane.INFORMATION_MESSAGE);
+
+        // call RaceTrackApplication
+        RaceTrackApplication raceTrackApplication = new RaceTrackApplication(this.lanes, this.length, this.trackShape, this.weatherCondition, this.HorseList, this.horseName, this.betAmount); // Create
     }
 
     public void resetForm() {
         // Reset the form fields to their default values
         horseNameField.setText(""); // Clear the horse name field
         betAmountField.setText(""); // Clear the bet amount field
+    }
+
+    public void setName(String horseName) {
+        this.horseName = horseName; // Set the horse name
+    }
+    
+    public void setBetAmount(int betAmount) {
+        this.betAmount = betAmount; // Set the bet amount
     }
 }

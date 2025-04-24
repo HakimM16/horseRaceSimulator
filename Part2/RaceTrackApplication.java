@@ -12,14 +12,18 @@ public class RaceTrackApplication {
     public String trackShape;
     public String weather;
     public Map<Integer, Horse> horses;
+    public String horseBet;
+    public int betAmount;
 
-    public RaceTrackApplication(int lanes, int length, String trackShape, String weather, Map<Integer, Horse> horses) {
+    public RaceTrackApplication(int lanes, int length, String trackShape, String weather, Map<Integer, Horse> horses, String horseBet, int betAmount) {
         // Constructor to initialize the application
         this.lanes = lanes;
         this.length = length;
         this.trackShape = trackShape;
         this.weather = weather;
         this.horses = horses;
+        this.horseBet = horseBet;
+        this.betAmount = betAmount;
 
         switch (this.trackShape) {
             case "oval":

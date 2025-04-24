@@ -394,9 +394,8 @@ public class HorseGUI extends JFrame{
             // Don't immediately exit - allow the calling code to get the finalHorseList
             dispose(); // Close the window but don't terminate the application
 
-            // call the Track class to start
-            //Track track = new Track();
-            RaceTrackApplication raceTrackApp = new RaceTrackApplication(this.lanes, this.length, this.trackShape, this.weatherCondition, this.finalHorseList);
+            // call the BettingSystem class to start the betting system
+            BettingSystem bettingSystem = new BettingSystem(this.lanes, this.length, this.trackShape, this.weatherCondition, this.finalHorseList);
             
         } else {
             // Reset the form for new entry only if we need to create more horses
