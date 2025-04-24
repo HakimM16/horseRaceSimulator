@@ -153,8 +153,17 @@ public class BettingSystem {
 
 
         System.out.println("Bet saved successfully!"); // Display a message when the bet is saved
+        // get bet odd from horseName
+        double odd = 0; // Initialize the betting odds
+        for (Horse horse : HorseList.values()) {
+            if (horse.getName().equalsIgnoreCase(horseName)) { // Check if the horse name matches any horse in the list
+                odd = horse.getOdd(); // Get the betting odds for the horse
+                break; // Exit the loop after getting the odds
+            }
+        }
         // display the horse name and the bet amount
-        JOptionPane.showMessageDialog(null, "Horse Name: " + horseName + "\nBet Amount: £" + betAmount, "Bet Confirmation", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Horse Name: " + horseName + "\nBet Amount: £" + betAmount + "\nBetting Odds: " + odd + 
+        "\nPotential winnings: £" + betAmount * odd, "Bet Confirmation", JOptionPane.INFORMATION_MESSAGE);
 
         // close the betting frame
         bettingFrame.dispose(); // Dispose of the betting frame

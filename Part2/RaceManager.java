@@ -163,6 +163,7 @@ public class RaceManager {
         if (someoneFinished) {
             resultLabel.setText(winner + " wins the race! Final time: " + timeString + "s");
             displayBet(winner, timeString);
+           
             return true;
         }
         // set label to say that all horses fell
