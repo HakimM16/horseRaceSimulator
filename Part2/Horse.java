@@ -267,7 +267,7 @@ public class Horse {
             case "Chestnut":
                 return new Color(139, 69, 19); // RGB for Chestnut
             case "Palomino":
-                return new Color(255, 228, 181); // RGB for Palomino
+                return new Color(207, 180, 122); // RGB for Palomino
             case "Pinto":
                 return new Color(128, 0, 0); // RGB for Pinto
                 
