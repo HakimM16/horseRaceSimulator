@@ -90,15 +90,21 @@ public class RaceTrackApplication {
         basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
         basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
-            double avgSpeed = ((horse.getSpeed() / 10) * 40) * horse.getStamina();
+            double avgSpeed = ((horse.getSpeed() / 10.0) * 40) * horse.getStamina();
             JPanel horsePanel = new JPanel(new GridLayout(0, 1));
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
             JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
             JLabel horseStats = new JLabel("Average Speed: " + (int) avgSpeed + "mph | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
             JLabel horseOdd = new JLabel("Odds: " + horse.getOdd() + " (Up to 3)");
-            horseLabel.setForeground(Color.WHITE);
-            horseStats.setForeground(Color.WHITE);
-            horseOdd.setForeground(Color.WHITE);
+            if (horse.getCoatColor().equals("Black")) {
+                horseLabel.setForeground(Color.WHITE);
+                horseStats.setForeground(Color.WHITE);
+                horseOdd.setForeground(Color.WHITE);
+            } else {
+                horseLabel.setForeground(Color.BLACK);
+                horseStats.setForeground(Color.BLACK);
+                horseOdd.setForeground(Color.BLACK);
+            }
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
             horseLabel.setPreferredSize(new Dimension(200, 20)); // Set fixed size for labels
             horsePanel.add(horseLabel);
@@ -230,15 +236,21 @@ public class RaceTrackApplication {
         basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
         basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
-            double avgSpeed = ((horse.getSpeed() / 10) * 40) * horse.getStamina();
+            double avgSpeed = ((horse.getSpeed() / 10.0) * 40) * horse.getStamina();
             JPanel horsePanel = new JPanel(new GridLayout(0, 1));
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
             JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
             JLabel horseStats = new JLabel("Average Speed: " + (int) avgSpeed + "mph | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
             JLabel horseOdd = new JLabel("Odds: " + horse.getOdd() + " (Up to 3)");
-            horseLabel.setForeground(Color.WHITE);
-            horseStats.setForeground(Color.WHITE);
-            horseOdd.setForeground(Color.WHITE);
+            if (horse.getCoatColor().equals("Black")) {
+                horseLabel.setForeground(Color.WHITE);
+                horseStats.setForeground(Color.WHITE);
+                horseOdd.setForeground(Color.WHITE);
+            } else {
+                horseLabel.setForeground(Color.BLACK);
+                horseStats.setForeground(Color.BLACK);
+                horseOdd.setForeground(Color.BLACK);
+            }
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
             horseLabel.setPreferredSize(new Dimension(200, 20)); // Set fixed size for labels
             horsePanel.add(horseLabel);
@@ -375,15 +387,21 @@ public class RaceTrackApplication {
         basicPanel.setBackground(new Color(173, 216, 230)); // Light blue color for basic panel
         basicPanel.setBorder(BorderFactory.createLineBorder(new Color(34, 139, 34), 5)); // Add border for visibility
         for (Horse horse : horses.values()) {
-            double avgSpeed = ((horse.getSpeed() / 10) * 40) * horse.getStamina();
+            double avgSpeed = ((horse.getSpeed() / 10.0) * 40) * horse.getStamina();
             JPanel horsePanel = new JPanel(new GridLayout(0, 1));
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
             JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
             JLabel horseStats = new JLabel("Average Speed: " + (int) avgSpeed + "mph | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
             JLabel horseOdd = new JLabel("Odds: " + horse.getOdd() + " (Up to 3)");
-            horseLabel.setForeground(Color.WHITE);
-            horseStats.setForeground(Color.WHITE);
-            horseOdd.setForeground(Color.WHITE);
+            if (horse.getCoatColor().equals("Black")) {
+                horseLabel.setForeground(Color.WHITE);
+                horseStats.setForeground(Color.WHITE);
+                horseOdd.setForeground(Color.WHITE);
+            } else {
+                horseLabel.setForeground(Color.BLACK);
+                horseStats.setForeground(Color.BLACK);
+                horseOdd.setForeground(Color.BLACK);
+            }
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
             horseLabel.setPreferredSize(new Dimension(200, 20)); // Set fixed size for labels
             horsePanel.add(horseLabel);

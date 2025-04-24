@@ -28,7 +28,7 @@ public class BettingSystem {
 
     public void bettingGUI() {
         // Create a frame for the betting
-        JFrame bettingFrame = new JFrame("Betting System");
+        this.bettingFrame = new JFrame("Betting System");
         bettingFrame.setSize(800, 600);
         bettingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         bettingFrame.setLocationRelativeTo(null); // Center the frame on the screen
@@ -71,7 +71,7 @@ public class BettingSystem {
         horseNameField.setBounds(450, 100, 150, 30); // Set position and size of the text field
         horseNameField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
         horseNameField.setHorizontalAlignment(JTextField.CENTER); // Center the text in the text field
-        horseNameField.setText("Thunder"); // Set default text for the text field
+        horseNameField.setText("Highlander"); // Set default text for the text field
         horseNameField.addActionListener(e -> setName(horseNameField.getText())); // Set action listener for the text field
         bettingPanel.add(horseNameField); // Add the text field to the betting panel
         
@@ -154,10 +154,14 @@ public class BettingSystem {
 
         System.out.println("Bet saved successfully!"); // Display a message when the bet is saved
         // display the horse name and the bet amount
-        JOptionPane.showMessageDialog(null, "Horse Name: " + horseName + "\nBet Amount: " + betAmount, "Bet Confirmation", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Horse Name: " + horseName + "\nBet Amount: £" + betAmount, "Bet Confirmation", JOptionPane.INFORMATION_MESSAGE);
+
+        // close the betting frame
+        bettingFrame.dispose(); // Dispose of the betting frame
 
         // call RaceTrackApplication
         RaceTrackApplication raceTrackApplication = new RaceTrackApplication(this.lanes, this.length, this.trackShape, this.weatherCondition, this.HorseList, this.horseName, this.betAmount); // Create
+
     }
 
     public void resetForm() {
@@ -169,7 +173,7 @@ public class BettingSystem {
     public void setName(String horseName) {
         this.horseName = horseName; // Set the horse name
     }
-    
+
     public void setBetAmount(int betAmount) {
         this.betAmount = betAmount; // Set the bet amount
     }

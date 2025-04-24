@@ -69,7 +69,11 @@ public class HorseGraphic {
         
         // Add HorseGraphic symbol label to make it more visible
         JLabel HorseGraphicLabel = new JLabel(symbol);
-        HorseGraphicLabel.setForeground(Color.WHITE);
+        if (color.equals(Color.WHITE)) {
+            HorseGraphicLabel.setForeground(Color.BLACK); // Change text color for better visibility
+        } else {
+            HorseGraphicLabel.setForeground(Color.WHITE);
+        }
         HorseGraphicLabel.setHorizontalAlignment(SwingConstants.CENTER);
         HorseGraphicPanel.setLayout(new BorderLayout());
         HorseGraphicPanel.add(HorseGraphicLabel, BorderLayout.CENTER);
