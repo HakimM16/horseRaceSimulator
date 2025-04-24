@@ -425,7 +425,6 @@ public class RaceTrackApplication {
                 horseMap.put(4, new Horse("storm", "Palomino", "S"));
                 // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
                 
-                
                 // Uncomment the track type you want to test
                 createRectangularTrack(600, 4, horseMap, "Sunny");
                 // createSimpleOvalTrack(1, horseMap, "Sunny");

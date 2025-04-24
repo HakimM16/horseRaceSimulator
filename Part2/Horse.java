@@ -20,6 +20,9 @@ public class Horse {
     private int newStamina;
     private int newConfidence;
 
+    private double bettingOdd;
+
+
     // Maps to store attribute modifiers based on selections
     private static final Map<String, int[]> BREED_ATTRIBUTES = new HashMap<>();
     static {
@@ -49,6 +52,7 @@ public class Horse {
         this.horseshoe = "Regular"; // Default horseshoe
         this.accessory = "None"; // Default accessory
         updateAttributes();
+        setOdd();
     }
 
     public Horse(String name, String coatColor, String symbol) {
@@ -60,6 +64,7 @@ public class Horse {
         this.horseshoe = "Regular"; // Default horseshoe
         this.accessory = "None"; // Default accessory
         updateAttributes();
+        setOdd();
     }
 
     private void updateAttributes() {
@@ -130,6 +135,17 @@ public class Horse {
 
     public void setAccessory(String accessory) { 
         this.accessory = accessory; 
+    }
+
+    public double getOdd() { 
+        return this.bettingOdd; 
+    }
+    public void setOdd() { 
+        // make betting odd based on attributes
+        // max odd is 3 and min is 0
+        double odds = getConfidence() * 0.5 + getStamina() * 0.5 + getSpeed() * 0.2; // Example formula
+        System.out.println("Betting odds for " + this.name + ": " + odds);
+        this.bettingOdd = odds;
     }
 
     public void setAttributes(int speed, int stamina, int confidence, String weather) {
@@ -264,6 +280,6 @@ public class Horse {
     public String toString() {
         return "Horse [name=" + name + ", breed=" + breed + ", color=" + coatColor +
                 ", symbol=" + symbol + ", attributes={speed=" + newSpeed + 
-                ", stamina=" + newStamina + ", confidence=" + newConfidence + "}]";
+                ", stamina=" + newStamina + ", confidence=" + newConfidence + "}, " + "bettingOdd=" + bettingOdd + "]";
     }
 }
