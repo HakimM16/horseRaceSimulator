@@ -19,6 +19,8 @@ public class RaceManager {
     public String horseBet;
     public int betAmount;
     public long raceStartTime;
+    public long elapsedTimeMs;
+    public String winner;
     
     public RaceManager(JPanel trackPanel, int trackLength, int lanes, HorseGraphic.TrackType trackType, Map<Integer, Horse> horses, String horseBet, int betAmount) {
         this.horses = horses;
@@ -96,11 +98,11 @@ public class RaceManager {
     public boolean updateRace() {
         int count = 0;
         boolean someoneFinished = false;
-        String winner = "";
+        winner = "";
 
         // calculate elapsed time
         long currentTime = System.currentTimeMillis();
-        long elapsedTimeMs = currentTime - raceStartTime;
+        elapsedTimeMs = currentTime - raceStartTime;
 
         // Convert to minutes:seconds.milliseconds format
         long minutes = (elapsedTimeMs / 60000);
@@ -161,8 +163,9 @@ public class RaceManager {
         trackPanel.repaint();
         
         if (someoneFinished) {
-            resultLabel.setText(winner + " wins the race! Final time: " + timeString + "s");
+            resultLabel.setText(winner + " wins the race! Fastest time: " + timeString + "s");
             displayBet(winner, timeString);
+            displayStatistics();
            
             return true;
         }
@@ -170,6 +173,7 @@ public class RaceManager {
         if (count == horsesGUI.size()) {
             resultLabel.setText("All horses have fallen! Race time: " + timeString + "s");
             displayBetForFallenHorses(timeString);
+            displayStatistics();
             return true;
         }
         return false;
@@ -238,5 +242,106 @@ public class RaceManager {
         JOptionPane.showMessageDialog(trackPanel, "Race completed at " + timestring + "s\nAll horses have fallen! \nYou lost £" + (int) lostAmount + " on " + this.horseBet 
         + " with betting odd of " + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         
+    }
+
+    public void displayStatistics() {
+        // Create and configure the statistics window
+        JFrame statsFrame = new JFrame("Statistics");
+        statsFrame.setSize(800, 600);
+        statsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        statsFrame.setLayout(new BorderLayout());
+
+        // Create main panel with proper spacing and center alignment
+        JPanel statsPanel = new JPanel();
+        statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+        statsPanel.setBackground(new Color(173, 216, 230));
+        statsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        
+        // Add title with center alignment
+        JLabel titleLabel = new JLabel("Horse Statistics");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(Color.BLUE);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statsPanel.add(titleLabel);
+        
+        statsPanel.add(Box.createVerticalStrut(20));
+        
+        // Create centered panel for bet information
+        JPanel betPanel = new JPanel();
+        betPanel.setLayout(new BoxLayout(betPanel, BoxLayout.Y_AXIS));
+        betPanel.setBackground(new Color(173, 216, 230));
+        betPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        JLabel betLabel = new JLabel("Your Bet: " + this.horseBet + " - Amount: £" + this.betAmount);
+        betLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        betLabel.setForeground(Color.WHITE);
+        betLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        JLabel winnerLabel = new JLabel("Winner: " + this.winner);
+        winnerLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        winnerLabel.setForeground(new Color(0, 128, 0));
+        winnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        betPanel.add(betLabel);
+        betPanel.add(Box.createVerticalStrut(5));
+        betPanel.add(winnerLabel);
+        statsPanel.add(betPanel);
+        
+        statsPanel.add(Box.createVerticalStrut(15));
+        
+        // Add race time information (centered)
+        JLabel timeLabel = new JLabel("Time: " + (this.elapsedTimeMs / 1000) + "s");
+        timeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        timeLabel.setForeground(Color.WHITE);
+        timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statsPanel.add(timeLabel);
+        
+        statsPanel.add(Box.createVerticalStrut(30));
+        
+        // Create a panel for horse statistics (centered)
+        JPanel horsesPanel = new JPanel();
+        horsesPanel.setLayout(new BoxLayout(horsesPanel, BoxLayout.Y_AXIS));
+        horsesPanel.setBackground(new Color(173, 216, 230));
+        horsesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        // Add horse statistics with center alignment
+        for (HorseGraphic horse : horsesGUI) {
+            String horseStats = String.format("%s - Speed: %s, Stamina: %.1f, Confidence: %.1f, Betting Odd: %.1f", 
+                    horse.getName(), 
+                    horse.getSpeed(), 
+                    horse.getStamina(), 
+                    horse.getName().equals(this.winner) ? horse.getConfidence() : (horse.getConfidence() - 0.1),
+                    horse.getOdd());
+            
+            JLabel horseLabel = new JLabel(horseStats);
+            horseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
+            if (horse.getName().equals(this.winner)) {
+                horseLabel.setFont(new Font("Arial", Font.BOLD, 16));
+                horseLabel.setForeground(Color.RED);
+            } else {
+                horseLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+                horseLabel.setForeground(Color.WHITE);
+            }
+            
+            horsesPanel.add(horseLabel);
+            horsesPanel.add(Box.createVerticalStrut(10));
+        }
+        
+        // Add horse statistics panel to a scroll pane with center alignment
+        JScrollPane scrollPane = new JScrollPane(horsesPanel);
+        scrollPane.setBorder(null);
+        scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statsPanel.add(scrollPane);
+        
+        // Center the main panel in the frame
+        JPanel centeringPanel = new JPanel(new GridBagLayout());
+        centeringPanel.setBackground(new Color(173, 216, 230));
+        centeringPanel.add(statsPanel);
+        
+        // Add main panel to frame and display
+        statsFrame.add(centeringPanel, BorderLayout.CENTER);
+        statsFrame.setVisible(true);
+        statsFrame.setResizable(false);
     }
 }

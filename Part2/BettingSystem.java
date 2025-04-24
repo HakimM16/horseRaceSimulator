@@ -161,9 +161,11 @@ public class BettingSystem {
                 break; // Exit the loop after getting the odds
             }
         }
+        // potential winnings
+        int potentialWinnings = (int)( betAmount + (betAmount * (odd / 3))); // Calculate potential winnings based on the betting odds
         // display the horse name and the bet amount
         JOptionPane.showMessageDialog(null, "Horse Name: " + horseName + "\nBet Amount: £" + betAmount + "\nBetting Odds: " + odd + 
-        "\nPotential winnings: £" + betAmount * odd, "Bet Confirmation", JOptionPane.INFORMATION_MESSAGE);
+        "\nPotential winnings: £" + potentialWinnings, "Bet Confirmation", JOptionPane.INFORMATION_MESSAGE);
 
         // close the betting frame
         bettingFrame.dispose(); // Dispose of the betting frame

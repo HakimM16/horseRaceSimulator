@@ -221,6 +221,18 @@ public class HorseGraphic {
         return this.name;
     }
 
+    public int getSpeed() {
+        return (int) this.speed; // Return speed as an integer
+    }
+
+    public double getStamina() {
+        return this.stamina; // Return stamina as a double
+    }
+
+    public double getConfidence() {
+        return this.confidence; // Return confidence as a double
+    }
+
     public double getOdd() {
         return this.bettingOdd;
     }
