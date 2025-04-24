@@ -214,7 +214,7 @@ public class RaceManager {
             }
         }
         double oddPercent = oddPredict / 3;
-        double lostAmount = betAmount * (1 - oddPercent);
+        double lostAmount = betAmount * oddPercent;
         JOptionPane.showMessageDialog(trackPanel, "All horses have fallen! \nYou lost £" + (int) lostAmount + " on " + this.horseBet + " with betting odd of " + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         
     }

@@ -365,6 +365,7 @@ public class HorseGUI extends JFrame{
         newHorse.setCoatColor(horse.getCoatColor());
         newHorse.setSymbol(horse.getSymbol());
         newHorse.setAttributes(horse.getSpeed(), horse.getStaminaRaw(), horse.getConfidenceRaw(), this.weatherCondition);
+        newHorse.setOdd();
     
         // Add the new horse to the list
         int horseId = horseList.size() + 1;

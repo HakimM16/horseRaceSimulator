@@ -112,6 +112,14 @@ public class Track {
         oddLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
         JTextField oddField = new JTextField(3);  // 5 columns wide
 
+        JLabel winLabel = new JLabel("If you win, you'll get your bet back plus the odds");
+        winLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField winField = new JTextField(3);  // 5 columns wide
+
+        JLabel loseLabel = new JLabel("If you lose, you'll lose the percentage of the betting odd ");
+        loseLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField loseField = new JTextField(3);  // 5 columns wide
+
         // Create a button to submit the input
         JButton submitButton = new JButton("Submit");
 
@@ -233,12 +241,14 @@ public class Track {
         panel.add(weatherConditions);  // Add label to panel
         panel.add(weatherConditionField);  // Add text field to panel
         panel.add(oddLabel);  // Add label to panel
+        panel.add(winLabel);
+        panel.add(loseLabel);
         buttonPanel.add(submitButton);  // Add button to panel
 
         // Add panel to frame
         frame.add(panel);
         frame.add(buttonPanel);  // Add button panel to frame
-        frame.setSize(400, 400);  // Set frame size
+        frame.setSize(400, 500);  // Set frame size
         frame.setLayout(new GridLayout(0, 1));  // Set layout to vertical grid
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Close operation
         frame.setVisible(true);  // Make frame visible

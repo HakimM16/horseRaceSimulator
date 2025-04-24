@@ -52,7 +52,7 @@ public class Horse {
         this.horseshoe = "Regular"; // Default horseshoe
         this.accessory = "None"; // Default accessory
         updateAttributes();
-        setOdd();
+        //setOdd();
     }
 
     public Horse(String name, String coatColor, String symbol) {
@@ -64,7 +64,7 @@ public class Horse {
         this.horseshoe = "Regular"; // Default horseshoe
         this.accessory = "None"; // Default accessory
         updateAttributes();
-        setOdd();
+        //setOdd();
     }
 
     private void updateAttributes() {
@@ -145,7 +145,8 @@ public class Horse {
         // max odd is 3 and min is 0
         double odds = getConfidence() * 0.5 + getStamina() * 0.5 + getSpeed() * 0.2; // Example formula
         System.out.println("Betting odds for " + this.name + ": " + odds);
-        this.bettingOdd = odds;
+        double odd_rounded = Math.round(odds * 100.0) / 100.0; // Round to 2 decimal places
+        this.bettingOdd = odd_rounded;
     }
 
     public void setAttributes(int speed, int stamina, int confidence, String weather) {
