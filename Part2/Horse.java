@@ -44,7 +44,7 @@ public class Horse {
     }
 
     public Horse() {
-        this.name = "highlander"; // Default name
+        this.name = "Highlander"; // Default name
         this.breed = "Thoroughbred"; // Default breed
         this.coatColor = "Brown"; // Default coat color
         this.symbol = "H"; // Default symbol

@@ -94,12 +94,15 @@ public class RaceTrackApplication {
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
             JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
             JLabel horseStats = new JLabel("Average Speed: " + horse.getSpeed() + " | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
+            JLabel horseOdd = new JLabel("Odds: " + horse.getOdd() + " (Up to 3)");
             horseLabel.setForeground(Color.WHITE);
             horseStats.setForeground(Color.WHITE);
+            horseOdd.setForeground(Color.WHITE);
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
             horseLabel.setPreferredSize(new Dimension(200, 20)); // Set fixed size for labels
             horsePanel.add(horseLabel);
             horsePanel.add(horseStats);
+            horsePanel.add(horseOdd);
             horsePanel.setPreferredSize(new Dimension(300, 50)); // Set fixed size for horse panel
             basicPanel.add(horsePanel);
         }
@@ -230,12 +233,15 @@ public class RaceTrackApplication {
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
             JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
             JLabel horseStats = new JLabel("Average Speed: " + horse.getSpeed() + " | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
+            JLabel horseOdd = new JLabel("Odds: " + horse.getOdd() + " (Up to 3)");
             horseLabel.setForeground(Color.WHITE);
             horseStats.setForeground(Color.WHITE);
+            horseOdd.setForeground(Color.WHITE);
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
             horseLabel.setPreferredSize(new Dimension(200, 20)); // Set fixed size for labels
             horsePanel.add(horseLabel);
             horsePanel.add(horseStats);
+            horsePanel.add(horseOdd);
             horsePanel.setPreferredSize(new Dimension(300, 50)); // Set fixed size for horse panel
             basicPanel.add(horsePanel);
         }
@@ -370,12 +376,15 @@ public class RaceTrackApplication {
             horsePanel.setBackground(horse.getColourFromString(horse.getCoatColor()));
             JLabel horseLabel = new JLabel(horse.getName() + " - " + horse.getSymbol());
             JLabel horseStats = new JLabel("Average Speed: " + horse.getSpeed() + " | Stamina: " + horse.getStamina() + " | Confidence: " + horse.getConfidence());
+            JLabel horseOdd = new JLabel("Odds: " + horse.getOdd() + " (Up to 3)");
             horseLabel.setForeground(Color.WHITE);
             horseStats.setForeground(Color.WHITE);
+            horseOdd.setForeground(Color.WHITE);
             horseLabel.setFont(new Font("Arial", Font.BOLD, 14));
             horseLabel.setPreferredSize(new Dimension(200, 20)); // Set fixed size for labels
             horsePanel.add(horseLabel);
             horsePanel.add(horseStats);
+            horsePanel.add(horseOdd);
             horsePanel.setPreferredSize(new Dimension(300, 50)); // Set fixed size for horse panel
             basicPanel.add(horsePanel);
         }
@@ -420,9 +429,9 @@ public class RaceTrackApplication {
             public void run() {
                 Map<Integer, Horse> horseMap = new HashMap<>();
                 horseMap.put(1, new Horse());
-                horseMap.put(2, new Horse("lightning", "Black", "L"));
-                horseMap.put(3, new Horse("thunder", "Pinto", "T"));
-                horseMap.put(4, new Horse("storm", "Palomino", "S"));
+                horseMap.put(2, new Horse("Lightning", "Black", "L"));
+                horseMap.put(3, new Horse("Thunder", "Pinto", "T"));
+                horseMap.put(4, new Horse("Storm", "Palomino", "S"));
                 // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
                 
                 // Uncomment the track type you want to test
