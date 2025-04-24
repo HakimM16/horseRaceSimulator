@@ -174,46 +174,55 @@ public class Horse {
                 speed += 2;
                 stamina += 1;
                 confidence += 2;
+                this.bettingOdd += 0.3; // Increase odds for sunny weather
                 break;
             case "rainy":
                 speed -= 1;
                 stamina += 1;
                 confidence -= 1;
+                this.bettingOdd -= 0.2; // Decrease odds for rainy weather
                 break;
             case "snowy":
                 speed -= 3;
                 stamina -= 2;
                 confidence -= 2;
+                this.bettingOdd -= 0.7; // Decrease odds for snowy weather
                 break;
             case "foggy":
                 speed -= 1;
                 stamina += 1;
                 confidence += 0;
+                this.bettingOdd -= 0.1; // Decrease odds for foggy weather
                 break;
             case "windy":
                 speed -= 2;
                 stamina += 1;
                 confidence += 0;
+                this.bettingOdd -= 0.3; // Decrease odds for windy weather
                 break;
             case "muddy":
                 speed -= 2;
                 stamina -= 1;
                 confidence -= 1;
+                this.bettingOdd -= 0.5; // Decrease odds for muddy weather
                 break;
             case "dry":
                 speed += 1;
                 stamina += 1;
                 confidence += 1;
+                this.bettingOdd += 0.1; // Increase odds for dry weather
                 break; 
             case "wet":
                 speed -= 1; 
                 stamina += 1; 
                 confidence += 0; 
+                this.bettingOdd -= 0.1; // Decrease odds for wet weather
                 break; 
             case "icy":
                 speed -= 3; 
                 stamina -= 2; 
                 confidence -= 3; 
+                this.bettingOdd -= 0.8; // Decrease odds for icy weather
                 break;
         }
         this.newSpeed = speed;
