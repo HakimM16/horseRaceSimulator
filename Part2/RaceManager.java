@@ -116,7 +116,7 @@ public class RaceManager {
                     // assign hasFinished based on angleDiff and hasCompletedLap
                     hasFinished = (angleDiff > 3.2 && angleDiff < 3.27) && hasCompletedLap;
                     
-                    System.out.println("has finished: " + hasFinished + " angleDiff: " + angleDiff + " hasCompletedLap: " + hasCompletedLap);
+                    System.out.println("Horse name: " + horse.getName() + " | has finished: " + hasFinished + " | angleDiff: " + angleDiff + " | hasCompletedLap: " + hasCompletedLap);
                     break;
                 case HALFOVAL:
                     // Finish when crossing finish line at top (angle near 3π/2)

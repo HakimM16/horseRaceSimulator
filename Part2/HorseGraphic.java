@@ -101,7 +101,7 @@ public class HorseGraphic {
             if (Math.random() < this.confidence) {
                 // Random chance to fall
                 // use stamina to decrease the chance of falling
-                if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
+                if (Math.random() * this.stamina < 0.0025) { // 0.25% chance to fall
                     this.hasFallen = true;
                     setConfidence(this.confidence - 0.1); // Decrease confidence on fall
                     HorseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
@@ -139,7 +139,7 @@ public class HorseGraphic {
             if (Math.random() < this.confidence) {
                 // Random chance to fall
                 // use stamina to decrease the chance of falling
-                if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
+                if (Math.random() * this.stamina < 0.0025) { // 0.25% chance to fall
                     this.hasFallen = true;
                     setConfidence(this.confidence - 0.1); // Decrease confidence on fall
                     HorseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
@@ -177,7 +177,7 @@ public class HorseGraphic {
             if (Math.random() < this.confidence) {
                 // Random chance to fall
                 // use stamina to decrease the chance of falling
-                if (Math.random() * this.stamina < 0.01) { // 5% chance to fall
+                if (Math.random() * this.stamina < 0.0025) { // 0.25% chance to fall
                     this.hasFallen = true;
                     setConfidence(this.confidence - 0.1); // Decrease confidence on fall
                     HorseGraphicPanel.setBackground(Color.RED); // Change color to indicate fall
