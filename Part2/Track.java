@@ -111,16 +111,20 @@ public class Track {
 
         JLabel oddLabel = new JLabel("Betting odds range from 0 to 3");
         oddLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
-        JTextField oddField = new JTextField(3);  // 5 columns wide
+
+        JLabel oddsRangeLabel = new JLabel("0 being the lowest and 3 being the highest");
+        oddsRangeLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+
+        JLabel clarificationLabel = new JLabel("Odds are calculated based on the horse's speed, stamina, and confidence.");
+        clarificationLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        clarificationLabel.setFont(new java.awt.Font("Arial", java.awt.Font.ITALIC, 10)); // Italic font
 
         JLabel winLabel = new JLabel("If you win, you'll get your bet back plus the odds");
         winLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
-        JTextField winField = new JTextField(3);  // 5 columns wide
 
         JLabel loseLabel = new JLabel("If you lose, you'll lose the percentage of the betting odd ");
         loseLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
-        JTextField loseField = new JTextField(3);  // 5 columns wide
-
+       
         // Create a button to submit the input
         JButton submitButton = new JButton("Submit");
 
@@ -242,6 +246,8 @@ public class Track {
         panel.add(weatherConditions);  // Add label to panel
         panel.add(weatherConditionField);  // Add text field to panel
         panel.add(oddLabel);  // Add label to panel
+        panel.add(oddsRangeLabel);  // Add label to panel
+        panel.add(clarificationLabel);  // Add label to panel
         panel.add(winLabel);
         panel.add(loseLabel);
         buttonPanel.add(submitButton);  // Add button to panel
