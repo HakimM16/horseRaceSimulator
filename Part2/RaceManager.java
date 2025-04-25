@@ -32,6 +32,10 @@ public class RaceManager {
     public static ArrayList<String> betAmounts = new ArrayList<>();
     public static ArrayList<String> betResults = new ArrayList<>();
 
+    // For feedback on betting strategies
+    public static int numOfWins = 0;
+    public static int numOfRaces = 0;
+
     
     public RaceManager(JPanel trackPanel, int trackLength, int lanes, HorseGraphic.TrackType trackType, Map<Integer, Horse> horses, String horseBet, int betAmount, String weather) {
         this.horses = horses;
@@ -176,6 +180,7 @@ public class RaceManager {
         
         if (someoneFinished) {
             resultLabel.setText(winner + " wins the race! Fastest time: " + timeString + "s");
+            numOfRaces++;
             displayBet(winner, timeString);
             displayStatistics();
            
@@ -184,6 +189,7 @@ public class RaceManager {
         // set label to say that all horses fell
         if (count == horsesGUI.size()) {
             resultLabel.setText("All horses have fallen! Race time: " + timeString + "s");
+            numOfRaces++;
             displayBetForFallenHorses(timeString);
             displayStatistics();
             return true;
@@ -436,6 +442,11 @@ public class RaceManager {
                     bettingOdds.get(i), 
                     betAmounts.get(i),
                     betResults.get(i));
+
+            // add to numOfWins if the betted horse is the winner
+            if (bettedHorseNames.get(i).equals(winners.get(i))) {
+                numOfWins++;
+            }
             
             JLabel horseLabel = new JLabel(horseStats);
             horseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -457,9 +468,29 @@ public class RaceManager {
         centeringPanel.add(historyPanel);
 
         // Add main panel to frame and display
-        historyFrame.add(centeringPanel, BorderLayout.CENTER);
+        historyFrame.add(centeringPanel, BorderLayout.NORTH);
         historyFrame.setVisible(true);
         historyFrame.setResizable(false);
+
+        // display a JOptionPane with the number of wins
+        if (numOfRaces % 5 == 0) {
+            double percentage = ((double) numOfWins / (double) numOfRaces) * 100;
+            String message = String.format("You won %d out of %d races this week!\nThat's %.2f%% of your bets!", numOfWins, numOfRaces, percentage);
+            
+            // Make 5 advices for betting startegies for every 20%
+            if (percentage < 20) {
+                message += "\n\nAdvice: Try betting on a different horse or increase your bet amount!";
+            } else if (percentage < 40) {
+                message += "\n\nAdvice: Consider betting on horses with higher odds!";
+            } else if (percentage < 60) {
+                message += "\n\nAdvice: You are doing well! Keep it up!";
+            } else if (percentage < 80) {
+                message += "\n\nAdvice: You are a pro! Keep betting on your favorite horses!";
+            } else {
+                message += "\n\nAdvice: You are a betting master!";
+            }
+            JOptionPane.showMessageDialog(historyFrame, message, "Betting Statistics", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public void addResults(String horseName, String weather, String winner, String time, String bettingOdd, String betAmount, String betResult) {
