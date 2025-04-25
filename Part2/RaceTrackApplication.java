@@ -124,7 +124,7 @@ public class RaceTrackApplication {
 
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, HorseGraphic.TrackType.RECTANGULAR, horseMap, horseBet, betAmount);
+        RaceManager raceManager = new RaceManager(trackPanel, length, lanes, HorseGraphic.TrackType.RECTANGULAR, horseMap, horseBet, betAmount, weather);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -269,7 +269,7 @@ public class RaceTrackApplication {
         trackFrame.add(basicPanel, BorderLayout.EAST);
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, HorseGraphic.TrackType.OVAL, horses, horseBet, betAmount);
+        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, HorseGraphic.TrackType.OVAL, horses, horseBet, betAmount, weather);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
@@ -419,7 +419,7 @@ public class RaceTrackApplication {
         trackFrame.add(basicPanel, BorderLayout.EAST);
         
         // Create race manager - after all track elements are added
-        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, HorseGraphic.TrackType.HALFOVAL, horses, horseBet, betAmount);
+        RaceManager raceManager = new RaceManager(trackPanel, width, lanes, HorseGraphic.TrackType.HALFOVAL, horses, horseBet, betAmount, weather);
         
         // Add action for start button
         startButton.addActionListener(new ActionListener() {
