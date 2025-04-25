@@ -288,6 +288,10 @@ public class RaceManager {
         betLabel.setForeground(Color.WHITE);
         betLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
+        // check if winner is empty, if so, set it to "All horses have fallen"
+        if (this.winner.equals("")) {
+            this.winner = "All horses have fallen";
+        }
         JLabel winnerLabel = new JLabel("Winner: " + this.winner);
         winnerLabel.setFont(new Font("Arial", Font.BOLD, 16));
         winnerLabel.setForeground(new Color(0, 128, 0));
@@ -455,6 +459,10 @@ public class RaceManager {
     public void addResults(String horseName, String weather, String winner, String time, String bettingOdd, String betAmount) {
         bettedHorseNames.add(horseName);
         weathers.add(weather);
+        // check if there is a winner, if not, add "All horses have fallen"
+        if (winner.equals("")) {
+            winner = "All horses have fallen";
+        }
         winners.add(winner);
         times.add(time);
         bettingOdds.add(bettingOdd);
