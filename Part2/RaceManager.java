@@ -310,7 +310,7 @@ public class RaceManager {
                     horse.getName(), 
                     horse.getSpeed(), 
                     horse.getStamina(), 
-                    horse.getName().equals(this.winner) ? horse.getConfidence() : (horse.getConfidence() - 0.1),
+                    horse.getName().equals(this.winner) ? (horse.getConfidence() + 0.1) : (horse.getConfidence() - 0.1),
                     horse.getOdd());
             
             JLabel horseLabel = new JLabel(horseStats);
