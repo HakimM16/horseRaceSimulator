@@ -30,6 +30,7 @@ public class RaceManager {
     public static ArrayList<String> times = new ArrayList<>();
     public static ArrayList<String> bettingOdds = new ArrayList<>();
     public static ArrayList<String> betAmounts = new ArrayList<>();
+    public static ArrayList<String> betResults = new ArrayList<>();
 
     
     public RaceManager(JPanel trackPanel, int trackLength, int lanes, HorseGraphic.TrackType trackType, Map<Integer, Horse> horses, String horseBet, int betAmount, String weather) {
@@ -366,8 +367,12 @@ public class RaceManager {
                         bettingOdd = horse.getOdd();
                     }
                 }
-                addResults(horseBet, weather, winner, String.valueOf(timeMs), String.valueOf(bettingOdd), String.valueOf(betAmount * 2)); // Example values for weather and betting odd
-                // Call the history method to display the
+                String betResult = winner.equals(horseBet) ? "You won" : "You lost";
+                // input the results into the history
+                addResults(horseBet, weather, winner, String.valueOf(timeMs), String.valueOf(bettingOdd), String.valueOf(betAmount * 2), betResult); // Example values for weather and betting odd
+                // Call the history method to display the history
+                // close the statistics window
+                statsFrame.dispose();
                 history();
             }
         });
@@ -423,17 +428,18 @@ public class RaceManager {
 
         // add horse statistics with center alignment using a loop
         for (int i = 0; i < bettedHorseNames.size(); i++) {
-            String horseStats = String.format("<html><b>Bet:</b> %s - <b>Weather:</b> %s - <b>Winner:</b> %s - <b>Time:</b> %ss - <b>Betting Odd:</b> %s - <b>Bet Amount:</b> £%s</html>", 
+            String horseStats = String.format("<html><b>Bet:</b> %s - <b>Weather:</b> %s - <b>Winner:</b> %s - <b>Time:</b> %ss - <b>Betting Odd:</b> %s - <b>Bet Amount:</b> £%s - <b>Bet Result:</b> %s</html>", 
                     bettedHorseNames.get(i), 
                     weathers.get(i), 
                     winners.get(i), 
                     times.get(i), 
                     bettingOdds.get(i), 
-                    betAmounts.get(i));
+                    betAmounts.get(i),
+                    betResults.get(i));
             
             JLabel horseLabel = new JLabel(horseStats);
             horseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            horseLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+            horseLabel.setFont(new Font("Arial", Font.PLAIN, 15));
             horseLabel.setForeground(Color.WHITE);
             
             horsesPanel.add(horseLabel);
@@ -456,7 +462,7 @@ public class RaceManager {
         historyFrame.setResizable(false);
     }
 
-    public void addResults(String horseName, String weather, String winner, String time, String bettingOdd, String betAmount) {
+    public void addResults(String horseName, String weather, String winner, String time, String bettingOdd, String betAmount, String betResult) {
         bettedHorseNames.add(horseName);
         weathers.add(weather);
         // check if there is a winner, if not, add "All horses have fallen"
@@ -467,5 +473,6 @@ public class RaceManager {
         times.add(time);
         bettingOdds.add(bettingOdd);
         betAmounts.add(betAmount);
+        betResults.add(betResult);
     }
 }
