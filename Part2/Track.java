@@ -26,6 +26,7 @@ public class Track {
     public Track() {
         this.lanes = 1; // default number of lanes
         this.length = 100; // default length of the track to 100 meters
+        inputValues();
     }
 
     public int getLanes() {
