@@ -353,8 +353,8 @@ public class RaceManager {
         // Add history button
         JButton historyButton = new JButton("View History");
         historyButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        historyButton.setBackground(new Color(173, 216, 230));
-        historyButton.setForeground(Color.WHITE);
+        historyButton.setBackground(Color.WHITE);
+        historyButton.setForeground(Color.BLACK);
         historyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         historyButton.addActionListener(new ActionListener() {
             @Override
@@ -392,7 +392,7 @@ public class RaceManager {
          * create a JFrame to display the history, using a loop to display each race in a new line
          */
         JFrame historyFrame = new JFrame("History");
-        historyFrame.setSize(800, 600);
+        historyFrame.setSize(1000, 600);
         historyFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         historyFrame.setLayout(new BorderLayout());
         historyFrame.setBackground(new Color(173, 216, 230));
@@ -423,7 +423,7 @@ public class RaceManager {
 
         // add horse statistics with center alignment using a loop
         for (int i = 0; i < bettedHorseNames.size(); i++) {
-            String horseStats = String.format("Bet: %s - Weather: %s - Winner: %s - Time: %s - Betting Odd: %s - Bet Amount: %s", 
+            String horseStats = String.format("<html><b>Bet:</b> %s - <b>Weather:</b> %s - <b>Winner:</b> %s - <b>Time:</b> %ss - <b>Betting Odd:</b> %s - <b>Bet Amount:</b> £%s</html>", 
                     bettedHorseNames.get(i), 
                     weathers.get(i), 
                     winners.get(i), 
