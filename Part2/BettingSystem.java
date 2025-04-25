@@ -26,6 +26,17 @@ public class BettingSystem {
         bettingGUI();
     }
 
+    public static void main(String[] args) {
+        Map<Integer, Horse> horseList = new HashMap<>(); // Create a map to store horse objects
+        horseList.put(1, new Horse("Highlander", "Brown", "H")); // Add a horse to the list
+        horseList.put(2, new Horse("Thunder", "WHITE", "T")); // Add another horse to the list
+        horseList.put(3, new Horse("Lightning", "White", "L")); // Add another horse to the list
+        horseList.put(4, new Horse("Storm", "Gray", "S")); // Add another horse to the list
+        horseList.put(5, new Horse("Blaze", "Chestnut", "B")); // Add another horse to the list
+
+        BettingSystem bettingSystem = new BettingSystem(3, 1000, "Oval", "Sunny", horseList); // Create a new betting system with the horse list
+    }
+
     public void bettingGUI() {
         // Create a frame for the betting
         this.bettingFrame = new JFrame("Betting System");
@@ -37,38 +48,54 @@ public class BettingSystem {
         // Create a panel for the betting system
         JPanel bettingPanel = new JPanel();
         bettingPanel.setLayout(null); // Use null layout for absolute positioning
-        bettingPanel.setBackground(Color.LIGHT_GRAY); // Set background color for the betting panel
+        bettingPanel.setBackground(new Color(0, 128, 0)); // Set background color for the betting panel
         bettingPanel.setBounds(0, 0, 800, 600); // Set bounds for the betting panel
-        // Set a black border for the betting panel
-        bettingPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        // Set a WHITE border for the betting panel
+        bettingPanel.setBorder(BorderFactory.createLineBorder(new Color(183, 237, 255), 2));
        
         // display the list of horses in the betting panel
         JLabel horseListLabel = new JLabel("List of Horses:"); // Set the label for the horse list
         horseListLabel.setBounds(350, 10, 200, 30); // Set position and size of the label
         horseListLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Set font for the label
+        horseListLabel.setForeground(new Color(183, 237, 255)); // Set text color for the label
         bettingPanel.add(horseListLabel); // Add the label to the betting panel  
+
+        // display horse name and odds in panel
+        JPanel horsePanel = new JPanel(); // Create a panel for the horse names and odds
+        horsePanel.setLayout(new GridLayout(HorseList.size(), 2)); // Set layout for the horse panel
+        horsePanel.setBounds(250, 40, 400, 300); // Set position and size of the horse panel
+        horsePanel.setBackground(new Color(0, 128, 0)); // Set background color for the horse panel
 
         // output the horse names in the betting panel
         int num = 0;
         for (Horse horse : HorseList.values()) {
             // Create a label for each horse and add it to the betting panel
             JLabel horseLabel = new JLabel(horse.getName()); // Create a label for the horse name
-            horseLabel.setBounds(200 + num, 40, 200, 30); // Set position and size of the label
+            JLabel oddsLabel = new JLabel("Odds: " + horse.getOdd());
+            horseLabel.setBounds(200, 40 + num, 200, 30); // Set position and size of the label
             horseLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Set font for the label
-            horseLabel.setForeground(Color.BLACK); // Set text color for the label
-            bettingPanel.add(horseLabel); // Add the label to the betting panel
-            num += 90; // Increment the position for the next horse label
+            horseLabel.setForeground(new Color(183, 237, 255)); // Set text color for the label
+
+            oddsLabel.setBounds(400, 40 + num, 200, 30); // Set position and size of the odds label
+            oddsLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the odds label
+            oddsLabel.setForeground(new Color(183, 237, 255)); // Set text color for the odds label
+            
+            horsePanel.add(horseLabel); // Add the label to the betting panel
+            horsePanel.add(oddsLabel); // Add the odds label to the horse panel
+            num += 30; // Increment the position for the next horse label
         }
 
+        bettingPanel.add(horsePanel); // Add the horse panel to the betting panel
         // Create a label for the name of the horse
         JLabel horseNameLabel = new JLabel("Enter the name of the horse:"); // Set the horse name
-        horseNameLabel.setBounds(200, 100, 400, 30); // Set position and size of the label
+        horseNameLabel.setBounds(200, 350, 400, 30); // Set position and size of the label
         horseNameLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the label
+        horseNameLabel.setForeground(new Color(183, 237, 255)); // Set text color for the label
         bettingPanel.add(horseNameLabel); // Add the label to the betting panel
 
         // Create a text field for the user to enter the horse name
         horseNameField = new JTextField(); // Create a text field for the horse name
-        horseNameField.setBounds(450, 100, 150, 30); // Set position and size of the text field
+        horseNameField.setBounds(450, 350, 150, 30); // Set position and size of the text field
         horseNameField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
         horseNameField.setHorizontalAlignment(JTextField.CENTER); // Center the text in the text field
         horseNameField.setText("Highlander"); // Set default text for the text field
@@ -77,13 +104,14 @@ public class BettingSystem {
         
         // Create a label for the betting amount
         JLabel betAmountLabel = new JLabel("Enter your bet amount:");
-        betAmountLabel.setBounds(200, 150, 200, 30); // Set position and size of the label
+        betAmountLabel.setBounds(200, 400, 200, 30); // Set position and size of the label
         betAmountLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the label
+        betAmountLabel.setForeground(new Color(183, 237, 255)); // Set text color for the label
         bettingPanel.add(betAmountLabel); // Add the label to the betting panel
 
         // Create a text field for the user to enter the bet amount
         betAmountField = new JTextField();
-        betAmountField.setBounds(450, 150, 150, 30); // Set position and size of the text field
+        betAmountField.setBounds(450, 400, 150, 30); // Set position and size of the text field
         betAmountField.setFont(new Font("Arial", Font.PLAIN, 16)); // Set font for the text field
         betAmountField.setHorizontalAlignment(JTextField.CENTER); // Center the text in the text field
         betAmountField.setText("400"); // Set default text for the text field
@@ -95,15 +123,23 @@ public class BettingSystem {
         JPanel buttonPanel = new JPanel();
         JButton saveButton = new JButton("Save Horse");
         saveButton.addActionListener(e -> saveBet());
+        saveButton.setBackground(new Color(183, 237, 255)); // Set background color for the save button
+        saveButton.setForeground(Color.BLACK); // Set text color for the save button
+        saveButton.setPreferredSize(new Dimension(150, 30)); // Set preferred size for the save button
+        saveButton.setFont(new Font("Arial", Font.BOLD, 16)); // Set font for the save button
         
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> resetForm());
+        resetButton.setBackground(new Color(183, 237, 255)); // Set background color for the reset button
+        resetButton.setForeground(Color.BLACK); // Set text color for the reset button
+        resetButton.setPreferredSize(new Dimension(150, 30)); // Set preferred size for the reset button
+        resetButton.setFont(new Font("Arial", Font.BOLD, 16)); // Set font for the reset button
         
         buttonPanel.add(saveButton);
         buttonPanel.add(resetButton);
         
-        buttonPanel.setBounds(200, 200, 400, 50); // Set position and size of the button panel
-        buttonPanel.setBackground(Color.LIGHT_GRAY); // Set background color for the button panel
+        buttonPanel.setBounds(200, 450, 400, 50); // Set position and size of the button panel
+        buttonPanel.setBackground(new Color(0, 128, 0)); // Set background color for the button panel
         
         bettingFrame.add(buttonPanel); // Add the button panel to the betting panel
         

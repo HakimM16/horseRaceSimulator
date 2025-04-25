@@ -64,7 +64,7 @@ public class Horse {
         this.horseshoe = "Regular"; // Default horseshoe
         this.accessory = "None"; // Default accessory
         updateAttributes();
-        //setOdd();
+        setOdd();
     }
 
     private void updateAttributes() {
