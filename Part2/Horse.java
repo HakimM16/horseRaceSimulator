@@ -184,9 +184,9 @@ public class Horse {
                 this.bettingOdd -= 0.2; // Decrease odds for rainy weather
                 break;
             case "snowy":
-                speed -= 3;
-                stamina -= 2;
-                confidence -= 2;
+                speed -= 6;
+                stamina -= 4;
+                confidence -= 4;
                 this.bettingOdd -= 0.7; // Decrease odds for snowy weather
                 break;
             case "foggy":
@@ -220,9 +220,9 @@ public class Horse {
                 this.bettingOdd -= 0.1; // Decrease odds for wet weather
                 break; 
             case "icy":
-                speed -= 3; 
+                speed -= 5; 
                 stamina -= 2; 
-                confidence -= 3; 
+                confidence -= 4; 
                 this.bettingOdd -= 0.8; // Decrease odds for icy weather
                 break;
         }
