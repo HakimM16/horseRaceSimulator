@@ -27,11 +27,11 @@ public class Horse {
     private static final Map<String, int[]> BREED_ATTRIBUTES = new HashMap<>();
     static {
         // Format: {speed, stamina, confidence}
-        BREED_ATTRIBUTES.put("Thoroughbred", new int[]{10, 7, 8});
-        BREED_ATTRIBUTES.put("Arabian", new int[]{9, 9, 8});
-        BREED_ATTRIBUTES.put("Quarter Horse", new int[]{8, 8, 9});
-        BREED_ATTRIBUTES.put("Appaloosa", new int[]{7, 10, 8});
-        BREED_ATTRIBUTES.put("Mustang", new int[]{8, 9, 10});
+        BREED_ATTRIBUTES.put("Thoroughbred", new int[]{8, 5, 6});
+        BREED_ATTRIBUTES.put("Arabian", new int[]{7, 7, 6});
+        BREED_ATTRIBUTES.put("Quarter Horse", new int[]{6, 6, 7});
+        BREED_ATTRIBUTES.put("Appaloosa", new int[]{5, 8, 6});
+        BREED_ATTRIBUTES.put("Mustang", new int[]{8, 7, 6});
     }
 
     private static final Map<String, int[]> HORSESHOE_ATTRIBUTES = new HashMap<>();
@@ -69,7 +69,7 @@ public class Horse {
 
     private void updateAttributes() {
         // Set base attributes from breed
-        int[] breedAttrs = BREED_ATTRIBUTES.getOrDefault(breed, new int[]{8, 8, 8});
+        int[] breedAttrs = BREED_ATTRIBUTES.getOrDefault(breed, new int[]{6, 6, 6});
         this.speed = breedAttrs[0];
         this.stamina = breedAttrs[1];
         this.confidence = breedAttrs[2];
