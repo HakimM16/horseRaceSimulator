@@ -22,6 +22,9 @@ public class RaceManager {
     public long elapsedTimeMs;
     public String winner;
     public String weather;
+    public static double wonAmount;
+    public static double lostAmount;
+    public static boolean wonRace = false;
 
     // For displaying history
     public static ArrayList<String> bettedHorseNames = new ArrayList<>();
@@ -221,6 +224,7 @@ public class RaceManager {
          * *     - The loser will lost the percentage of the bet amount based on the betting odd of the horse
          */
         if (!winner.equals(this.horseBet)) {
+            wonRace = false;
             // Calculate the amount lost based on the betting odd of the horse
             double oddPredict = 0;
             for (HorseGraphic horse : horsesGUI) {
@@ -233,6 +237,7 @@ public class RaceManager {
             JOptionPane.showMessageDialog(trackPanel, winner + " has won the race in " + timestring + "s\nYou lost £" + (int) lostAmount + " on " + this.horseBet + " with betting odd of " 
             + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         } else {
+            wonRace = true;
             // calculate the amount won based on the betting odd of the horse
             double oddPredict = 0;
             for (HorseGraphic horse : horsesGUI) {
@@ -241,7 +246,7 @@ public class RaceManager {
                 }
             }
             double oddPercent = oddPredict / 3;
-            double wonAmount = betAmount + (betAmount * oddPercent);
+            wonAmount = betAmount + (betAmount * oddPercent);
             JOptionPane.showMessageDialog(trackPanel, winner + " has won the race in " + timestring + "s\nYou won £" + (int) wonAmount + " on " + this.horseBet + " with betting odd of "
              + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -256,7 +261,7 @@ public class RaceManager {
             }
         }
         double oddPercent = oddPredict / 3;
-        double lostAmount = betAmount * oddPercent;
+        lostAmount = betAmount * oddPercent;
         JOptionPane.showMessageDialog(trackPanel, "Race completed at " + timestring + "s\nAll horses have fallen! \nYou lost £" + (int) lostAmount + " on " + this.horseBet 
         + " with betting odd of " + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         
@@ -403,7 +408,7 @@ public class RaceManager {
          * create a JFrame to display the history, using a loop to display each race in a new line
          */
         JFrame historyFrame = new JFrame("History");
-        historyFrame.setSize(1000, 600);
+        historyFrame.setSize(1200, 600);
         historyFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         historyFrame.setLayout(new BorderLayout());
         historyFrame.setBackground(new Color(173, 216, 230));
@@ -434,15 +439,31 @@ public class RaceManager {
 
         // add horse statistics with center alignment using a loop
         for (int i = 0; i < bettedHorseNames.size(); i++) {
-            String horseStats = String.format("<html><b>Bet:</b> %s - <b>Weather:</b> %s - <b>Winner:</b> %s - <b>Time:</b> %ss - <b>Betting Odd:</b> %s - <b>Bet Amount:</b> £%s - <b>Bet Result:</b> %s</html>", 
+            String horseStats;
+            // display the betted amount
+            if (wonRace) {
+                // if the betted horse is the winner, display the amount won
+                horseStats = String.format("<html><b>Bet:</b> %s - <b>Weather:</b> %s - <b>Winner:</b> %s - <b>Time:</b> %ss - <b>Betting Odd:</b> %s - <b>Bet Amount:</b> £%s - <b>Bet Result:</b> %s - <b>Money gained:</b> +£%.2f</html>", 
                     bettedHorseNames.get(i), 
                     weathers.get(i), 
                     winners.get(i), 
                     times.get(i), 
                     bettingOdds.get(i), 
                     betAmounts.get(i),
-                    betResults.get(i));
-
+                    betResults.get(i),
+                    wonAmount);
+            } else {
+                // if the betted horse is not the winner, display the amount lost
+                horseStats = String.format("<html><b>Bet:</b> %s - <b>Weather:</b> %s - <b>Winner:</b> %s - <b>Time:</b> %ss - <b>Betting Odd:</b> %s - <b>Bet Amount:</b> £%s - <b>Bet Result:</b> %s - <b>Money lost:</b> -£%.2f</html>", 
+                    bettedHorseNames.get(i), 
+                    weathers.get(i), 
+                    winners.get(i), 
+                    times.get(i), 
+                    bettingOdds.get(i), 
+                    betAmounts.get(i),
+                    betResults.get(i),
+                    lostAmount);
+            }
             // add to numOfWins if the betted horse is the winner
             if (bettedHorseNames.get(i).equals(winners.get(i))) {
                 numOfWins++;
