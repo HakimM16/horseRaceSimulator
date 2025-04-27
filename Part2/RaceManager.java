@@ -233,7 +233,7 @@ public class RaceManager {
                 }
             }
             double oddPercent = oddPredict / 3;
-            double lostAmount = betAmount * oddPercent;
+            lostAmount = betAmount * oddPercent;
             JOptionPane.showMessageDialog(trackPanel, winner + " has won the race in " + timestring + "s\nYou lost £" + (int) lostAmount + " on " + this.horseBet + " with betting odd of " 
             + oddPredict, "Betting Result", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -408,7 +408,7 @@ public class RaceManager {
          * create a JFrame to display the history, using a loop to display each race in a new line
          */
         JFrame historyFrame = new JFrame("History");
-        historyFrame.setSize(1200, 600);
+        historyFrame.setSize(1100, 600);
         historyFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         historyFrame.setLayout(new BorderLayout());
         historyFrame.setBackground(new Color(173, 216, 230));
@@ -443,7 +443,7 @@ public class RaceManager {
             // display the betted amount
             if (wonRace) {
                 // if the betted horse is the winner, display the amount won
-                horseStats = String.format("<html><b>Bet:</b> %s - <b>Weather:</b> %s - <b>Winner:</b> %s - <b>Time:</b> %ss - <b>Betting Odd:</b> %s - <b>Bet Amount:</b> £%s - <b>Bet Result:</b> %s - <b>Money gained:</b> +£%.2f</html>", 
+                horseStats = String.format("<html><b style='color:blue;'>Bet:</b> %s - <b style='color:green;'>Weather:</b> %s - <b style='color:red;'>Winner:</b> %s - <b style='color:purple;'>Time:</b> %ss - <b style='color:orange;'>Betting Odd:</b> %s - <b style='color:teal;'>Bet Amount:</b> £%s - <b style='color:darkred;'>Bet Result:</b> %s - <b style='color:darkgreen;'>Money gained:</b> <span style='color:green'>+£%.2f</span></html>", 
                     bettedHorseNames.get(i), 
                     weathers.get(i), 
                     winners.get(i), 
@@ -454,7 +454,7 @@ public class RaceManager {
                     wonAmount);
             } else {
                 // if the betted horse is not the winner, display the amount lost
-                horseStats = String.format("<html><b>Bet:</b> %s - <b>Weather:</b> %s - <b>Winner:</b> %s - <b>Time:</b> %ss - <b>Betting Odd:</b> %s - <b>Bet Amount:</b> £%s - <b>Bet Result:</b> %s - <b>Money lost:</b> -£%.2f</html>", 
+                horseStats = String.format("<html><b style='color:blue;'>Bet:</b> %s - <b style='color:green;'>Weather:</b> %s - <b style='color:red;'>Winner:</b> %s - <b style='color:purple;'>Time:</b> %ss - <b style='color:orange;'>Betting Odd:</b> %s - <b style='color:teal;'>Bet Amount:</b> £%s - <b style='color:darkred;'>Bet Result:</b> %s - <b style='color:darkblue;'>Money lost:</b> <span style='color:red'>-£%.2f</span></html>", 
                     bettedHorseNames.get(i), 
                     weathers.get(i), 
                     winners.get(i), 
@@ -471,7 +471,7 @@ public class RaceManager {
             
             JLabel horseLabel = new JLabel(horseStats);
             horseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            horseLabel.setFont(new Font("Arial", Font.PLAIN, 15));
+            horseLabel.setFont(new Font("Arial", Font.PLAIN, 14));
             horseLabel.setForeground(Color.WHITE);
             
             horsesPanel.add(horseLabel);
