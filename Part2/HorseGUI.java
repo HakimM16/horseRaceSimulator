@@ -108,6 +108,7 @@ public class HorseGUI extends JFrame{
         saddleComboBox = new JComboBox<>(saddles);
         saddleComboBox.addActionListener(e -> {
             horse.setSaddle((String) saddleComboBox.getSelectedItem());
+            updateAttributeBars();
             updateHorsePreview();
         });
         mainPanel.add(saddleComboBox);
@@ -129,6 +130,7 @@ public class HorseGUI extends JFrame{
         accessoryComboBox = new JComboBox<>(accessories);
         accessoryComboBox.addActionListener(e -> {
             horse.setAccessory((String) accessoryComboBox.getSelectedItem());
+            updateAttributeBars();
             updateHorsePreview();
         });
         mainPanel.add(accessoryComboBox);
@@ -198,7 +200,7 @@ public class HorseGUI extends JFrame{
         speedBar.setValue(horse.getSpeed());
         staminaBar.setValue(horse.getStaminaRaw());
         confidenceBar.setValue(horse.getConfidenceRaw() );
-        //System.out.println("Speed: " + horse.getSpeed() + ", Stamina: " + horse.getStaminaRaw() + ", Confidence: " + horse.getConfidenceRaw());
+        // System.out.println("Speed: " + horse.getSpeed() + ", Stamina: " + horse.getStaminaRaw() + ", Confidence: " + horse.getConfidenceRaw());
     }
     
     private void updateHorsePreview() {

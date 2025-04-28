@@ -42,6 +42,25 @@ public class Horse {
         HORSESHOE_ATTRIBUTES.put("Endurance", new int[]{-1, 2, 0});
         HORSESHOE_ATTRIBUTES.put("Confidence Booster", new int[]{0, 0, 2});
     }
+    private static final Map<String, int[]> SADDLE_ATTRIBUTES = new HashMap<>();
+    static {
+        // Format: {speed, stamina, confidence}
+        SADDLE_ATTRIBUTES.put("Standard", new int[]{1, 1, 1});
+        SADDLE_ATTRIBUTES.put("Racing", new int[]{3, -1, 2});
+        SADDLE_ATTRIBUTES.put("Western", new int[]{1, 3, 2});
+        SADDLE_ATTRIBUTES.put("English", new int[]{-3, 2, 1});
+        SADDLE_ATTRIBUTES.put("Dressage", new int[]{-2, 1, -1});
+    }
+
+    private static final Map<String, int[]> ACCESSORY_ATTRIBUTES = new HashMap<>();
+    static {
+        // Format: {speed, stamina, confidence}
+        ACCESSORY_ATTRIBUTES.put("None", new int[]{0, 0, 0});
+        ACCESSORY_ATTRIBUTES.put("Racing Blinkers", new int[]{2, 3, 1});
+        ACCESSORY_ATTRIBUTES.put("Winter Blanket", new int[]{1, -1, 1});
+        ACCESSORY_ATTRIBUTES.put("Fancy Hat", new int[]{2, 1, -1});
+        ACCESSORY_ATTRIBUTES.put("Victory Wreath", new int[]{0, 1, 3});
+    }
 
     public Horse() {
         this.name = "Highlander"; // Default name
@@ -79,6 +98,20 @@ public class Horse {
         this.speed += horseshoeModifiers[0];
         this.stamina += horseshoeModifiers[1];
         this.confidence += horseshoeModifiers[2];
+
+        // Apply saddle modifiers
+        int[] saddleModifiers = SADDLE_ATTRIBUTES.getOrDefault(saddle, new int[]{0, 0, 0});
+        this.speed += saddleModifiers[0];
+        this.stamina += saddleModifiers[1];
+        this.confidence += saddleModifiers[2];
+
+        // Apply accessory modifiers
+        int[] accessoryModifiers = ACCESSORY_ATTRIBUTES.getOrDefault(accessory, new int[]{0, 0, 0});
+        this.speed += accessoryModifiers[0];
+        this.stamina += accessoryModifiers[1];
+        this.confidence += accessoryModifiers[2];
+
+        
     }
 
     public String getName() { 
@@ -118,6 +151,7 @@ public class Horse {
 
     public void setSaddle(String saddle) { 
         this.saddle = saddle; 
+        updateAttributes();
     }
     
     public String getHorseshoe() { 
@@ -135,6 +169,7 @@ public class Horse {
 
     public void setAccessory(String accessory) { 
         this.accessory = accessory; 
+        updateAttributes();
     }
 
     public double getOdd() { 
