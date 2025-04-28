@@ -36,9 +36,22 @@ public class startRace {
             confidence3 = Math.round(confidence3 * 10.0) / 10.0;
             
 
-            char symbol1 = inputChar("Enter the symbol for horse 1 (first character of input is taken as the symbol): "); 
-            char symbol2 = inputChar("Enter the symbol for horse 2 (first character of input is taken as the symbol): ");
-            char symbol3 = inputChar("Enter the symbol for horse 3 (first character of input is taken as the symbol): ");
+            // give user the option to enter the symbol or use default symbols
+            char symbol1;
+            char symbol2;
+            char symbol3;
+            
+            String symbolInput = inputString("Do you want to enter the symbols for the horses? (y/n): ");
+            if (symbolInput.equalsIgnoreCase("y")) {
+                symbol1 = inputChar("Enter the symbol for horse 1: ");
+                symbol2 = inputChar("Enter the symbol for horse 2: ");
+                symbol3 = inputChar("Enter the symbol for horse 3: ");
+            } else {
+                symbol1 = '\u2658'; // white horse, symbol: \u2658
+                symbol2 = '\u265A'; // white king, symbol: \u265A
+                symbol3 = '\u2656'; // white rook, symbol: \u2656
+
+            }
             
             // check for same symbol
             checkSymbol(symbol1, symbol2, symbol3);

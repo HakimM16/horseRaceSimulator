@@ -162,6 +162,7 @@ public class Race
         return charinput; 
     }
 
+    
     // inputInt()
 
     /*
@@ -170,7 +171,7 @@ public class Race
 
     implementation:
     - the method takes in the string argument message
-    - The string variable string is initialised to the value of inputInt() with the argument message
+    - The string variable string is initialised to the value of inputString() with the argument message
     - The int variable numberinput is initialised to the value of string converted into an integer type
     - then, the method returns number input
     */
