@@ -443,24 +443,24 @@ public class RaceTrackApplication {
     }
     // Method to create zigzag track with racing functionality
 
-    // Main method to run the application
-    public static void main(String[] args) {
-        // Run GUI construction on the Event Dispatch Thread
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Map<Integer, Horse> horseMap = new HashMap<>();
-                horseMap.put(1, new Horse());
-                horseMap.put(2, new Horse("Lightning", "Black", "L"));
-                horseMap.put(3, new Horse("Thunder", "Pinto", "T"));
-                horseMap.put(4, new Horse("Storm", "Palomino", "S"));
-                // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
+    // Main method to test the application
+    // public static void main(String[] args) {
+    //     // Run GUI construction on the Event Dispatch Thread
+    //     SwingUtilities.invokeLater(new Runnable() {
+    //         @Override
+    //         public void run() {
+    //             Map<Integer, Horse> horseMap = new HashMap<>();
+    //             horseMap.put(1, new Horse());
+    //             horseMap.put(2, new Horse("Lightning", "Black", "L"));
+    //             horseMap.put(3, new Horse("Thunder", "Pinto", "T"));
+    //             horseMap.put(4, new Horse("Storm", "Palomino", "S"));
+    //             // horseMap.put(5, new Horse("blaze", "Chestnut", "B"));
                 
-                // Uncomment the track type you want to test
-                createRectangularTrack(600, 4, horseMap, "Sunny", "Thunder", 100);
-                // createSimpleOvalTrack(4, horseMap, "Sunny");
-                // createHalfOvalTrack(4, horseMap, "Rainy");
-            }
-        });
-    }
+    //             // Uncomment the track type you want to test
+    //             createRectangularTrack(600, 4, horseMap, "Sunny", "Thunder", 100);
+    //             // createSimpleOvalTrack(4, horseMap, "Sunny");
+    //             // createHalfOvalTrack(4, horseMap, "Rainy");
+    //         }
+    //     });
+    // }
 }

@@ -61,20 +61,11 @@ public class Track {
         this.weatherCondition = weatherCondition; // set the weather condition
     }
 
-    // Main method to run the program
-    public static void main(String[] args) {
-        Track track = new Track(); // Create a new track with 1 lane
-        track.inputValues(); // Call the inputValues method to get user input
-        // track.createRectangularTrack(track.getLength(), track.getLanes());
-        // track.createSimpleOvalTrack(track.getLanes()); // Call the createTrack method to draw the track
-        // track.createZigZagTrack(600, 2); // Call the createTrack method to draw the track
-        
-        // // Print the track details
-        // System.out.println("Number of lanes: " + track.getLanes()); // Print the number of lanes
-        // System.out.println("Length of track: " + track.getLength() + " meters"); // Print the length of the track
-        // System.out.println("Track shape: " + track.getTrackShape()); // Print the shape of the track
-        // System.out.println("Weather condition: " + track.getWeatherCondition()); // Print the weather condition
-    }
+    // Main method to test the program
+    // public static void main(String[] args) {
+    //     Track track = new Track(); // Create a new track with 1 lane
+    //     track.inputValues(); // Call the inputValues method to get user input
+    // }
 
     // select number of lanes from user
     public void inputValues() {

@@ -198,7 +198,7 @@ public class HorseGUI extends JFrame{
         speedBar.setValue(horse.getSpeed());
         staminaBar.setValue(horse.getStaminaRaw());
         confidenceBar.setValue(horse.getConfidenceRaw() );
-        System.out.println("Speed: " + horse.getSpeed() + ", Stamina: " + horse.getStaminaRaw() + ", Confidence: " + horse.getConfidenceRaw());
+        //System.out.println("Speed: " + horse.getSpeed() + ", Stamina: " + horse.getStaminaRaw() + ", Confidence: " + horse.getConfidenceRaw());
     }
     
     private void updateHorsePreview() {
@@ -376,9 +376,9 @@ public class HorseGUI extends JFrame{
             "Horse Saved", JOptionPane.INFORMATION_MESSAGE);
         
         // Here you would typically save to a database or file
-        System.out.println("Horse saved: " + newHorse);
-        System.out.println("Horse size: " + this.horseList.size());
-        System.out.println("Horse list: " + this.horseList);
+        // System.out.println("Horse saved: " + newHorse);
+        // System.out.println("Horse size: " + this.horseList.size());
+        // System.out.println("Horse list: " + this.horseList);
         
         // Increment the number of horses created
         this.num++;
@@ -390,7 +390,7 @@ public class HorseGUI extends JFrame{
                 "All horses have been saved. Total: " + this.finalHorseList.size(), 
                 "Complete", 
                 JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("Final horse list: " + this.finalHorseList);
+            //System.out.println("Final horse list: " + this.finalHorseList);
             
             // Don't immediately exit - allow the calling code to get the finalHorseList
             dispose(); // Close the window but don't terminate the application
@@ -427,23 +427,24 @@ public class HorseGUI extends JFrame{
         updateHorsePreview();
     }
     
-    public static void main(String[] args) {
-        // Use the system look and feel
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    // Main method to test the GUI
+    // public static void main(String[] args) {
+    //     // Use the system look and feel
+    //     try {
+    //         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
         
-        // First approach: Create a GUI that returns results through a callback
+    //     // First approach: Create a GUI that returns results through a callback
         
     
-        // Show the GUI on the Event Dispatch Thread
-        SwingUtilities.invokeLater(() -> {
+    //     // Show the GUI on the Event Dispatch Thread
+    //     SwingUtilities.invokeLater(() -> {
             
-            HorseGUI horseGUI = new HorseGUI();
-            horseGUI.setVisible(true);
+    //         HorseGUI horseGUI = new HorseGUI();
+    //         horseGUI.setVisible(true);
             
-        });
-    }
+    //     });
+    // }
 }
