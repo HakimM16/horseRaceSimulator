@@ -4,9 +4,11 @@ A Java-based Horse Race Simulator with a graphical user interface (GUI). This ap
 
 ## 🎯 Features
 - 🏁 Simulates horse races with multiple participants
-- 🎨 Graphical representation of the race
+- 🎨 Graphical and Command line representation of the race
 - ⚙️ Customizable race settings
 - 🏆 Displays race results at the end
+- ⏲️ Displays time taken to finish the race
+- 💵 Betting system
 
 ## 🛠️ Setup Instructions
 
@@ -23,20 +25,30 @@ Ensure you have the following installed on your system:
    ```
 2. 🏗️ Open the project in your preferred IDE.
 3. 🔧 Ensure that JavaFX is properly configured in your project (if needed).
-4. ▶️ Compile and run the `Main.java` file to start the application.
+4. ▶️ For Part 1, cd into Part 1 by typing `cd Part 1` in terminal, then type `javac startRace` to compile and run the `startRace.java` file to start the application.
+5. ▶️ For Part 2, compile and run the `startRaceGUI.java` file to start the application
 
 ## 📦 Dependencies
 The project relies on the following dependencies:
 - 🎭 JavaFX for the graphical user interface
 - 📜 Standard Java libraries (e.g., `java.util`)
 
-## 🎮 Usage Guidelines
+## 🎮 Usage Guidelines for Part 1
 1. 🎬 Launch the application.
 2. 🏇 Set the number of horses and race parameters.
-3. ▶️ Click the "Start Race" button to begin the simulation.
+3. ▶️ Make a prediction on one of the horses to win to begin the simulation.
 4. 👀 Watch as horses progress across the screen.
 5. 🏅 View race results at the end.
 
+## 🎮 Usage Guidelines for Part 2
+1. 🎬 Launch the application.
+2. ☁️ Set the number of horses, length of track, type of track and weather
+3. 🏇 Customise each horse with different attributes (e.g. breed, coat colour, horseshoes)
+4. 💵 Make a bet on one of horses up to £100,000
+5. ▶️ Press `Start race` button to start the race or press `Reset` to reset the race
+6. 👀 Watch as horses progress in the GUI
+7. 🏅 View race results on the statistics GUI
+8. 📜 View all races taken in the same code run in the history GUI
 ---
 
 🏇 Enjoy the race!

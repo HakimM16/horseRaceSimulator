@@ -1,0 +1,281 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Track {
+    public int lanes; // number of lanes in the track
+    public int length; // length of the track
+    public String trackShape; // shape of the track
+    public String weatherCondition; // weather condition
+
+    // Constructor to initialize the track with lanes, length, shape, and weather condition
+    public Track(int lanes, int length, String trackShape, String weatherCondition) {
+        this.lanes = lanes; // set the number of lanes
+        this.length = length; // set the length of the track to 100 meters
+        this.trackShape = trackShape; // set the shape of the track
+        this.weatherCondition = weatherCondition; // set the weather condition
+    }
+
+    // Constructor to initialize the track with lanes and length
+    public Track(int lanes, int length) {
+        this.lanes = lanes; // set the number of lanes
+        this.length = length; // set the length of the track to 100 meters
+    }
+
+    // Constructor to initialize the track with default values
+    public Track() {
+        this.lanes = 1; // default number of lanes
+        this.length = 100; // default length of the track to 100 meters
+        inputValues();
+    }
+
+    public int getLanes() {
+        return this.lanes; // return the number of lanes
+    }
+
+    public int getLength() {
+        return this.length; // return the length of the track
+    }
+
+    public String getTrackShape() {
+        return this.trackShape; // return the shape of the track
+    }
+
+    public String getWeatherCondition() {
+        return this.weatherCondition; // return the weather condition
+    }
+
+    public void setLanes(int lanes) {
+        this.lanes = lanes; // set the number of lanes
+    }
+
+    public void setLength(int length) {
+        this.length = length; // set the length of the track
+    }
+
+    public void setTrackShape(String trackShape) {
+        this.trackShape = trackShape; // set the shape of the track
+    }
+
+    public void setWeatherCondition(String weatherCondition) {
+        this.weatherCondition = weatherCondition; // set the weather condition
+    }
+
+    // Main method to test the program
+    // public static void main(String[] args) {
+    //     Track track = new Track(); // Create a new track with 1 lane
+    //     track.inputValues(); // Call the inputValues method to get user input
+    // }
+
+    // select number of lanes from user
+    public void inputValues() {
+        // Create the frame
+        JFrame frame = new JFrame("Select Race");
+
+        // Create panel and components
+        JPanel panel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        panel.setLayout(new GridLayout(0, 1));  // Set layout to vertical grid
+        JLabel lanes = new JLabel("Enter number of lanes (1-5): ");
+        lanes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField inputField = new JTextField(3);  // 5 columns wide
+        inputField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
+
+        JLabel length = new JLabel("Enter length of track (between 100 and 700 meters): ");
+        length.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField lengthField = new JTextField(3);  // 5 columns wide
+        lengthField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
+
+        JLabel trackShapeLabel = new JLabel("Enter track shape: ");
+        JLabel trackShapes = new JLabel("(oval, rectangular, half-oval)");
+        trackShapes.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        trackShapeLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField trackShapeField = new JTextField(3);  // 5 columns wide
+        trackShapeField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
+
+        JLabel weatherConditionLabel = new JLabel("Enter weather condition: ");
+        JLabel weatherConditions = new JLabel("(sunny, rainy, snowy, foggy, windy, muddy, dry, wet, icy)");
+        weatherConditions.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        weatherConditionLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        JTextField weatherConditionField = new JTextField(3);  // 5 columns wide
+        weatherConditionField.setHorizontalAlignment(JTextField.CENTER); // Center the input text
+
+        JLabel oddLabel = new JLabel("Betting odds range from 0 to 3");
+        oddLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+
+        JLabel oddsRangeLabel = new JLabel("0 being the lowest and 3 being the highest");
+        oddsRangeLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+
+        JLabel clarificationLabel = new JLabel("Odds are calculated based on the horse's speed, stamina, and confidence.");
+        clarificationLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+        clarificationLabel.setFont(new java.awt.Font("Arial", java.awt.Font.ITALIC, 10)); // Italic font
+
+        JLabel winLabel = new JLabel("If you win, you'll get your bet back plus the odds");
+        winLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+
+        JLabel loseLabel = new JLabel("If you lose, you'll lose the percentage of the betting odd ");
+        loseLabel.setHorizontalAlignment(JLabel.CENTER);  // Align label to left
+       
+        // Create a button to submit the input
+        JButton submitButton = new JButton("Submit");
+
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // remove error label for lanes if it exists
+                for (int i = 0; i < panel.getComponentCount(); i++) {
+                    if (panel.getComponent(i) instanceof JLabel && ((JLabel) panel.getComponent(i)).getText().equals("Please enter a number between 1 and 5.")) {
+                        panel.remove(i);  // Remove the error label
+                        break;  // Exit the loop after removing the label
+                    }
+                }
+                // remove error label for length if it exists
+                for (int i = 0; i < panel.getComponentCount(); i++) {
+                    if (panel.getComponent(i) instanceof JLabel && ((JLabel) panel.getComponent(i)).getText().equals("Please enter a number between 100 and 700.")) {
+                        panel.remove(i);  // Remove the error label
+                        break;  // Exit the loop after removing the label
+                    }
+                }
+                
+                String lanesInput = inputField.getText();  // Get text from field
+                String lengthInput = lengthField.getText();  // Get text from field
+                // check if lanes is between 1 and 10
+                if (Integer.parseInt(lanesInput) < 1 || Integer.parseInt(lanesInput) > 5) {
+                    System.out.println("Invalid number of lanes. Please enter a number between 1 and 5.");
+                    // Show error message to user as a label
+                    JOptionPane.showMessageDialog(null, "Please enter a number between 1 and 5.", "Invalid Input - Lanes", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit the method if invalid input
+                }
+                // check if length is between 1 and 180
+                if (Integer.parseInt(lengthInput) < 100 || Integer.parseInt(lengthInput) > 700) {
+                    System.out.println("Invalid length. Please enter a number between 100 and 700.");
+                    // Show error message to user as a label
+                    JOptionPane.showMessageDialog(null, "Please enter a length between 100 and 700.", "Invalid Input - Length", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit the method if invalid input
+                }
+
+                // check if track shape is not empty
+                if (trackShapeField.getText().isEmpty()) {
+                    System.out.println("Invalid track shape. Please enter a valid track shape.");
+                    // Show error message to user as a label
+                    JOptionPane.showMessageDialog(null, "Please enter a track shape.", "Invalid Input - Track Shape", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit the method if invalid input
+                }
+
+                // check if track shape is in the list of valid shapes
+                String[] validShapes = {"oval", "rectangular", "half-oval"};
+                boolean isValidShape = false;
+                for (String shape : validShapes) {
+                    if (shape.equalsIgnoreCase(trackShapeField.getText())) {
+                        isValidShape = true;  // Set flag to true if valid shape is found
+                        break;  // Exit the loop if valid shape is found
+                    }
+                }
+                if (!isValidShape) {
+                    System.out.println("Invalid track shape. Please enter a valid track shape.");
+                    // Show error message to user as a label
+                    JOptionPane.showMessageDialog(null, "Please enter a track shape.", "Invalid Input - Track Shape", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit the method if invalid input
+                }
+
+                // check if weather condition is in the list of valid conditions
+                String[] validConditions = {"sunny", "rainy", "snowy", "foggy", "windy", "muddy", "dry", "wet", "icy"};
+                boolean isValidCondition = false;
+                for (String condition : validConditions) {
+                    if (condition.equalsIgnoreCase(weatherConditionField.getText())) {
+                        isValidCondition = true;  // Set flag to true if valid condition is found
+                        break;  // Exit the loop if valid condition is found
+                    }
+                }
+                if (!isValidCondition) {
+                    System.out.println("Invalid weather condition. Please enter a valid weather condition.");
+                    // Show error message to user as a label
+                    JLabel errorLabel = new JLabel("Please enter a valid weather condition.");
+                    JOptionPane.showMessageDialog(null, "Please enter a valid weather condition.", "Invalid Input - Weather", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit the method if invalid input
+                }
+                // check if weather condition is not empty
+                if (weatherConditionField.getText().isEmpty()) {
+                    System.out.println("Invalid weather condition. Please enter a valid weather condition.");
+                    // Show error message to user as a label
+                    JOptionPane.showMessageDialog(null, "Please enter a weather condition.", "Invalid Input - Weather", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit the method if invalid input
+                }
+
+                // Set the number of lanes and length of the track
+                setLanes(Integer.parseInt(lanesInput));  // Set the number of lanes
+                setLength(Integer.parseInt(lengthInput));  // Set the length of the track
+                setTrackShape(trackShapeField.getText());  // Set the shape of the track
+                setWeatherCondition(weatherConditionField.getText());  // Set the weather condition
+
+                // store values in variables for HorseGUI
+                int lanes = getLanes();  // Get the number of lanes
+                int length = getLength();  // Get the length of the track
+                String trackShape = getTrackShape();  // Get the shape of the track
+                String weatherCondition = getWeatherCondition();  // Get the weather condition
+
+                inputField.setText("");  // Optionally clear the field after submit
+                lengthField.setText("");  // Optionally clear the field after submit
+                trackShapeField.setText("");  // Optionally clear the field after submit
+                weatherConditionField.setText("");  // Optionally clear the field after submit
+                // Close the frame after submission
+                frame.dispose();  // Close the frame
+                // Call the createTrack method to draw the track
+                HorseGUI gui = new HorseGUI(lanes, length, trackShape, weatherCondition);  // Create a new HorseGUI object
+                gui.setVisible(true);
+            }
+        });
+
+        // Add components to panel
+        panel.add(lanes);  // Add label to panel
+        panel.add(inputField);  // Add text field to panel
+        panel.add(length);  // Add label to panel
+        panel.add(lengthField);  // Add text field to panel
+        panel.add(trackShapeLabel);  // Add label to panel
+        panel.add(trackShapes);  // Add label to panel
+        panel.add(trackShapeField);  // Add text field to panel
+        panel.add(weatherConditionLabel);  // Add label to panel
+        panel.add(weatherConditions);  // Add label to panel
+        panel.add(weatherConditionField);  // Add text field to panel
+        panel.add(oddLabel);  // Add label to panel
+        panel.add(oddsRangeLabel);  // Add label to panel
+        panel.add(clarificationLabel);  // Add label to panel
+        panel.add(winLabel);
+        panel.add(loseLabel);
+        buttonPanel.add(submitButton);  // Add button to panel
+
+        // Add panel to frame
+        frame.add(panel);
+        frame.add(buttonPanel);  // Add button panel to frame
+        frame.setSize(400, 500);  // Set frame size
+        frame.setLayout(new GridLayout(0, 1));  // Set layout to vertical grid
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Close operation
+        frame.setVisible(true);  // Make frame visible
+        frame.setLocationRelativeTo(null);  // Center the frame on the screen
+        frame.setResizable(false);  // Make frame not resizable
+        // Set background color for the panel
+        panel.setBackground(new java.awt.Color(240, 248, 255)); // Light blue background
+        buttonPanel.setBackground(new java.awt.Color(240, 248, 255)); // Match button panel background
+
+        // Customize the font and alignment of labels
+        java.awt.Font labelFont = new java.awt.Font("Arial", java.awt.Font.BOLD, 14);
+        lanes.setFont(labelFont);
+        length.setFont(labelFont);
+        trackShapeLabel.setFont(labelFont);
+        weatherConditionLabel.setFont(labelFont);
+
+        // Customize the font of the text fields
+        java.awt.Font textFieldFont = new java.awt.Font("Arial", java.awt.Font.PLAIN, 14);
+        inputField.setFont(textFieldFont);
+        lengthField.setFont(textFieldFont);
+        trackShapeField.setFont(textFieldFont);
+        weatherConditionField.setFont(textFieldFont);
+
+        // Customize the submit button
+        submitButton.setBackground(new java.awt.Color(100, 149, 237)); // Cornflower blue background
+        submitButton.setForeground(java.awt.Color.WHITE); // White text
+        submitButton.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+        submitButton.setFocusPainted(false); // Remove focus border
+        
+    }
+
+}
