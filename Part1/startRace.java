@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main {
+public class startRace {
     public static void main(String[] args) throws EmptyStringException {
         try {
             // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
