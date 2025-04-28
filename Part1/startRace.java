@@ -2,6 +2,12 @@ import java.util.Scanner;
 
 public class startRace {
     public static void main(String[] args) throws EmptyStringException {
+        startRace sr = new startRace();
+        sr.startRace(); // Start the
+
+    }
+
+    public void startRace() throws EmptyStringException {
         try {
             // Users can create three horses with different horse names, confidence levels will be random and symbols are fixed
             System.out.println("Welcome to the horse race stimulator!");
@@ -96,7 +102,6 @@ public class startRace {
             System.out.println(e.getMessage());
             System.exit(1);
         }
-
     }
 
     public static String inputString(String message) throws EmptyStringException 
