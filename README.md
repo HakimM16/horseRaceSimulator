@@ -19,7 +19,7 @@ Ensure you have the following installed on your system:
 ### 🚀 Steps to Run the Project Locally
 1. 📂 Clone the repository:
    ```sh
-   git clone https://github.com/your-username/horse-race-simulator.git
+   git clone https://github.com/HakimM16/horseRaceSimulator
    ```
 2. 🏗️ Open the project in your preferred IDE.
 3. 🔧 Ensure that JavaFX is properly configured in your project (if needed).
