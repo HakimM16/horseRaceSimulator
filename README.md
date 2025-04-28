@@ -39,6 +39,9 @@ The project relies on the following dependencies:
 3. ▶️ Make a prediction on one of the horses to win to begin the simulation.
 4. 👀 Watch as horses progress across the screen.
 5. 🏅 View race results at the end.
+6. If using vscode or intellij, make sure it is in full screen to display the whole length of the track like this
+![Screenshot of full screen in vsCode](image.png)
+![Screenshot of full screen in intellij](image-1.png)
 
 ## 🎮 Usage Guidelines for Part 2
 1. 🎬 Launch the application.
