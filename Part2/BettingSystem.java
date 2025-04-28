@@ -182,8 +182,8 @@ public class BettingSystem {
             JOptionPane.showMessageDialog(null, "Horse not found in the list.", "Invalid Input", JOptionPane.ERROR_MESSAGE); // Display an error message if the horse is not found
             return; // Exit the method if the horse is not found
         }
-        if (betAmount <= 0 || betAmount > 1000) { // Check if the bet amount is valid (between 1 and 1000)
-            JOptionPane.showMessageDialog(null, "Please enter a valid bet amount between 0 to 1000.", "Invalid Input", JOptionPane.ERROR_MESSAGE); // Display an error message if the bet amount is invalid
+        if (betAmount <= 0 || betAmount > 100000) { // Check if the bet amount is valid (between 1 and 1000)
+            JOptionPane.showMessageDialog(null, "Please enter a valid bet amount between 0 to 100000.", "Invalid Input", JOptionPane.ERROR_MESSAGE); // Display an error message if the bet amount is invalid
             return; // Exit the method if the bet amount is invalid
         }
 
