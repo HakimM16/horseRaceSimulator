@@ -25,7 +25,7 @@ Ensure you have the following installed on your system:
    ```
 2. 🏗️ Open the project in your preferred IDE.
 3. 🔧 Ensure that JavaFX is properly configured in your project (if needed).
-4. ▶️ For Part 1, compile and run the `startRace.java` file to start the application.
+4. ▶️ For Part 1, cd into Part 1 by typing `cd Part 1` in terminal, then type `javac startRace` to compile and run the `startRace.java` file to start the application.
 5. ▶️ For Part 2, compile and run the `startRaceGUI.java` file to start the application
 
 ## 📦 Dependencies
