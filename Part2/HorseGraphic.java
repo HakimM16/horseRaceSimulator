@@ -1,4 +1,6 @@
 
+package Part2;
+
 import java.awt.*;
 import java.awt.geom.Path2D;
 import javax.swing.*;

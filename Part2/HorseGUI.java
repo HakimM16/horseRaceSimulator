@@ -1,3 +1,5 @@
+package Part2;
+
 // similar to Horse.java in part 1 but changes for GUI
 /**
  * In the race, the horse is represented by a symbol and has attributes like speed, stamina, and confidence.

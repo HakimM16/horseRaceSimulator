@@ -1,3 +1,5 @@
+package Part2;
+
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;

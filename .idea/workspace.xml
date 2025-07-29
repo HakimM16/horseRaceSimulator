@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86a64fac-9edb-48d7-9b11-2356bf9cec7c" name="Changes" comment="" />
+    <list default="true" id="86a64fac-9edb-48d7-9b11-2356bf9cec7c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/BettingSystem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Horse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/HorseGUI$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/HorseGUI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/HorseGraphic$TrackType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/HorseGraphic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceManager$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceManager$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceManager$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/RaceTrackApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Track$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Track.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/Track.java" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/Track.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/startRaceGUI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part2/startRaceGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Part2/startRaceGUI.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +39,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "HakimM16"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/HakimM16/horseRaceSimulator.git",
+    "accountId": "c6cd20ef-7b27-49f1-97b1-0718a51ab435"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
@@ -24,10 +62,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.startRaceGUI.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/hakim/OneDrive/Documents/Queen Mary University of London/ECS414U - Object Oriented Programming/horseRaceStimulator folder/horseRaceSimulator",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -36,11 +76,25 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="startRaceGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="startRaceGUI" />
+      <module name="horseRaceSimulator" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.startRaceGUI" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.117" />
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.117" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26574.91" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26574.91" />
       </set>
     </attachedChunks>
   </component>
@@ -58,6 +112,8 @@
       <workItem from="1744634345092" duration="197000" />
       <workItem from="1744800093587" duration="597000" />
       <workItem from="1745828109985" duration="321000" />
+      <workItem from="1745954486584" duration="6000" />
+      <workItem from="1753785118275" duration="1157000" />
     </task>
     <servers />
   </component>
